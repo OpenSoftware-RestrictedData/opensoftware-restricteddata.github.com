@@ -24,7 +24,7 @@ title: Site Map
 <ul>
 <li><a href="/postgresql.html">2.3.1 PostgreSQL</a></li>
 <li><a href="/postgis.html">2.3.2 PostGIS</a></li>
-<li><a href="#sec-2-3-2">2.3.3 TODO Important shared memory settings</a></li>
+<li><a href="/sharedmemory.html">2.3.3 Important shared memory settings</a></li>
 <li><a href="#sec-2-3-3">2.3.4 TODO Test loading some shapefiles</a></li>
 </ul>
 </li>

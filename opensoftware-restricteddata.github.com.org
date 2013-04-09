@@ -233,7 +233,7 @@ The R code produces the plot:
   <ul>
   <li><a href="/postgresql.html">2.3.1 PostgreSQL</a></li>
   <li><a href="/postgis.html">2.3.2 PostGIS</a></li>
-  <li><a href="#sec-2-3-2">2.3.3 TODO Important shared memory settings</a></li>
+  <li><a href="/sharedmemory.html">2.3.3 Important shared memory settings</a></li>
   <li><a href="#sec-2-3-3">2.3.4 TODO Test loading some shapefiles</a></li>
   </ul>
   </li>
@@ -1124,8 +1124,7 @@ title: PostgreSQL
 
 #+begin_src markdown :tangle postgresql.md :exports reports :eval no :padline no
 ## Install PostgreSQL 9.2 
-PostgreSQL is an Open Source database that can be extended with GIS functionality using the PostGIS tools.  The latest version is 9.2.  Please see [this link](http://people.planetpostgresql.org/devrim/index.php?/archives/70-How-to-install-PostgreSQL-9.2-on-RHELCentOSScientific-Linux-5-and-6.html)  for the orginial documentation I used to install this on Centos or Redhat 6.4.  Check the correct download from [this link](http://yum.postgresql.org/repopackages.php#pg92). Not that this didn't work on Ubuntu 12.04 LTS for me in early 2013 because PostGIS 2.0 was not included in their repositories.
-
+PostgreSQL is an Open Source database that can be extended with GIS functionality using the PostGIS tools.  The latest version is 9.2.  Please see [this link](http://people.planetpostgresql.org/devrim/index.php?/archives/70-How-to-install-PostgreSQL-9.2-on-RHELCentOSScientific-Linux-5-and-6.html)  for the orginial documentation I used to install this on Centos or Redhat 6.4.  Check the correct download from [this link](http://yum.postgresql.org/repopackages.php#pg92). Please note that this didn't work on Ubuntu 12.04 LTS for me in early 2013 because PostGIS 2.0 was not included in their repositories.  I ended up rolling back to PostgreSQL 9.1 on that machine.
 
 #+end_src
 
@@ -1240,57 +1239,51 @@ CREATE ROLE gislibrary LOGIN PASSWORD 'gislibrary';
 # show port;
 
 **** Configure PostgreSQL connection settings
-#+begin_src sh :session *shell* :exports reports :eval no :results silent
-#Set postgres Password
-su - postgres
-psql postgres postgres
-alter user postgres with password 'password';
-#edit your pg_hba.conf file under /var/lib/pgsql/9.2/data
-#I added a super user from my ip address and allowed all the local ip addresses access
-host    all             postgres        my.desk.ip.address/32       md5
-# if you want to allow data sharing on a specific database then create a public user
-# host    dbname        publicdata      0.0.0.0/0                   md5
-# if you want people to access from a subnet at your work
-# host    dbname        username        ip.address.range.0/24        md5
-# still connected to psql
-select pg_reload_conf();
-# close the psql using \q
-# change back to root
-su - root
+#+begin_src markdown :tangle postgresql.md :exports reports :eval no
+  #### Code
+      #edit your pg_hba.conf file under /var/lib/pgsql/9.2/data
+      #I added a super user from my ip address and allowed all the local ip addresses access
+      host    all             postgres        my.desk.ip.address/32       md5
+      # if you want to allow data sharing on a specific database then create a public user
+      # host    dbname        publicdata      0.0.0.0/0                   md5
+      # if you want people to access from a subnet at your work
+      # host    dbname        username        ip.address.range.0/24        md5
 #+end_src
 
+#+begin_src markdown :tangle postgresql.md :exports reports :eval no
+  #### Code
+      #connect to psql
+      #Set postgres Password
+      su - postgres
+      psql postgres postgres
+      alter user postgres with password 'password';
+      select pg_reload_conf();
+      # close the psql using \q
+      # change back to root
+      exit
+#+end_src
+
+#+begin_src markdown :tangle postgresql.md :exports reports :eval no
 Now make the server listen for any connection requests from anywhere in the world.
-#+begin_src sh :session *shell* :exports reports :eval no :results silent
-# First locate the postgresql.conf file under /var/lib/pgsql/9.2/data.
-# uncomment and change from localhost
-# listen_addresses = '*'
-# then restart the server
-sudo service postgresql-9.2 restart
-#then reboot and confirm postgres started
+#+end_src
+
+#+begin_src markdown :tangle postgresql.md :exports reports :eval no
+  #### Code
+      # First locate the postgresql.conf file under /var/lib/pgsql/9.2/data.
+      # uncomment and change from localhost
+      # listen_addresses = '*'
+      # then restart the server
+      sudo service postgresql-9.2 restart
+      #then reboot and confirm postgres started
 #+end_src
 **** Allow connection to postgres through the firewall
-#+name:setting-ports
-#+begin_src sh :session *shell* :tangle no :exports reports :eval no
-###########################################################################
-# newnode: setting-ports
-vi /etc/sysconfig/iptables 
-# and add the line
--A INPUT -m state --state NEW -m tcp -p tcp --dport 5432 -j ACCEPT
 
-service iptables restart
-#+end_src
-**** GDAL, PROJ and GEOS
-#+name:gdal
-#+begin_src sh :session *shell* :exports reports :eval no :results silent
-sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
-sudo rpm -Uvh http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-7.noarch.rpm
-# yum list gdal*
-yum install gdal-devel.x86_64 
-yum install proj-devel.x86_64
-yum install geos-devel.x86_64
-#to update
-yum remove gdal*
-yum install gdal-devel.x86_64 
+#+begin_src sh :session *shell* :tangle postgresql.md :exports reports :eval no
+#### Code: setting-ports
+    vi /etc/sysconfig/iptables 
+    # and add the line
+    -A INPUT -m state --state NEW -m tcp -p tcp --dport 5432 -j ACCEPT
+    service iptables restart
 #+end_src
 
 *** PostGIS 2.0
@@ -1307,6 +1300,13 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 
 #+end_src
 
+#+begin_src markdown :tangle postgis.md :exports reports :eval no
+#### References   
+ [http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos]([http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos])
+    [http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html](http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html)
+    [http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html](http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html)
+#+end_src
+
 #+name:install-postgis2
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
 #### code: install-postgis2
@@ -1317,71 +1317,107 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
   
 #+end_src
 
-#+begin_src markdown :tangle postgis.md :exports reports :eval no
-#### References   
- [http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos]([http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos])
-    [http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html](http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html)
-    [http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html](http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html)
+
+**** GDAL, PROJ and GEOS
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no :results silent
+  #### Code
+      sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
+      sudo rpm -Uvh http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-7.noarch.rpm
+      # yum list gdal*
+      yum install gdal-devel.x86_64 
+      yum install proj-devel.x86_64
+      yum install proj-nad.x86_64
+      yum install geos-devel.x86_64
+      #to update
+      yum remove gdal*
+      yum install gdal-devel.x86_64 
 #+end_src
+
 **** Create Database
-#+begin_src R :session *shell* :tangle no :exports reports :eval no
-su - postgres 
-createdb ewedb
-psql -d ewedb -U postgres  
-CREATE EXTENSION postgis;  
-CREATE EXTENSION postgis_topology;  
- 
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+  #### Code: Create Database
+      su - postgres 
+      createdb mydb
+      psql -d mydb -U postgres  
+      CREATE EXTENSION postgis;  
+      CREATE EXTENSION postgis_topology;  
+   
 #+end_src
+
 
 **** Create a GIS user and a group
-#+begin_src R :session *shell* :tangle no :exports reports :eval no
-CREATE ROLE public_group;
-CREATE ROLE ivan_hanigan LOGIN PASSWORD 'password';
-GRANT public_group TO ivan_hanigan;
-
-grant usage on schema public to public_group;
-GRANT select ON ALL TABLES IN SCHEMA public TO public_group;
-grant execute on all functions in schema public to public_group;
-grant select on all sequences in schema public to public_group;
-grant select on table geometry_columns to public_group;
-grant select on table spatial_ref_sys to public_group;  
-grant select on table geography_columns to public_group;
-grant select on table raster_columns to public_group;
-grant select on table raster_overviews to public_group;
-
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+  #### Code: Create a GIS user and a group
+      CREATE ROLE public_group;
+      CREATE ROLE ivan_hanigan LOGIN PASSWORD 'password';
+      GRANT public_group TO ivan_hanigan;
+  
+      grant usage on schema public to public_group;
+      GRANT select ON ALL TABLES IN SCHEMA public TO public_group;
+      grant execute on all functions in schema public to public_group;
+      grant select on all sequences in schema public to public_group;
+      grant select on table geometry_columns to public_group;
+      grant select on table spatial_ref_sys to public_group;
+      grant select on table geography_columns to public_group;
+      grant select on table raster_columns to public_group;
+      grant select on table raster_overviews to public_group;
+      \q
+      exit
 #+end_src
 
 **** Specific transformations grid for Australian projections AGD66 to GDA94
 kudos2 Joe Guillaume and Francis Markham
-#+name:proper transforms
-#+begin_src sh :session *shell* :exports reports :results silent :eval no 
-cd /usr/share/proj
-# the original was moved
-# wget http://www.icsm.gov.au/icsm/gda/gdatm/national66.zip
-wget http://www.icsm.gov.au/gda/gdatm/national66.zip
-# if it moves again a version of it is included with this repo
-# from your local scp to your server
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+  #### Code: transformations grid for Australian projections
+      cd /usr/share/proj
+      # the original was moved
+      # wget http://www.icsm.gov.au/icsm/gda/gdatm/national66.zip
+      wget http://www.icsm.gov.au/gda/gdatm/national66.zip
+      # if it moves again a version of it is included with this repo
+      # from your local scp to your server
+       
+      yum install unzip
+      unzip national66.zip
+      mv "A66 National (13.09.01).gsb" aust_national_agd66_13.09.01.gsb
+  
+      su - postgres 
+      psql -d mydb
+  
+      UPDATE spatial_ref_sys SET
+      proj4text='+proj=longlat +ellps=aust_SA +nadgrids=aust_national_agd66_13.09.01.gsb +wktext'
+      where srid=4202;
+      \q
+      exit
+#+end_src
 
-yum install unzip
-unzip national66.zip
-mv "A66 National (13.09.01).gsb" aust_national_agd66_13.09.01.gsb
+**** Test transform
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+  #### Code: test transformation from AGD66 to GDA94
+      select geocode, geoname, st_transform(geom, 4283) as the_geom
+      into schema.gda94_table
+      from  schema.agd66_table;
+#+end_src
 
-#### FROM YOUR R SERVER OR LOCAL ####
-R
-require(devtools)
-install_github("swishdbtools", "swish-climate-impact-assessment")
-pwd <- getPassword(remote=F)
-su <- connect2postgres("ip.address", "dbname", "postgres", p = pwd)
-dbSendQuery(su,
-"UPDATE spatial_ref_sys SET
-proj4text='+proj=longlat +ellps=aust_SA +nadgrids=aust_national_agd66_13.09.01.gsb +wktext'
-where srid=4202;
-")
-# now you can go ahead and convert AGD66 (4202) to GDA94 (4283)
-sql <- sql_subset_into(ch, "schema.agd66_table", select =
-           'geocode, geoname, st_transform(geom, 4283) as the_geom',
-           into_schema = "schema", into_table = "gda94_table", eval = F)
-cat(sql)
+#+begin_src R :session *R* :tangle no :exports reports :eval no  
+  #### FROM YOUR R SERVER OR LOCAL ####
+  #R
+  require(devtools)
+  install_github("swishdbtools", "swish-climate-impact-assessment")
+  require(swishdbtools)
+  pwd <- getPassword(remote=F)
+  ch <- connect2postgres2("django")
+  #("ip.address", "dbname", "postgres", p = pwd)
+  ## dbSendQuery(su,
+  ## "UPDATE spatial_ref_sys SET
+  ## proj4text='+proj=longlat +ellps=aust_SA +nadgrids=aust_national_agd66_13.09.01.gsb +wktext'
+  ## where srid=4202;
+  ## ")
+  # now you can go ahead and convert AGD66 (4202) to GDA94 (4283)
+  sql <- sql_subset_into(ch, "schema.agd66_table", select =
+             'geocode, geoname, st_transform(geom, 4283) as the_geom',
+             into_schema = "schema", into_table = "gda94_table", eval = F, check = F)
+  cat(sql)
+  
 #+end_src
 **** COMMENT DEPRECATED Specific transformations grid for Australian projections AGD66 to GDA94
 #+name:proper transforms
@@ -1496,36 +1532,66 @@ vi /etc/init.d/postgresql
 #+end_src
 
 *** Important shared memory settings
-For eg managing memory settings
-#+name:sharedMem
-#+begin_src R :session *R* :tangle no :exports reports :eval no
-vi /home/pgsql/9.2/data/postgresql.conf 
-# shared_buffers
-#http://michael.otacoo.com/postgresql-2/take-care-of-kernel-memory-limitation-for-postgresql-shared-buffers/
-# PostgreSQL has a default shared_buffers value at 32MB, what is enough for small configurations but it is said that this parameter should be set at 25% of the system’s RAM. This allows your system to keep a good performance in parallel with the database server.
-# So in the case of a machine with 4GB of RAM, you should set shared_buffers at 1GB.
-2GB = 2048MB
 
-also look at max_locks_per_transaction.  tried setting to 1000???
+#+begin_src markdown :tangle sharedmemory.md :exports reports :eval no :padline no
+--- 
+name: sharedmemory
+layout: default
+title: Important Shared Memory Settings
+---
 
-################################################################
-# name:sharedMem
-# http://www.postgresql.org/docs/9.2/static/kernel-resources.html
-# Linux
+## Managing memory settings
+The default settings in PostgreSQL are usually pretty good but these memory settings are conservative to start with and often need modifications.
 
-#     The default maximum segment size is 32 MB, which is only adequate for very small PostgreSQL installations. The default maximum total size is 2097152 pages. A page is almost always 4096 bytes except in unusual kernel configurations with "huge pages" (use getconf PAGE_SIZE to verify). That makes a default limit of 8 GB, which is often enough, but not always.
+## References
 
-#     The shared memory size settings can be changed via the sysctl interface. For example, to allow 16 GB:
+[Kernal memory limitations](http://michael.otacoo.com/postgresql-2/take-care-of-kernel-memory-limitation-for-postgresql-shared-buffers/)
 
-#     $ sysctl -w kernel.shmmax=17179869184
-#     $ sysctl -w kernel.shmall=4194304
+#+end_src
 
-#     In addition these settings can be preserved between reboots in the file /etc/sysctl.conf. Doing that is highly recommended.
-
-
-#    The remaining defaults are quite generously sized, and usually do not require changes.
-# also http://www.linux.com/learn/tutorials/394523-configuring-postgresql-for-pretty-good-performance
-# work mem 4MB
+#+begin_src sh :session *shell* :tangle sharedmemory.md :exports reports :eval no
+  #### Code: sharedmemory
+      vi /home/pgsql/9.2/data/postgresql.conf 
+      # shared_buffers
+      
+      # PostgreSQL has a default shared_buffers value at 32MB, what is
+      # enough for small configurations but it is said that this
+      # parameter should be set at 25% of the system’s RAM. This allows
+      # your system to keep a good performance in parallel with the
+      # database server.  So in the case of a machine with 4GB of RAM,
+      # you should set shared_buffers at 1GB.
+      2GB = 2048MB
+       
+      #also look at max_locks_per_transaction.  tried setting to 1000???
+       
+      ################################################################
+       
+      # http://www.postgresql.org/docs/9.2/static/kernel-resources.html
+      # Linux
+       
+      #     The default maximum segment size is 32 MB, which is only
+      #     adequate for very small PostgreSQL installations. The
+      #     default maximum total size is 2097152 pages. A page is
+      #     almost always 4096 bytes except in unusual kernel
+      #     configurations with "huge pages" (use getconf PAGE_SIZE to
+      #     verify). That makes a default limit of 8 GB, which is often
+      #     enough, but not always.
+       
+      #     The shared memory size settings can be changed via the
+      #     sysctl interface. For example, to allow 16 GB:
+       
+      sysctl -w kernel.shmmax=17179869184
+      sysctl -w kernel.shmall=4194304
+       
+      #     In addition these settings can be preserved between reboots
+      #     in the file /etc/sysctl.conf. Doing that is highly
+      #     recommended.
+       
+       
+      #    The remaining defaults are quite generously sized, and
+      # usually do not require changes.  also
+      # http://www.linux.com/learn/tutorials/394523-configuring-postgresql-for-pretty-good-performance
+      # work mem 4MB
 #+end_src
 
 *** Test loading some shapefiles
