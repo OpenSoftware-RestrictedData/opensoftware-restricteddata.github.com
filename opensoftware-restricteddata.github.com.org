@@ -3271,7 +3271,7 @@ layout: default
 title: OpenGeo Suite
 ---
 
-The OpenGeo Suite provides a complete spatial data server software stack.  I use this for the geoserver functionality as it enables batch uploades for many spatial tables from the Brawn database at once. 
+The OpenGeo Suite provides a complete spatial data server software stack.  I use this for the geoserver functionality as it enables batch uploades for many spatial tables from the Brawn database at once.  [Installation instructions are here](http://suite.opengeo.org/opengeo-docs/installation/linux/centos/suite.html) but beware that the Redhat version requires the optional channel to be enabled. 
 
 #+end_src
 #+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
