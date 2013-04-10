@@ -1368,7 +1368,13 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 #+end_src
 
 **** Specific transformations grid for Australian projections AGD66 to GDA94
-kudos2 Joe Guillaume and Francis Markham
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+#### Additional Reprojection File
+A special transformations grid file is required to be added to the PROJ.4 files for reprojecting the Australian projections AGD66 to GDA94.
+
+Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markham](http://stackoverflow.com/users/103225/fmark) for providing this solution.
+#+end_src
+
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
   #### Code: transformations grid for Australian projections
       cd /usr/share/proj
