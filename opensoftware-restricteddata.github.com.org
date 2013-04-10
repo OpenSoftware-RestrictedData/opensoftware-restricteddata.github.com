@@ -204,7 +204,7 @@ The R code produces the plot:
 [1]: http://www.nectar.org.au/research-cloud/ "Nectar"
 #+end_src
 
-*** Site map
+* Site map
 #+name:introduction
 #+begin_src markdown :tangle sitemap.md :exports none :eval no :padline no
   --- 
@@ -242,11 +242,11 @@ The R code produces the plot:
   <li><a href="#sec-2-4-1">2.4.1 TODO R Server</a></li>
   <li><a href="#sec-2-4-2">2.4.2 TODO Test the Backups of this Minimal R Sever.</a></li>
   <li><a href="#sec-2-4-3">2.4.3 TODO Oracle XE Permissions and Users System</a></li>
-  <li><a href="#sec-2-4-4">2.4.4 TODO DDIindex</a></li>
-  <li><a href="#sec-2-4-5">2.4.5 TODO Set up a private git lab for data and code</a></li>
-  <li><a href="#sec-2-4-6">2.4.6 TODO True-Crypt encrypted volumes</a></li>
-  <li><a href="#sec-2-4-7">2.4.7 TODO ResearchData storage</a></li>
-  <li><a href="/opengeosuite.html">2.4.8 OpenGeo suite</a></li>
+  <li><a href="/opengeosuite.html">2.4.4 OpenGeo suite</a></li>
+  <li><a href="#sec-2-4-4">2.4.5 TODO DDIindex</a></li>
+  <li><a href="#sec-2-4-5">2.4.6 TODO Set up a private git lab for data and code</a></li>
+  <li><a href="#sec-2-4-6">2.4.7 TODO True-Crypt encrypted volumes</a></li>
+  <li><a href="#sec-2-4-7">2.4.8 TODO ResearchData storage</a></li>
   </ul></li>
   </ul>
   </li>
@@ -822,7 +822,7 @@ There are a few commonly used packages recommended for both Brawn and Brains.
 # kudos 2 http://rlamp.blogspot.com.au/2010/03/getting-started-setting-up-rapache.html
 #+name:foundations
 #+begin_src sh :session *shell* :results silent :reports none :eval no 
-yum install gcc-gfortran gcc-c++ readline-devel libpng-devel libX11-devel libXt-devel texinfo-tex.x86_64 tetex-dvips docbook-utils-pdf cairo-devel java-1.6.0-openjdk-devel libxml2-devel make unzip
+yum install gcc-gfortran gcc-c++ readline-devel libpng-devel libX11-devel libXt-devel texinfo-tex.x86_64 tetex-dvips docbook-utils-pdf cairo-devel java-1.6.0-openjdk-devel libxml2-devel make unzip hdparm
 #+end_src
 **** Describe the system
 Now we will note the size and number of the disc partitions.
@@ -927,6 +927,8 @@ mount -t ext3 /dev/vdb /home
 # once successful edit /etc/fstab to mount the drive at boot e.g.
 # /dev/vdb    /home    ext3     defaults    0 0
 # Reboot the server to ensure that the drive mounts on boot.
+# check performance
+hdparm -tT /dev/vdb
 #+end_src
 
 
@@ -1478,23 +1480,27 @@ grant select on all sequences in schema public to gislibrary;
 grant all on table geometry_columns to gislibrary;
 #+end_src
 **** Move the postgres data folder to Secondary Disk
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
 To take advantage of the extra storage on the secondary disk we mounted in the initial configuration then do the following.
-#+begin_src sh :session *shell* :tangle no :exports reports :eval no
-#     Stop Apache PostgreSQL Services
-service postgresql-9.2 stop
-#     Copy the pgsql directory from /var/lib (or customer install directory) location to another location
-cp -r /var/lib/pgsql /home/pgsql
-chown -R postgres:postgres /home/pgsql
-#     Navigate to /etc/init.d location
-#     Edit the start script 'postgresql'
-#     Search for parameter PGDATA which would be entered as "PGDATA=/var/lib/pgsql"
-#     Edit the line such that PGDATA points to the new location. For e.g. "PGDATA=/newloc/pgsql"
-#     ALSO DO PGLOG, and PGUPLOG
-#     Save and exit the file
-#     Start PostgreSQL Service 
-service postgresql-9.2 start
-# tidy up but not too much, just data?
-rm -r -f /var/lib/pgsql/9.2/data?
+#+end_src
+
+#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+  #### Code: Migrate PostgreSQL Data
+      service postgresql-9.2 stop
+      #     Copy the pgsql directory from /var/lib (or customer install directory) location to another location
+      cp -r /var/lib/pgsql /home/pgsql
+      chown -R postgres:postgres /home/pgsql
+      #     Navigate to /etc/init.d location
+      #     Edit the start script 'postgresql'
+      #     Search for parameter PGDATA which would be entered as "PGDATA=/var/lib/pgsql"
+      #     Edit the line such that PGDATA points to the new location. For e.g. "PGDATA=/newloc/pgsql"
+      #     ALSO DO PGLOG, and PGUPLOG
+      #     Save and exit the file
+      #     Start PostgreSQL Service 
+      service postgresql-9.2 start
+      # tidy up but not too much, just data?
+      rm -r -f /var/lib/pgsql/9.2/data?
+  
 #+end_src
 **** TODO need to set up backups from here to a secure location at my work.
 ***** COMMENT  REFERENCES
@@ -2674,6 +2680,161 @@ Using RJDBC is what I recommend.  I found ROracle suboptimal.
   #install.packages('ROracle')
 #+end_src
 
+*** OpenGeo Suite
+
+#+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
+--- 
+name: opengeosuite
+layout: default
+title: OpenGeo Suite
+---
+
+The OpenGeo Suite provides a complete spatial data server software stack.  I use this for the geoserver functionality as it enables batch uploades for many spatial tables from the Brawn database at once.  [Installation instructions are here](http://suite.opengeo.org/opengeo-docs/installation/linux/centos/suite.html) but beware that the Redhat version requires the optional channel to be enabled. 
+
+#+end_src
+
+#+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
+#### Code
+    cd /etc/yum.repos.d
+    wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
+    yum install opengeo-suite
+#+end_src  
+
+#+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
+Notice that the installer pulls in an out of date tomcat6 (as at April 2013) which has [vulnerabilities](http://tomcat.apache.org/security-6.html#Apache_Tomcat_6.x_vulnerabilities) so upgrade that to the latest tomcat6 (NOT tomcat 7).
+#+end_src
+
+#+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
+  #### Code
+      service tomcat6 stop
+      chkconfig tomcat6 off
+            
+      wget http://mirror.overthewire.com.au/pub/apache/tomcat/tomcat-6/v6.0.36/bin/apache-tomcat-6.0.36.tar.gz
+      mv apache-tomcat-6.0.36.tar.gz  /usr/share/
+      cd /usr/share
+      tar -xzf apache-tomcat-6.0.36.tar.gz
+      #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,
+      cd /usr/share/apache-tomcat-6.0.36
+      vi conf/server.xml
+      # change <Connector port="8181"/> from 8080
+      vi conf/tomcat-users.xml
+      #add a user with roles of admin,manager like this
+      <user name="tomcat" password="password" roles="admin,manager" />
+      cd /usr/share/tomcat6/webapps
+      cp -r ddiindex /usr/share/apache-tomcat-6.0.36/webapps
+      cd /usr/share/apache-tomcat-6.0.36
+      ./bin/startup.sh
+      ./bin/shutdown.sh
+       
+      # edit
+      cd /etc/init.d  
+      vi tomcat
+      chkconfig --add tomcat  
+      chkconfig --level 234 tomcat on  
+      # verify
+      chkconfig --list tomcat  
+      service tomcat start  
+      
+  
+#+end_src  
+
+**** bulk upload requires OpenGeo Suite
+http://workshops.opengeo.org/suiteintro/geoserver/importdb.html#import-from-postgis-store
+http://dev.horizon.opengeo.org/opengeo-docs/installation/linux/centos/suite.html#installation-linux-centos-suite
+http://workshops.opengeo.org/suiteintro/postgis/createdb.html
+#+name:opengeo-suite
+#+begin_src sh :tangle no :exports none :eval no
+yum remove gdal*
+yum remove proj*
+yum remove geos*
+cd /etc/yum.repos.d
+#CentOS 6, 64 bit
+wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
+yum install opengeo-suite
+# it installs tomcat 6.0.24 and claims: 
+# http://workshops.opengeo.org/postgis-spatialdbtips/installation.html
+# The Tomcat install for the workshop is not the default install you can download from the Tomcat web site. We have taken Tomcat 6 and added in extra software and configuration for the workshop:
+
+# - We have configured a JNDI database connection so that we can easily connect to our “medford” database in PostgreSQL.
+# - We have added a copy of GeoServer and configured it to pull layers from our “medford” database.
+# - We have added the scripts needed for our workshop examples.
+# - We have added a recent copy of OpenLayers.
+# So should I give up on tomcat 6.0.36 and just try to secure 6.0.24?
+chkconfig tomcat off
+service tomcat stop
+# also noticed NOTICE run /usr/share/opengeo-suite/geoserver-setup.sh?
+# go to http://server:8181/dashboard, click geoserver
+login as admin, geoserver
+# change password
+su - postgres
+
+# TODO 
+# describe create postgis database from postgis_template
+
+# Please read the file /usr/share/opengeo-suite-data/geoserver_data/security/masterpw.info and remove it afterwards. This file is a security risk.
+
+# Please remove the file /usr/share/opengeo-suite-data/geoserver_data/security/users.properties.old because it contains user passwords in plain text. This file is a security risk.
+
+# The default user/group service should use digest password encoding.
+# http://suite.opengeo.org/docs/geoserver/security/tutorials/digest/index.html
+
+cd /usr/share/tomcat6/webapps
+cp -avr geowebcache /usr/share/apache-tomcat-6.0.36/webapps/
+# 3cmd, geowebcache, recipes, geoexplorer,  dashboard, geoserver, opengeo-docs
+service tomcat restart
+#+end_src
+
+**** Otherwise just install normal geoserver
+#+begin_src R :session *shell* :tangle no :exports reports :eval no
+################################################################
+
+# java
+# yum install java-1.6.0-openjdk-devel
+http://coastalrocket.blogspot.com.au/2012/08/installing-geostack-on-centos-6-64bit.html
+yum -y install tomcat6 tomcat6-webapps tomcat6-admin-webapps 
+# or
+# http://newpush.com/2011/10/how-to-install-tomcat-6-on-rhel-6-or-centos-6/
+# yum install yum-priorities
+# rpm -Uvh http://apt.sw.be/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+# #rpm -Uvh http://download.fedora.redhat.com/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm
+# rpm -Uvh http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/jpackage-utils-5.0.0-7.jpp6.noarch.rpm
+# #yum -y install java
+# yum -y install tomcat6 tomcat6-webapps tomcat6-admin-webapps
+
+vi /etc/tomcat6/tomcat-users.xml
+#add a user with roles of admin,manager
+chkconfig tomcat6 on
+# now to geoserver
+cd /home/<user>
+wget http://downloads.sourceforge.net/geoserver/geoserver-2.1.4-war.zip
+unzip geoserver-2.1.4-war.zip
+mv geoserver.war /usr/share/tomcat6/webapps
+# start up tomcat6
+service tomcat6 startexit
+# test geoserver at
+http://localhost:8080/geoserver/web/
+
+# and you'll probably want access across your network
+iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
+/sbin/service iptables save
+iptables -F
+cleanaway 62601472
+
+# note used the same iptables as those above
+# also did service tomcat6 start and 
+reboot
+login as admin, geoserver
+
+
+
+#+end_src
+**** TODO configure geoserver
+# DEADLINK? http://www.gistutor.com/geoserver/21-intermediate-geoserver-tutorials/38-configuring-geoserver-proxy-for-public-and-remote-data-access.html
+NB is the default memory setting too low?  Ran out of memory pretty quick.
+**** expose spatial data
+# publish
+http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html
+
 *** DDIindex
 The DDIindex is a java based catalogue that was written by the Australian Data Archives at the ANU (Formerly the ASSDA http://assda.anu.edu.au/ddiindex.html). The original application source is still available from the ASSDA site but I am using the one I have archived because it has some configurations that I don't remember who to make again at the moment.
 **** TOMCAT
@@ -3262,122 +3423,6 @@ chmod 0777 /home/ResearchData
 # TODO check the security of this
 #+end_src
 
-*** OpenGeo Suite
-
-#+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
---- 
-name: opengeosuite
-layout: default
-title: OpenGeo Suite
----
-
-The OpenGeo Suite provides a complete spatial data server software stack.  I use this for the geoserver functionality as it enables batch uploades for many spatial tables from the Brawn database at once.  [Installation instructions are here](http://suite.opengeo.org/opengeo-docs/installation/linux/centos/suite.html) but beware that the Redhat version requires the optional channel to be enabled. 
-
-#+end_src
-#+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
-#### Code
-    cd /etc/yum.repos.d
-    wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
-    yum install opengeo-suite
-#+end_src  
-
-
-**** bulk upload requires OpenGeo Suite
-http://workshops.opengeo.org/suiteintro/geoserver/importdb.html#import-from-postgis-store
-http://dev.horizon.opengeo.org/opengeo-docs/installation/linux/centos/suite.html#installation-linux-centos-suite
-http://workshops.opengeo.org/suiteintro/postgis/createdb.html
-#+name:opengeo-suite
-#+begin_src sh :tangle no :exports none :eval no
-yum remove gdal*
-yum remove proj*
-yum remove geos*
-cd /etc/yum.repos.d
-#CentOS 6, 64 bit
-wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
-yum install opengeo-suite
-# it installs tomcat 6.0.24 and claims: 
-# http://workshops.opengeo.org/postgis-spatialdbtips/installation.html
-# The Tomcat install for the workshop is not the default install you can download from the Tomcat web site. We have taken Tomcat 6 and added in extra software and configuration for the workshop:
-
-# - We have configured a JNDI database connection so that we can easily connect to our “medford” database in PostgreSQL.
-# - We have added a copy of GeoServer and configured it to pull layers from our “medford” database.
-# - We have added the scripts needed for our workshop examples.
-# - We have added a recent copy of OpenLayers.
-# So should I give up on tomcat 6.0.36 and just try to secure 6.0.24?
-chkconfig tomcat off
-service tomcat stop
-# also noticed NOTICE run /usr/share/opengeo-suite/geoserver-setup.sh?
-# go to http://server:8181/dashboard, click geoserver
-login as admin, geoserver
-# change password
-su - postgres
-
-# TODO 
-# describe create postgis database from postgis_template
-
-# Please read the file /usr/share/opengeo-suite-data/geoserver_data/security/masterpw.info and remove it afterwards. This file is a security risk.
-
-# Please remove the file /usr/share/opengeo-suite-data/geoserver_data/security/users.properties.old because it contains user passwords in plain text. This file is a security risk.
-
-# The default user/group service should use digest password encoding.
-# http://suite.opengeo.org/docs/geoserver/security/tutorials/digest/index.html
-
-cd /usr/share/tomcat6/webapps
-cp -avr geowebcache /usr/share/apache-tomcat-6.0.36/webapps/
-# 3cmd, geowebcache, recipes, geoexplorer,  dashboard, geoserver, opengeo-docs
-service tomcat restart
-#+end_src
-
-**** Otherwise just install normal geoserver
-#+begin_src R :session *shell* :tangle no :exports reports :eval no
-################################################################
-
-# java
-# yum install java-1.6.0-openjdk-devel
-http://coastalrocket.blogspot.com.au/2012/08/installing-geostack-on-centos-6-64bit.html
-yum -y install tomcat6 tomcat6-webapps tomcat6-admin-webapps 
-# or
-# http://newpush.com/2011/10/how-to-install-tomcat-6-on-rhel-6-or-centos-6/
-# yum install yum-priorities
-# rpm -Uvh http://apt.sw.be/redhat/el6/en/x86_64/rpmforge/RPMS/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
-# #rpm -Uvh http://download.fedora.redhat.com/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm
-# rpm -Uvh http://mirrors.dotsrc.org/jpackage/6.0/generic/free/RPMS/jpackage-utils-5.0.0-7.jpp6.noarch.rpm
-# #yum -y install java
-# yum -y install tomcat6 tomcat6-webapps tomcat6-admin-webapps
-
-vi /etc/tomcat6/tomcat-users.xml
-#add a user with roles of admin,manager
-chkconfig tomcat6 on
-# now to geoserver
-cd /home/<user>
-wget http://downloads.sourceforge.net/geoserver/geoserver-2.1.4-war.zip
-unzip geoserver-2.1.4-war.zip
-mv geoserver.war /usr/share/tomcat6/webapps
-# start up tomcat6
-service tomcat6 startexit
-# test geoserver at
-http://localhost:8080/geoserver/web/
-
-# and you'll probably want access across your network
-iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
-/sbin/service iptables save
-iptables -F
-cleanaway 62601472
-
-# note used the same iptables as those above
-# also did service tomcat6 start and 
-reboot
-login as admin, geoserver
-
-
-
-#+end_src
-**** TODO configure geoserver
-# DEADLINK? http://www.gistutor.com/geoserver/21-intermediate-geoserver-tutorials/38-configuring-geoserver-proxy-for-public-and-remote-data-access.html
-NB is the default memory setting too low?  Ran out of memory pretty quick.
-**** expose spatial data
-# publish
-http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html
 
 * Procedures for add users to the system.
 ** Description of the access procedure

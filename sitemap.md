@@ -33,11 +33,11 @@ title: Site Map
 <li><a href="#sec-2-4-1">2.4.1 TODO R Server</a></li>
 <li><a href="#sec-2-4-2">2.4.2 TODO Test the Backups of this Minimal R Sever.</a></li>
 <li><a href="#sec-2-4-3">2.4.3 TODO Oracle XE Permissions and Users System</a></li>
-<li><a href="#sec-2-4-4">2.4.4 TODO DDIindex</a></li>
-<li><a href="#sec-2-4-5">2.4.5 TODO Set up a private git lab for data and code</a></li>
-<li><a href="#sec-2-4-6">2.4.6 TODO True-Crypt encrypted volumes</a></li>
-<li><a href="#sec-2-4-7">2.4.7 TODO ResearchData storage</a></li>
-<li><a href="/opengeosuite.html">2.4.8 OpenGeo suite</a></li>
+<li><a href="/opengeosuite.html">2.4.4 OpenGeo suite</a></li>
+<li><a href="#sec-2-4-4">2.4.5 TODO DDIindex</a></li>
+<li><a href="#sec-2-4-5">2.4.6 TODO Set up a private git lab for data and code</a></li>
+<li><a href="#sec-2-4-6">2.4.7 TODO True-Crypt encrypted volumes</a></li>
+<li><a href="#sec-2-4-7">2.4.8 TODO ResearchData storage</a></li>
 </ul></li>
 </ul>
 </li>
