@@ -16,8 +16,11 @@ title: Site Map
 <li><a href="#sec-2-2-1">2.2.1 TODO Launch an instance</a></li>
 <li><a href="#sec-2-2-2">2.2.2 TODO requesting help</a></li>
 <li><a href="#sec-2-2-3">2.2.3 TODO connect using ssh</a></li>
-<li><a href="#sec-2-2-4">2.2.4 TODO Setting up the basic server framework</a></li>
-<li><a href="#sec-2-2-5">2.2.5 TODO Disk Storage</a></li>
+</ul>
+<li><a href="#sec-2-3">2.3 Setting up the basic server framework</a></li>
+<ul>
+<li><a href="/swapon.html">2.3.1 Swap space</a></li>
+<li><a href="#sec">2.3.1 TODO Disk Storage</a></li>
 </ul>
 </li>
 <li><a href="#sec-2-3">2.3 The Brawn</a>
