@@ -5,7 +5,7 @@ title: PostGIS
 ---
 
 <li><a href="/postgresql.html">Previous: PostgreSQL</a></li>
-<li><a href="/postres-migrate.html">Next: PostgreSQL Migrate</a></li>
+<li><a href="/postgres-migrate.html">Next: PostgreSQL Migrate</a></li>
 
 
 ## Install PostGIS 2.0

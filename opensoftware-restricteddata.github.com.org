@@ -85,7 +85,7 @@ access data such as the Australian Deaths dataset.
           </strong>
           <!--<p>random-website</p>-->
   
-                <p>Links:</p>
+          <p>Links:</p>
                 <a class="Contact the project" href="mailto:ivan.hanigan@gmail.com">Contact the project →</a>  
                 <!--<p></p>-->
                 <!--<a class="Font of all wisdom" href="www.google.com">Font of all wisdom →</a>-->  
@@ -206,7 +206,228 @@ The R code produces the plot:
 
 * Site map
 #+name:introduction
-#+begin_src markdown :tangle sitemap.md :exports none :eval no :padline no
+#+begin_src html :tangle sitemap.md :exports none :eval no :padline no
+  --- 
+  name: sitemap
+  layout: default
+  title: Site Map
+  ---
+  
+  <div id="table-of-contents">
+  <!-- <h2>Table of Contents</h2> -->
+  <div id="text-table-of-contents">
+  <ul>
+  <li><a href="#sec-1">1 Site map</a></li>
+  <li><a href="/introduction.html">2 Introduction </a></li>
+  <li><a href="#sec-3">3 Deploying Virtual Machines</a>
+  <ul>
+  <li><a href="#sec-3-1">3.1 Description</a></li>
+  <li><a href="#sec-3-2">3.2 Accessing Virtual Machines on the Australian  Research Cloud</a>
+  <ul>
+  <li><a href="#sec-3-2-1">3.2.1 Launch an instance</a></li>
+  <li><a href="#sec-3-2-2">3.2.2 requesting help</a></li>
+  <li><a href="#sec-3-2-3">3.2.3 connect using ssh</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-3-3">3.3 Setting up the basic server framework</a>
+  <ul>
+  <li><a href="#sec-3-3-1">3.3.1 Install any updates using the yum package manager</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-3-4">3.4 Security measures</a>
+  <ul>
+  <li><a href="#sec-3-4-1">3.4.1 Restrict ssh access to a specific ip address/range</a></li>
+  <li><a href="#sec-3-4-2">3.4.2 Security Enhanced Linux (selinux)</a></li>
+  <li><a href="#sec-3-4-3">3.4.3 Install some base packages</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-3-5">3.5 Hardware set-up</a>
+  <ul>
+  <li><a href="/swapon.html">3.5.1 Swap space </a></li>
+  <li><a href="#sec-3-5-2">3.5.2 Persistent Net Rules Should Be Avoided On Centos</a></li>
+  <li><a href="#sec-3-5-3">3.5.3 Disk Storage</a></li>
+  </ul></li>
+  </ul>
+  </li>
+  <li><a href="#sec-4">4 The Brawn</a>
+  <ul>
+  <li><a href="/postgresql.html">4.1 PostgreSQL </a>
+  <ul>
+  <li><a href="#sec-4-1-1">4.1.1 Configure PostgreSQL connection settings</a></li>
+  <li><a href="#sec-4-1-2">4.1.2 Allow connection to postgres through the firewall</a></li>
+  </ul>
+  </li>
+  <li><a href="/postgis.html">4.2 PostGIS 2.0 </a>
+  <ul>
+  <li><a href="/postgis.html">4.2.1 Postgis</a></li>
+  <li><a href="#sec-4-2-2">4.2.2 GDAL, PROJ and GEOS</a></li>
+  <li><a href="#sec-4-2-3">4.2.3 Create Database</a></li>
+  <li><a href="#sec-4-2-4">4.2.4 Create a GIS user and a group</a></li>
+  <li><a href="#sec-4-2-5">4.2.5 Specific transformations grid for Australian projections AGD66 to GDA94</a></li>
+  <li><a href="#sec-4-2-6">4.2.6 Test transform</a></li>
+  </ul>
+  </li>
+  <li><a href="/postgres-migrate.html">4.3 PostgreSQL Migration </a>
+  <ul>
+  <li><a href="/postgres-migrate.html">4.3.1 Migrate the data</a></li>
+  <li><a href="#sec-4-3-2">4.3.2 Set up backups</a></li>
+  </ul>
+  </li>
+  <li><a href="/sharedmemory.html">4.4 Important shared memory settings </a></li>
+  <li><a href="#sec-4-5">4.5 Test loading some shapefiles</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-5">5 The Brains</a>
+  <ul>
+  <li><a href="#sec-5-1">5.1 R Server</a>
+  <ul>
+  <li><a href="#sec-5-1-1">5.1.1 R</a></li>
+  <li><a href="#sec-5-1-2">5.1.2 package management and R updates</a></li>
+  <li><a href="#sec-5-1-3">5.1.3 Rstudio</a></li>
+  <li><a href="#sec-5-1-4">5.1.4 firewall access</a></li>
+  <li><a href="#sec-5-1-5">5.1.5 SSL/HHTPS and running a proxy server</a></li>
+  <li><a href="#sec-5-1-6">5.1.6 git</a></li>
+  <li><a href="#sec-5-1-7">5.1.7 ssh for github</a></li>
+  <li><a href="#sec-5-1-8">5.1.8 gdal</a></li>
+  <li><a href="#sec-5-1-9">5.1.9 geos</a></li>
+  <li><a href="#sec-5-1-10">5.1.10 or under ubuntu</a></li>
+  <li><a href="#sec-5-1-11">5.1.11 test readOGR</a></li>
+  <li><a href="#sec-5-1-12">5.1.12 rgraphviz</a></li>
+  <li><a href="#sec-5-1-13">5.1.13 test</a></li>
+  <li><a href="#sec-5-1-14">5.1.14 install just the postgres bits required for RPostgreSQL package</a></li>
+  <li><a href="#sec-5-1-15">5.1.15 postgis utilities</a></li>
+  <li><a href="#sec-5-1-16">5.1.16 unixODBC</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-5-2">5.2 Test the Backups of this Minimal R Sever.</a>
+  <ul>
+  <li><a href="#sec-5-2-1">5.2.1 Backup the 2nd Disc</a></li>
+  <li><a href="#sec-5-2-2">5.2.2 Launch from this snapshot and test the R server and 2nd Disc</a></li>
+  <li><a href="#sec-5-2-3">5.2.3 the permissions of the user on their home directory cause issues for logging in.</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-5-3">5.3 Oracle XE Permissions and Users System</a>
+  <ul>
+  <li><a href="#sec-5-3-1">5.3.1 backup local ubuntu version</a></li>
+  <li><a href="#sec-5-3-2">5.3.2 INIT</a></li>
+  <li><a href="#sec-5-3-3">5.3.3 SWAP</a></li>
+  <li><a href="#sec-5-3-4">5.3.4 DOWNLOAD AND SCP</a></li>
+  <li><a href="#sec-5-3-5">5.3.5 Install the database</a></li>
+  <li><a href="#sec-5-3-6">5.3.6 import application and set Security</a></li>
+  <li><a href="#sec-5-3-7">5.3.7 explain the table creation script</a></li>
+  <li><a href="#sec-5-3-8">5.3.8 set up R, RJDBC and ROracle</a></li>
+  </ul>
+  </li>
+  <li><a href="/opengeosuite.html">5.4 OpenGeo Suite </a>
+  <ul>
+  <li><a href="#sec-5-4-1">5.4.1 The OpenGeo Suite Installer</a></li>
+  <li><a href="#sec-5-4-2">5.4.2 bulk upload requires OpenGeo Suite</a></li>
+  <li><a href="#sec-5-4-3">5.4.3 Otherwise just install normal geoserver</a></li>
+  <li><a href="#sec-5-4-4">5.4.4 configure geoserver</a></li>
+  <li><a href="#sec-5-4-5">5.4.5 expose spatial data</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-5-5">5.5 DDIindex</a>
+  <ul>
+  <li><a href="#sec-5-5-1">5.5.1 TOMCAT</a></li>
+  <li><a href="#sec-5-5-2">5.5.2 TOMCAT upgrade 6 to 7</a></li>
+  <li><a href="#sec-5-5-3">5.5.3 Unsuccessfully did 7, try latest 6</a></li>
+  <li><a href="#sec-5-5-4">5.5.4 UPLOAD THE DDIINDEX</a></li>
+  <li><a href="#sec-5-5-5">5.5.5 add explanation of the ddiindex.zip file in lib</a></li>
+  <li><a href="#sec-5-5-6">5.5.6 MySQL</a></li>
+  <li><a href="#sec-5-5-7">5.5.7 make sure ddiindex can connect to mysql as ddiindex user</a></li>
+  <li><a href="#sec-5-5-8">5.5.8 Check the security implications of allowing write permissions here</a></li>
+  <li><a href="#sec-5-5-9">5.5.9 Running the Indexer</a></li>
+  <li><a href="#sec-5-5-10">5.5.10 personalise the ddiindex</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-5-6">5.6 Set up a private git lab for data and code</a>
+  <ul>
+  <li><a href="#sec-5-6-1">5.6.1 Firewall</a></li>
+  <li><a href="#sec-5-6-2">5.6.2 SSH server</a></li>
+  <li><a href="#sec-5-6-3">5.6.3 Encrypted files</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-5-7">5.7 True-Crypt encrypted volumes</a></li>
+  <li><a href="#sec-5-8">5.8 ResearchData storage</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-6">6 Procedures for add users to the system.</a>
+  <ul>
+  <li><a href="#sec-6-1">6.1 Description of the access procedure</a>
+  <ul>
+  <li><a href="#sec-6-1-1">6.1.1 Getting Access</a></li>
+  <li><a href="#sec-6-1-2">6.1.2 Managing Access</a></li>
+  <li><a href="#sec-6-1-3">6.1.3 Ending Access</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-6-2">6.2 The process user administrators go through to set up users</a>
+  <ul>
+  <li><a href="#sec-6-2-1">6.2.1 lodge request in user db</a></li>
+  <li><a href="#sec-6-2-2">6.2.2 r-nceph</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-6-3">6.3 brains</a>
+  <ul>
+  <li><a href="#sec-6-3-1">6.3.1 linux user</a></li>
+  <li><a href="#sec-6-3-2">6.3.2 mysql (check ddiindex)</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-6-4">6.4 brawn</a>
+  <ul>
+  <li><a href="#sec-6-4-1">6.4.1 postgres</a></li>
+  <li><a href="#sec-6-4-2">6.4.2 geoserver</a></li>
+  <li><a href="#sec-6-4-3">6.4.3 alliance wiki</a></li>
+  <li><a href="#sec-6-4-4">6.4.4 text message the set password</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-6-5">6.5 edits to oraphi via sql</a>
+  <ul>
+  <li><a href="#sec-6-5-1">6.5.1 revocation</a></li>
+  </ul></li>
+  </ul>
+  </li>
+  <li><a href="#sec-7">7 Backups</a>
+  <ul>
+  <li><a href="#sec-7-1">7.1 General</a>
+  <ul>
+  <li><a href="#sec-7-1-1">7.1.1 maintenance</a></li>
+  <li><a href="#sec-7-1-2">7.1.2 nearline for potential restore</a></li>
+  <li><a href="#sec-7-1-3">7.1.3 archive and remove</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-7-2">7.2 General concerns</a></li>
+  <li><a href="#sec-7-3">7.3 Brains</a>
+  <ul>
+  <li><a href="#sec-7-3-1">7.3.1 Backup oraphi</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-7-4">7.4 Brawn</a>
+  <ul>
+  <li><a href="#sec-7-4-1">7.4.1 Find out how big is it?</a></li>
+  <li><a href="#sec-7-4-2">7.4.2 Dump and download it to a secure computer</a></li>
+  <li><a href="#sec-7-4-3">7.4.3 find out more about the -mtime +1 bit.</a></li>
+  <li><a href="#sec-7-4-4">7.4.4 restore this dump into a new database on local machine as a failsafe.</a></li>
+  <li><a href="#sec-7-4-5">7.4.5 launch a new Nectar VM from the snapshot image</a></li>
+  <li><a href="#sec-7-4-6">7.4.6 mount the 2nd disc and load/restore the postgres db and data into it</a></li>
+  </ul>
+  </li>
+  <li><a href="#sec-7-5">7.5 Disaster Recovery Plan</a>
+  <ul>
+  <li><a href="#sec-7-5-1">7.5.1 test a snapshot</a></li>
+  <li><a href="#sec-7-5-2">7.5.2 60GB disk is not being saved in snapshots</a></li>
+  <li><a href="#sec-7-5-3">7.5.3 Restore ORAPHI</a></li>
+  </ul>
+  </li>
+  </ul>
+  </li>
+  </ul>
+  </div>
+  </div>
+  
+#+end_src
+** old version
+#+begin_src html
   --- 
   name: sitemap
   layout: default
@@ -216,91 +437,94 @@ The R code produces the plot:
   <!--<h2>Table of Contents</h2>-->
   <div id="text-table-of-contents">
   <ul>
-  <li><a href="/introduction.html">1 Introduction</a></li>
-  <li><a href="/introduction.html">2 TODO Build and Deploy</a>
-  <ul>
-  <li><a href="/introduction.html">2.1 TODO Description</a></li>
-  <li><a href="#sec-2-2">2.2 TODO Accessing Virtual Machines on the Australian  Research Cloud</a>
-  <ul>
-  <li><a href="#sec-2-2-1">2.2.1 TODO Launch an instance</a></li>
-  <li><a href="#sec-2-2-2">2.2.2 TODO requesting help</a></li>
-  <li><a href="#sec-2-2-3">2.2.3 TODO connect using ssh</a></li>
-  </ul>
-  <li><a href="#sec-2-3">2.3 Setting up the basic server framework</a></li>
-  <ul>
-  <li><a href="/swapon.html">2.3.1 Swap space</a></li>
-  <li><a href="#sec">2.3.1 TODO Disk Storage</a></li>
-  </ul>
-  </li>
-  <li><a href="#sec-2-3">2.3 The Brawn</a>
-  <ul>
-  <li><a href="/postgresql.html">2.3.1 PostgreSQL</a></li>
-  <li><a href="/postgis.html">2.3.2 PostGIS</a></li>
-  <li><a href="/postgres-migrate.html">2.3.3 PostgreSQL Migration</a></li>
-  <li><a href="/sharedmemory.html">2.3.4 Important shared memory settings</a></li>
-  <li><a href="#sec-2-3-3">2.3.5 TODO Test loading some shapefiles</a></li>
-  </ul>
-  </li>
-  <li><a href="#sec-2-4">2.4 The Brains</a>
-  <ul>
-  <li><a href="#sec-2-4-1">2.4.1 TODO R Server</a></li>
-  <li><a href="#sec-2-4-2">2.4.2 TODO Test the Backups of this Minimal R Sever.</a></li>
-  <li><a href="#sec-2-4-3">2.4.3 TODO Oracle XE Permissions and Users System</a></li>
-  <li><a href="/opengeosuite.html">2.4.4 OpenGeo suite</a></li>
-  <li><a href="#sec-2-4-4">2.4.5 TODO DDIindex</a></li>
-  <li><a href="#sec-2-4-5">2.4.6 TODO Set up a private git lab for data and code</a></li>
-  <li><a href="#sec-2-4-6">2.4.7 TODO True-Crypt encrypted volumes</a></li>
-  <li><a href="#sec-2-4-7">2.4.8 TODO ResearchData storage</a></li>
-  </ul></li>
-  </ul>
-  </li>
-  <li><a href="#sec-3">3 TODO Procedures for add users to the system.</a>
-  <ul>
-  <li><a href="#sec-3-1">3.1 TODO Description of the access procedure</a>
-  <ul>
-  <li><a href="#sec-3-1-1">3.1.1 TODO Getting Access</a></li>
-  <li><a href="#sec-3-1-2">3.1.2 TODO Managing Access</a></li>
-  <li><a href="#sec-3-1-3">3.1.3 TODO Ending Access</a></li>
-  </ul>
-  </li>
-  <li><a href="#sec-3-2">3.2 TODO The process user administrators go through to set up users</a>
-  <ul>
-  <li><a href="#sec-3-2-1">3.2.1 TODO lodge request in user db</a></li>
-  <li><a href="#sec-3-2-2">3.2.2 TODO r-nceph</a></li>
-  <li><a href="#sec-3-2-3">3.2.3 TODO brains</a></li>
-  <li><a href="#sec-3-2-4">3.2.4 TODO brawn</a></li>
-  <li><a href="#sec-3-2-5">3.2.5 TODO alliance wiki</a></li>
-  <li><a href="#sec-3-2-6">3.2.6 TODO text message the set password</a></li>
-  <li><a href="#sec-3-2-7">3.2.7 TODO edits to oraphi via sql</a></li>
-  <li><a href="#sec-3-2-8">3.2.8 TODO revocation</a></li>
-  </ul></li>
-  </ul>
-  </li>
-  <li><a href="#sec-4">4 TODO Backups</a>
-  <ul>
-  <li><a href="#sec-4-1">4.1 TODO General</a>
-  <ul>
-  <li><a href="#sec-4-1-1">4.1.1 TODO maintenance</a></li>
-  <li><a href="#sec-4-1-2">4.1.2 TODO nearline for potential restore</a></li>
-  <li><a href="#sec-4-1-3">4.1.3 TODO archive and remove</a></li>
-  </ul>
-  </li>
-  <li><a href="#sec-4-2">4.2 TODO Specific</a>
-  <ul>
-  <li><a href="#sec-4-2-1">4.2.1 TODO Brains</a></li>
-  <li><a href="#sec-4-2-2">4.2.2 TODO Brawn</a></li>
-  </ul>
-  </li>
-  <li><a href="#sec-4-3">4.3 TODO Disaster Recovery Plan</a>
-  <ul>
-  <li><a href="#sec-4-3-1">4.3.1 TODO Test a snapshot</a></li>
-  <li><a href="#sec-4-3-2">4.3.2 TODO 60GB disk is not being saved in snapshots</a></li>
-  <li><a href="#sec-4-3-3">4.3.3 TODO Restore ORAPHI</a></li>
-  </ul>
-  </li>
-  </ul>
-  </li>
-  </ul>
+    <li><a href="/introduction.html">1 Introduction</a></li>
+    <li><a href="/introduction.html">2 TODO Build and Deploy</a>
+      <ul>
+      <li><a href="/introduction.html">2.1 TODO Description</a></li>
+      <li><a href="#sec-2-2">2.2 TODO Accessing Virtual Machines on the Australian  Research Cloud</a>
+        <ul>
+          <li><a href="#sec-2-2-1">2.2.1 TODO Launch an instance</a></li>
+          <li><a href="#sec-2-2-2">2.2.2 TODO requesting help</a></li>
+          <li><a href="#sec-2-2-3">2.2.3 TODO connect using ssh</a></li>
+        </ul>
+        <li><a href="#sec-2-3">2.3 Setting up the basic server framework</a></li>
+        <ul>
+          <li><a href="/swapon.html">2.3.1 Swap space</a></li>
+          <li><a href="#sec">2.3.1 TODO Disk Storage</a></li>
+        </ul>
+        </li>
+    </ul> 
+    
+    <ul> 
+    <li><a href="#sec-3">3 The Brawn</a>
+      <ul>
+        <li><a href="/postgresql.html">3.1 PostgreSQL</a></li>
+        <li><a href="/postgis.html">3.2 PostGIS</a></li>
+        <li><a href="/postgres-migrate.html">3.3 PostgreSQL Migration</a></li>
+        <li><a href="/sharedmemory.html">3.4 Important shared memory settings</a></li>
+        <li><a href="#sec-2-3-3">3.5 TODO Test loading some shapefiles</a></li>
+      </ul>
+      </li>
+        <li><a href="#sec-2-4">2.4 The Brains</a>
+        <ul>
+          <li><a href="#sec-2-4-1">2.4.1 TODO R Server</a></li>
+          <li><a href="#sec-2-4-2">2.4.2 TODO Test the Backups of this Minimal R Sever.</a></li>
+          <li><a href="#sec-2-4-3">2.4.3 TODO Oracle XE Permissions and Users System</a></li>
+          <li><a href="/opengeosuite.html">2.4.4 OpenGeo suite</a></li>
+          <li><a href="#sec-2-4-4">2.4.5 TODO DDIindex</a></li>
+          <li><a href="#sec-2-4-5">2.4.6 TODO Set up a private git lab for data and code</a></li>
+          <li><a href="#sec-2-4-6">2.4.7 TODO True-Crypt encrypted volumes</a></li>
+          <li><a href="#sec-2-4-7">2.4.8 TODO ResearchData storage</a></li>
+        </ul></li>
+        </ul>
+        </li>
+        <li><a href="#sec-3">3 TODO Procedures for add users to the system.</a>
+        <ul>
+        <li><a href="#sec-3-1">3.1 TODO Description of the access procedure</a>
+        <ul>
+          <li><a href="#sec-3-1-1">3.1.1 TODO Getting Access</a></li>
+          <li><a href="#sec-3-1-2">3.1.2 TODO Managing Access</a></li>
+          <li><a href="#sec-3-1-3">3.1.3 TODO Ending Access</a></li>
+        </ul>
+        </li>
+        <li><a href="#sec-3-2">3.2 TODO The process user administrators go through to set up users</a>
+        <ul>
+          <li><a href="#sec-3-2-1">3.2.1 TODO lodge request in user db</a></li>
+          <li><a href="#sec-3-2-2">3.2.2 TODO r-nceph</a></li>
+          <li><a href="#sec-3-2-3">3.2.3 TODO brains</a></li>
+          <li><a href="#sec-3-2-4">3.2.4 TODO brawn</a></li>
+          <li><a href="#sec-3-2-5">3.2.5 TODO alliance wiki</a></li>
+          <li><a href="#sec-3-2-6">3.2.6 TODO text message the set password</a></li>
+          <li><a href="#sec-3-2-7">3.2.7 TODO edits to oraphi via sql</a></li>
+          <li><a href="#sec-3-2-8">3.2.8 TODO revocation</a></li>
+        </ul></li>
+        </ul>
+        </li>
+        <li><a href="#sec-4">4 TODO Backups</a>
+        <ul>
+        <li><a href="#sec-4-1">4.1 TODO General</a>
+        <ul>
+          <li><a href="#sec-4-1-1">4.1.1 TODO maintenance</a></li>
+          <li><a href="#sec-4-1-2">4.1.2 TODO nearline for potential restore</a></li>
+          <li><a href="#sec-4-1-3">4.1.3 TODO archive and remove</a></li>
+        </ul>
+        </li>
+        <li><a href="#sec-4-2">4.2 TODO Specific</a>
+        <ul>
+        <li><a href="#sec-4-2-1">4.2.1 TODO Brains</a></li>
+        <li><a href="#sec-4-2-2">4.2.2 TODO Brawn</a></li>
+        </ul>
+        </li>
+        <li><a href="#sec-4-3">4.3 TODO Disaster Recovery Plan</a>
+        <ul>
+        <li><a href="#sec-4-3-1">4.3.1 TODO Test a snapshot</a></li>
+        <li><a href="#sec-4-3-2">4.3.2 TODO 60GB disk is not being saved in snapshots</a></li>
+        <li><a href="#sec-4-3-3">4.3.3 TODO Restore ORAPHI</a></li>
+        </ul>
+      </li>
+      </ul>
+    </li>
+    </ul>
   </div>
   </div>
   
@@ -510,7 +734,7 @@ whoami
 | ivan |
 
 * COMMENT Plan
-* Introduction
+* Introduction /introduction.html
 
 #+name:introduction
 #+begin_src markdown :tangle introduction.md :exports none :eval no :padline no
@@ -581,7 +805,7 @@ While the analysis is exploratory only, the use of the system
 shows the ease with which multiple data sources (some restricted) can be brought together,
 and hence to be able to answer more complex research questions, and at
 increasingly specific levels of geography. 
-* Build and Deploy 
+* Deploying Virtual Machines
 ** Description
 We want to deploy the service as a symbiotic pair of virtual images that together will provide integrated data storage and analysis services in the cloud.
 Our recent review of the system prototype I developed suggested a need for two servers to comprise this system; to provide a more robust and powerful combination of structural and functional aspects.
@@ -660,7 +884,7 @@ This is recommended to do every week to maintain the server in good condition, e
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 yum update 
 #+end_src
-*** TODO Check these security measures
+** Security measures
 The following section sets some restrictions on the server.
 I would like to know how important it is to restrict root login and also if we can permit login via ssh and port 22 if it is only open to the NCEPH VPN range?  If so I just leave the below as yes yes yes?
 I had to get a bit of advice from a sysadmin at work about the following but I am sure it is still pretty unsecure.  
@@ -828,13 +1052,13 @@ There are a few commonly used packages recommended for both Brawn and Brains.
 #+begin_src sh :session *shell* :results silent :reports none :eval no 
 yum install gcc-gfortran gcc-c++ readline-devel libpng-devel libX11-devel libXt-devel texinfo-tex.x86_64 tetex-dvips docbook-utils-pdf cairo-devel java-1.6.0-openjdk-devel libxml2-devel make unzip hdparm
 #+end_src
-*** Describe the system
+** Hardware set-up
 Now we will note the size and number of the disc partitions.
 #+name:partitions
 #+begin_src sh :session *shell* :exports reports :results silent  :eval no
 df -h
 #+end_src
-*** TODO Add swap space
+*** Swap space /swapon.html
 #+begin_src markdown :tangle swapon.md :exports reports :eval no :padline no
 --- 
 name: swapon
@@ -1130,9 +1354,9 @@ root ALL=(ALL) ALL
 
 #+end_src
 
-** The Brawn
+* The Brawn
 The Brawn is a PostgreSQL Geographical Information System (GIS) Database server.
-*** PostgreSQL
+** PostgreSQL /postgresql.html
 #+begin_src markdown :tangle postgresql.md :exports none :eval no :padline no
 --- 
 name: postgresql
@@ -1166,8 +1390,8 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 #+end_src
 
 
-**** COMMENT for 9.1
-***** TODO DEPRECATED  upgrade from 8.4 using opengeo
+*** COMMENT for 9.1
+**** TODO DEPRECATED  upgrade from 8.4 using opengeo
 not installing tomcat6-admin-webapps
 "You have to subscribe to the "RHEL Server Optional" channel in order to get this package available through yum." commented by anonymous at
 http://dougbunger.blogspot.com.au/2010/05/redhat-tomcat-6-with-web-manager.html
@@ -1200,7 +1424,7 @@ cd /etc/yum.repos.d
 #CentOS 6, 64 bit
 wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
 yum install opengeo-suite
-***** TODO upgrade 9.1 to 9.2 Ubuntu
+**** TODO upgrade 9.1 to 9.2 Ubuntu
 The upgrade process I'm following is:
 
  sudo add-apt-repository ppa:pitti/postgresql
@@ -1213,8 +1437,8 @@ The upgrade process I'm following is:
 #   pg_dropcluster 9.1 main
 #http://stackoverflow.com/questions/12944830/error-upgrading-postgresql-cluster-from-9-1-to-9-2
 
-***** TODO delete the deprecated postgres 9.1 junk
-***** install pg9.1
+**** TODO delete the deprecated postgres 9.1 junk
+**** install pg9.1
 kudos2 http://wiki.postgresql.org/wiki/YUM_Installation
 #+name:postgres
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
@@ -1240,7 +1464,7 @@ rpm -ivh pgdg-centos91-9.1-4.noarch.rpm
 yum install postgresql91-server postgresql91 postgresql91-devel postgresql91-libs postgresql91-contrib
 #+end_src
 
-***** init postgres9.1
+**** init postgres9.1
 #+name:initialise postgres
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 service postgresql-9.1 initdb
@@ -1253,14 +1477,14 @@ psql postgres postgres
 alter user postgres with password 'password';
 CREATE ROLE gislibrary LOGIN PASSWORD 'gislibrary';
 #+end_src
-***** deprecated?
+**** deprecated?
 # failed to start.
 #GIVING UP 
 #yum erase postgresql91*
 # show listen_addresses;
 # show port;
 
-**** Configure PostgreSQL connection settings
+*** Configure PostgreSQL connection settings
 #+begin_src markdown :tangle postgresql.md :exports reports :eval no
   #### Code
       #edit your pg_hba.conf file under /var/lib/pgsql/9.2/data
@@ -1298,7 +1522,7 @@ Now make the server listen for any connection requests from anywhere in the worl
       sudo service postgresql-9.2 restart
       #then reboot and confirm postgres started
 #+end_src
-**** Allow connection to postgres through the firewall
+*** Allow connection to postgres through the firewall
 
 #+begin_src sh :session *shell* :tangle postgresql.md :exports reports :eval no
 #### Code: setting-ports
@@ -1308,8 +1532,8 @@ Now make the server listen for any connection requests from anywhere in the worl
     service iptables restart
 #+end_src
 
-*** PostGIS 2.0
-
+** PostGIS 2.0 /postgis.html
+*** Postgis
 #+begin_src markdown :tangle postgis.md :exports reports :eval no :padline no
 --- 
 name: postgis
@@ -1318,7 +1542,7 @@ title: PostGIS
 ---
 
 <li><a href="/postgresql.html">Previous: PostgreSQL</a></li>
-<li><a href="/postres-migrate.html">Next: PostgreSQL Migrate</a></li>
+<li><a href="/postgres-migrate.html">Next: PostgreSQL Migrate</a></li>
 
 
 ## Install PostGIS 2.0
@@ -1344,7 +1568,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 #+end_src
 
 
-**** GDAL, PROJ and GEOS
+*** GDAL, PROJ and GEOS
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no :results silent
   #### Code
       sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
@@ -1359,7 +1583,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
       yum install gdal-devel.x86_64 
 #+end_src
 
-**** Create Database
+*** Create Database
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
   #### Code: Create Database
       su - postgres 
@@ -1371,7 +1595,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 #+end_src
 
 
-**** Create a GIS user and a group
+*** Create a GIS user and a group
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
   #### Code: Create a GIS user and a group
       CREATE ROLE public_group;
@@ -1391,7 +1615,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
       exit
 #+end_src
 
-**** Specific transformations grid for Australian projections AGD66 to GDA94
+*** Specific transformations grid for Australian projections AGD66 to GDA94
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
 #### Additional Reprojection File
 A special transformations grid file is required to be added to the PROJ.4 files for reprojecting the Australian projections AGD66 to GDA94.
@@ -1422,7 +1646,7 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
       exit
 #+end_src
 
-**** Test transform
+*** Test transform
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
   #### Code: test transformation from AGD66 to GDA94
       select geocode, geoname, st_transform(geom, 4283) as the_geom
@@ -1451,7 +1675,7 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
   cat(sql)
   
 #+end_src
-**** COMMENT DEPRECATED Specific transformations grid for Australian projections AGD66 to GDA94
+*** COMMENT DEPRECATED Specific transformations grid for Australian projections AGD66 to GDA94
 #+name:proper transforms
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 cd /usr/share/proj
@@ -1461,8 +1685,8 @@ unzip national66.zip
 mv "A66 National (13.09.01).gsb" aust_national_agd66_13.09.01.gsb
 #+end_src
 
-**** COMMENT 2.0 was not working 
-***** TODO remove redundant old crap re postgis not working
+*** COMMENT 2.0 was not working 
+**** TODO remove redundant old crap re postgis not working
 http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos
 
 #+name:postgis2
@@ -1486,7 +1710,7 @@ failed due to depends?
 # # success!
 # # but now postgis not working.  reinstall and it works
 
-***** TODO remove PostGIS 1.5
+**** TODO remove PostGIS 1.5
 Requires postgres, gdal, geos http://postgis.refractions.net/docs/postgis_installation.html
 
 http://www.davidghedini.com/pg/entry/install_postgresql_9_on_centos
@@ -1496,7 +1720,7 @@ http://www.davidghedini.com/pg/entry/install_postgresql_9_on_centos
 # yum list postgis*  
 yum install postgis91.x86_64 postgis91-utils.x86_64
 #+end_src
-***** TODO remove Create Database
+**** TODO remove Create Database
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 su - postgres 
 createdb ewedb
@@ -1509,7 +1733,8 @@ grant execute on all functions in schema public to gislibrary;
 grant select on all sequences in schema public to gislibrary;
 grant all on table geometry_columns to gislibrary;
 #+end_src
-**** Move the postgres data folder to Secondary Disk
+** PostgreSQL Migration /postgres-migrate.html
+*** Migrate the data
 #+begin_src markdown :tangle postgres-migrate.md :exports reports :eval no :padline no
 ---
 name: postgres-migrate
@@ -1542,8 +1767,9 @@ To take advantage of the extra storage on the secondary disk we mounted in the i
   
 #+end_src
 
-**** TODO need to set up backups from here to a secure location at my work.
-***** COMMENT  REFERENCES
+*** Set up backups
+From here to a secure location at my work.
+**** COMMENT  REFERENCES
 # http://docs.fedoraproject.org/en-US/Fedora/13/html/Managing_Confined_Services/sect-Managing_Confined_Services-PostgreSQL-Configuration_Examples.html
 # If you want to move the postgres database after installation then this should work.
 # How do I move the PostgreSQL database from one location to another on Linux?
@@ -1577,7 +1803,7 @@ vi /etc/init.d/postgresql
 #     Then Start Tomcat Service 
 #+end_src
 
-*** Important shared memory settings
+** Important shared memory settings /sharedmemory.html
 
 #+begin_src markdown :tangle sharedmemory.md :exports reports :eval no :padline no
 --- 
@@ -1640,14 +1866,14 @@ The default settings in PostgreSQL are usually pretty good but these memory sett
       # work mem 4MB
 #+end_src
 
-*** Test loading some shapefiles
+** Test loading some shapefiles
 on your ubuntu desktop install postgis and gdal (see above)
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 ################################################################
 sudo apt-get install postgis
 #+end_src
 then let's demo the Tasmanian SLAs:
-***** download the shapefiles
+**** download the shapefiles
 #+name:tassla01
 #+begin_src R :session *R* :tangle no :exports reports :eval no
     ################################################################
@@ -1696,7 +1922,7 @@ then let's demo the Tasmanian SLAs:
     
 #+end_src
 
-***** upload the shp2psql
+**** upload the shp2psql
 #+begin_src sh :session *shell* :exports reports :eval no
   # psql -d ewedb -U postgres -h 115.146.94.209
   # CREATE SCHEMA abs_sla;
@@ -1710,7 +1936,7 @@ then let's demo the Tasmanian SLAs:
   # GRANT select ON ALL TABLES IN SCHEMA public TO gislibrary;
 #+end_src
 
-***** COMMENT DEPRECATED, TODO change to swishdbtools version = add metadata using df2ddi
+**** COMMENT DEPRECATED, TODO change to swishdbtools version = add metadata using df2ddi
 #+name:add_ddi
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
   ################################################################
@@ -1795,10 +2021,10 @@ then let's demo the Tasmanian SLAs:
 
 
 
-** The Brains
+* The Brains
 The Brains is a Statistical Analysis engine (running the R environment) integrated with a metadata registry.
-*** R Server
-**** R
+** R Server
+*** R
 #+name:R
 #+begin_src sh :session *shell* :exports reports :results silent :eval no
 #rpm -Uvh http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-7.noarch.rpm
@@ -1816,7 +2042,7 @@ yum update R
 #+end_src
 
 
-**** TODO package management and R updates
+*** TODO package management and R updates
 Kudos2
 http://zvfak.blogspot.com.au/2012/06/updating-r-but-keeping-your-installed.html
 The problem is that when you update R you usually need to re-install your libraries or change .libPaths() to point to a location that has your previous libraries.
@@ -1847,7 +2073,7 @@ R_LIBS=~/Rlibs
 update.packages() 
 # in R console, and the libraries will be updated.
 #+end_src
-**** Rstudio
+*** Rstudio
 check out the RSudio versions at: http://rstudio.org/download/server
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 # on RHEL6 ran into dependencies: libcrypto.so.6()(64bit) is needed by rstudio-server-0.96.331-1.x86_64
@@ -1862,7 +2088,7 @@ wget http://download2.rstudio.org/rstudio-server-0.97.173-x86_64.rpm
 sudo yum install --nogpgcheck rstudio-server-0.97.173-x86_64.rpm
 rstudio-server verify-installation
 #+end_src
-**** firewall access
+*** firewall access
 #+name:firewall
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 # kudos2 http://slinsmeier.wordpress.com/2012/05/19/creating-a-lab-environment-with-rstudio/
@@ -1876,7 +2102,7 @@ vi /etc/sysconfig/iptables
 service iptables restart
 #+end_src
 Check that you can log on via port 8787.  Note that this is an unsecure R server and the following steps are required to make this a secure server.  We will need to block port 8787 later on.
-**** SSL/HHTPS and running a proxy server 
+*** SSL/HHTPS and running a proxy server 
 # Perhaps an alternative? http://www.investuotojas.eu/2012/08/10/rstudio-server-through-ssh/
 # Or  http://rstudio.org/docs/server/running_with_proxy is only for ubuntu?
 
@@ -1962,7 +2188,7 @@ sudo /etc/init.d/rstudio-server restart
 
 # NOT RUN vi +/SSLCertificateFile /etc/httpd/conf.d/ssl.conf
 
-**** COMMENT test Sweave
+*** COMMENT test Sweave
 log on to Rstudio at https://your.new.ip.address and copy the following into a new RNW sweave file (might need to modify the sweave options in tools, something to do with tex2dvi?)
 #+name:learnR
 #+begin_src R :session *R* :tangle no :exports reports :eval no
@@ -2142,18 +2368,18 @@ sessionInfo()
 
 #+end_src
 
-**** git
+*** git
 #+name:git
 #+begin_src sh :session *shell* :exports reports  :results silent :eval no
 yum install git
 # restart R studio
 #+end_src
-**** ssh for github
+*** ssh for github
 - in rstudio
 - tools / options / version control
 - create rsa key, ok, ok
 - view pub key, copy, paste to your github account
-**** gdal
+*** gdal
 #+name:gdal
 #+begin_src sh :session *shell* :exports reports :results silent :eval no
 sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
@@ -2161,7 +2387,7 @@ sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.no
 yum install gdal-devel.x86_64 proj-devel.x86_64
 #+end_src
 
-**** COMMENT if proj not working
+*** COMMENT if proj not working
 #+begin_src sh :session *shell* :exports reports :results silent :eval yes
 #not working proj-devel?
 yum erase proj XXX
@@ -2176,11 +2402,11 @@ yum install gdal-devel.x86_64
 # success!
 # but now postgis not working.  reinstall and it works
 #+end_src
-**** geos
+*** geos
 #+begin_src sh :session *shell* :exports reports :results silent :eval no
 yum install geos-devel.x86_64
 #+end_src
-**** or under ubuntu
+*** or under ubuntu
 #+name:gdal
 #+begin_src sh :exports reports
   sudo apt-get update
@@ -2199,7 +2425,7 @@ yum install geos-devel.x86_64
 #+RESULTS: gdal
 
 
-**** test readOGR
+*** test readOGR
 NB only possible once the PostGIS install is complete, see below.
 #+name:readOGR2
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
@@ -2258,7 +2484,7 @@ NB only possible once the PostGIS install is complete, see below.
   
 #+end_src
 
-**** rgraphviz
+*** rgraphviz
 
 #+name:gviz
 #+begin_src sh :session *shell* :exports reports :results silent :eval no 
@@ -2274,7 +2500,7 @@ biocLite("Rgraphviz")
 q()
 #+end_src
 
-**** COMMENT under ubuntu
+*** COMMENT under ubuntu
 # if on ubuntu kudos2 http://vladinformatics.blogspot.com.au/2012/03/my-experience-with-installing-rgraphviz.html 
 make sure libgraphviz-dev is installed. It is needed for some header files (e.g. gvc.h)
 sudo apt-get install libgraphviz-dev
@@ -2284,7 +2510,7 @@ source('http://bioconductor.org/biocLite.R')
 biocLite("Rgraphviz", configure.args=c("--with-graphviz=/usr"))
 the reason is that at least on my comp the dot program was in /usr/bin, but not in /usr/local/bin as Rgraphviz defaults 
 
-**** test
+*** test
 #+name:test-rgraphviz
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 ###########################################################################
@@ -2293,7 +2519,7 @@ try newnode_test from
 git@github.com:ivanhanigan/disentangle.git
 #+end_src
 
-**** install just the postgres bits required for RPostgreSQL package
+*** install just the postgres bits required for RPostgreSQL package
 #+name:rpostgresql
 #+begin_src sh :session *shell* :tangle no :exports reports :eval no
 ###########################################################################
@@ -2318,7 +2544,7 @@ install.packages('RPostgreSQL')
 # works?
 
 #+end_src
-**** postgis utilities
+*** postgis utilities
 #+name:postgisutils
 #+begin_src sh :session *shell* :tangle no :exports reports :eval no
 ################################################################
@@ -2343,7 +2569,7 @@ chmod 0600 /home/user/.pgpass
 #+end_src
 
 
-**** TODO unixODBC
+*** TODO unixODBC
 #+name:unixODBC
 #+begin_src sh :session *shell* :tangle no :exports reports :eval no
 ################################################################
@@ -2355,9 +2581,9 @@ install.packages('RODBC')
 require(RODBC)
 #+end_src
 
-*** Test the Backups of this Minimal R Sever.
+** Test the Backups of this Minimal R Sever.
 To test that this will restore successfully if there is a crash or the VM becomes corrupted take a snapshot from the ResearchCloud dashboard website and launch it to a new VM.  Note that this will only restore the 10GB primary disc which has our software but not the user data which is on the secondary disc so try mounting that and check that the new VM will be a good replacement of the old one.
-**** Backup the 2nd Disc
+*** Backup the 2nd Disc
 #+name:2ndDisc
 #+begin_src sh :session *sh* :tangle no :exports reports :eval no
 ################################################################
@@ -2387,15 +2613,15 @@ rm homebackup.zip
 
 
 
-**** Launch from this snapshot and test the R server and 2nd Disc
+*** Launch from this snapshot and test the R server and 2nd Disc
 
-**** TODO the permissions of the user on their home directory cause issues for logging in.  
+*** TODO the permissions of the user on their home directory cause issues for logging in.  
 I've just used userdel -r username, then useradd etc and use their own user account to scp the backup files across.
 One solution is to not offer backup services, then users will have to undertake to load all data again from a fresh server if it failed.  Data could be backed up on Brawn only?
 
-*** Oracle XE Permissions and Users System
+** Oracle XE Permissions and Users System
 Installing Oracle XE, this is used as a data registry and I have a HTML-DB application available from XXXXXX to be used.  It is called OraPUS because the Oracle XE license restricts any references to Oracle in the name of the application.  There are other restrictions on this licence such as XXXXX.
-**** backup local ubuntu version
+*** backup local ubuntu version
 I have a ubuntu pc as my main desktop and also backups
 to create oracle on this I needed a centos virtual Machines
 use the instructions at http://extr3metech.wordpress.com/2012/10/25/centos-6-3-installation-in-virtual-box-with-screenshots/
@@ -2423,8 +2649,8 @@ Now, you can check your command
 Now, it should work. I will be posting a detailed article soon for my readers soon. Thank you for visiting my blog. Feel free to ask any questions in the comments section. Have fun!
 
 
-**** COMMENT Dave did a bit different
-***** TODO document Dave's different build
+*** COMMENT Dave did a bit different
+**** TODO document Dave's different build
 Oracle 11g XE
 
 Pre-requirements
@@ -2534,7 +2760,7 @@ Comments
 
 - Discuss with Ivan if ArchiveLog mode needs to be enable or is offline backups of the database(s) sufficent.
 
-**** INIT
+*** INIT
 #+name:init
 #+begin_src sh :session *shell* :tangle no :eval no
 ################################################################
@@ -2554,7 +2780,7 @@ SELINUX=enforcing
 #+end_src
 # for eg i-00002979
 # NB saw this on a youtube demo, not done10.10.10.1 oradb.localdomain oradb
-**** SWAP
+*** SWAP
 MAKE SURE YOU HAVE 2GB SWAP, this is required for install but I have deleted it aftward and things still work
 http://bvirtual.nl/2009/08/add-more-swap-space-to-running-linux.html
 I SET TO 3000, didn't set to start at boot so have to 
@@ -2576,13 +2802,13 @@ free -m | grep Swap
 # TOO LAZY TO ADD TO BOOT SO JUST DO SWAPON EVERY TIME?
 #+end_src
 
-**** DOWNLOAD AND SCP
+*** DOWNLOAD AND SCP
 create free oracle account.  download to local and then upload to server.
 #+name:upload-via-scp
 #+begin_src R :session *R* :tangle no :eval no
 scp oracle-xe-11.2.0-1.0.x86_64.rpm.zip user@ip.address.of.server:/home/
 #+end_src
-**** Install the database
+*** Install the database
 I followed these online guides:
 http://youtu.be/DRZg8tfmldA (this needs VNC or other)
 http://www.davidghedini.com/pg/entry/install_oracle_11g_xe_on
@@ -2649,7 +2875,7 @@ Now create Workspace:
 - DDIINDEXDB
 - 100MB
 - admin user IVAN
-**** import application and set Security
+*** import application and set Security
 import the application 102
 then set authentication 
 I followed the advice from the oracle documentation http://docs.oracle.com/cd/E17556_01/doc/user.40/e15517/sec.htm#BCGICEAH
@@ -2667,7 +2893,7 @@ Navigate to the Authentication Schemes:
 - (Application Express is good)
 - Click Make Current.
 
-**** COMMENT or an alternative reference?
+*** COMMENT or an alternative reference?
 http://docs.oracle.com/cd/E17556_01/doc/user.40/e15517/sec.htm
 13 Managing Application Security
 Setting Up Application Express Account Credentials
@@ -2683,10 +2909,10 @@ To set up Application Express Account Credentials:
 - Specify a login page and click Next.
 - Enter a name and click Create Scheme.
 
-**** TODO explain the table creation script 
+*** TODO explain the table creation script 
 now go to lib/setup_oracle_of_delphe.r
 to build the tables
-**** set up R, RJDBC and ROracle
+*** set up R, RJDBC and ROracle
 Using RJDBC is what I recommend.  I found ROracle suboptimal.
 
 # might need oracle installed and then
@@ -2720,8 +2946,8 @@ Using RJDBC is what I recommend.  I found ROracle suboptimal.
   #install.packages('ROracle')
 #+end_src
 
-*** OpenGeo Suite
-
+** OpenGeo Suite /opengeosuite.html
+*** The OpenGeo Suite Installer
 #+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
 --- 
 name: opengeosuite
@@ -2778,7 +3004,7 @@ Notice that the installer pulls in an out of date tomcat6 (as at April 2013) whi
   
 #+end_src  
 
-**** bulk upload requires OpenGeo Suite
+*** bulk upload requires OpenGeo Suite
 http://workshops.opengeo.org/suiteintro/geoserver/importdb.html#import-from-postgis-store
 http://dev.horizon.opengeo.org/opengeo-docs/installation/linux/centos/suite.html#installation-linux-centos-suite
 http://workshops.opengeo.org/suiteintro/postgis/createdb.html
@@ -2824,7 +3050,7 @@ cp -avr geowebcache /usr/share/apache-tomcat-6.0.36/webapps/
 service tomcat restart
 #+end_src
 
-**** Otherwise just install normal geoserver
+*** Otherwise just install normal geoserver
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 ################################################################
 
@@ -2868,16 +3094,16 @@ login as admin, geoserver
 
 
 #+end_src
-**** TODO configure geoserver
+*** TODO configure geoserver
 # DEADLINK? http://www.gistutor.com/geoserver/21-intermediate-geoserver-tutorials/38-configuring-geoserver-proxy-for-public-and-remote-data-access.html
 NB is the default memory setting too low?  Ran out of memory pretty quick.
-**** expose spatial data
+*** expose spatial data
 # publish
 http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html
 
-*** DDIindex
+** DDIindex
 The DDIindex is a java based catalogue that was written by the Australian Data Archives at the ANU (Formerly the ASSDA http://assda.anu.edu.au/ddiindex.html). The original application source is still available from the ASSDA site but I am using the one I have archived because it has some configurations that I don't remember who to make again at the moment.
-**** TOMCAT
+*** TOMCAT
 http://coastalrocket.blogspot.com.au/2012/08/installing-geostack-on-centos-6-64bit.html
 #+name:install-tomcat
 #+begin_src R :session *shell* :tangle no :eval no
@@ -2906,7 +3132,7 @@ changing the Tomcat Port
 #+begin_src R :session *R* :tangle no :eval no
 service tomcat6 restart
 #+end_src
-**** TOMCAT upgrade 6 to 7
+*** TOMCAT upgrade 6 to 7
 I found out that tomcat 6 presents a security risk.  here is the testing upgrade to tomcat7
 
 service tomcat6 stop
@@ -2984,7 +3210,7 @@ service tomcat stop
 cd /usr/share/tomcat6/webapps
 cp -r ddiindex /usr/share/apache-tomcat-7.0.37/webapps
 service tomcat start
-**** Unsuccessfully did 7, try latest 6
+*** Unsuccessfully did 7, try latest 6
 #yum -y install tomcat6 tomcat6-webapps
 # service tomcat6 stop
 #chkconfig tomcat6 off
@@ -3019,8 +3245,8 @@ chkconfig --list tomcat
 service tomcat start  
 
 
-**** UPLOAD THE DDIINDEX
-**** TODO add explanation of the ddiindex.zip file in lib
+*** UPLOAD THE DDIINDEX
+*** TODO add explanation of the ddiindex.zip file in lib
 #+name:upload-ddiindex-source
 #+begin_src sh :session *shell* :tangle no :eval no
 cd ~/Dropbox/projects/0.3\ Catalogue/versions/ddiindex/ddiindex/code
@@ -3046,7 +3272,7 @@ tar -zxvf ddiindex_2010-04-27-1259.tar.gz
 
 service tomcat6 restart
 #+end_src
-**** MySQL
+*** MySQL
 http://www.if-not-true-then-false.com/2010/install-mysql-on-fedora-centos-red-hat-rhel/
 #+name:mysql
 #+begin_src R :session *R* :tangle no  :eval no
@@ -3082,7 +3308,7 @@ mysql -h localhost -u root -p security < security_2010-04-27-1259.sql;
 # Enter password: 
 # deprecated let thru iptables port 3306?
 #+end_src
-**** make sure ddiindex can connect to mysql as ddiindex user
+*** make sure ddiindex can connect to mysql as ddiindex user
 #+name:modify-dburl
 #+begin_src sh :session *shell* :tangle no  :eval no
 # now go to /usr/share/tomcat/webapps/ddiindex/WEB-INF/classes/index-conf.xml
@@ -3102,7 +3328,7 @@ and login.jsp
 and search.jsp
 <%@taglib uri="http://assda.anu.edu.au/ddiindex" prefix="ddiindex"%>
 
-**** TODO Check the security implications of allowing write permissions here
+*** TODO Check the security implications of allowing write permissions here
 I found I need to allow write access to the  xmldata folder for uploads of the xml metadata files.
 #+name:write-permission
 #+begin_src sh :session *shell* :tangle no  :eval no
@@ -3117,7 +3343,7 @@ chmod 0777 /opt/ddiindex/nceph_s
 chmod -R 777 /opt/ddiindex/ewedb
 chmod 0777 /opt/ddiindex/ewedb_s
 #+end_src
-***** COMMENT deprecated? permissions to try to fix lock out on nectar cloud
+**** COMMENT deprecated? permissions to try to fix lock out on nectar cloud
 # trying stuff because after snapshot got read-only errors, cant start mysql daemon
 chown -R mysql:mysql /var/lib/mysql
 chmod 0777  /var/lib/mysql
@@ -3125,7 +3351,7 @@ chmod 0777  /var/log
 chmod 0777  /usr/share/tomcat6/webapps/ddiindex/images
 # but then I did a reboot and then could start it
 
-**** Running the Indexer
+*** Running the Indexer
 Log on as an admin user (set in the MySQL userEJB table) and you can run the indexer.jsp
 Before doing this the first time I did the following:
 - went to nceph and nceph_s deleted the recent created files
@@ -3133,16 +3359,16 @@ Before doing this the first time I did the following:
 - restart TOMCAT
 - go to indexer, upload xml
 - hit the 'add to index' button.
-**** personalise the ddiindex
+*** personalise the ddiindex
 ie home.jsp
    <div class="intro">The Graduate Information Literacy Program at ANU now offers resources for researchers and graduate students on data management planning: a comprehensive Manual and a Data Management Planning Template. <a href="http://ilp.anu.edu.au/dm/" target="_blank">http://ilp.anu.edu.au/dm</a></div>
 
-*** Set up a private git lab for data and code
+** Set up a private git lab for data and code
 Git needs to be installed first.
-**** Firewall
-**** SSH server
-**** Encrypted files
-*** COMMENT ecryptfs-user-code
+*** Firewall
+*** SSH server
+*** Encrypted files
+** COMMENT ecryptfs-user-code
 #+name:ecryptfs-user
 #+begin_src sh :tangle no :eval no
 apt-get install ecryptfs-utils
@@ -3161,7 +3387,7 @@ ssh username@server
 ecryptfs-unwrap-passphrase  ~/.ecryptfs/wrapped-passphrase
 # record this in your encrypted passwords file
 #+end_src
-**** SSH keys
+*** SSH keys
 #+name:gitlab-sshkeys
 #+begin_src sh :tangle no :eval no
 #checked to see if I had a current public SSH key:
@@ -3203,7 +3429,7 @@ service ssh restart
 ssh username@[your server name]
   
 #+end_src
-**** COMMENT NOTE THAT THIS BROKE MY NX SERVER KEY
+*** COMMENT NOTE THAT THIS BROKE MY NX SERVER KEY
 SO WHEN I WANT TO USE THE NO MACHINE DESKTOP I HAVE TO SSH IN 
 ssh user@server
 sudo su
@@ -3211,7 +3437,7 @@ vi /etc/ssh/sshd_config
 # comment/uncomment AuthorizedKeysFile
 service ssh restart
 
-**** Set up Git repositories
+*** Set up Git repositories
 
 #+name:gitstore
 #+begin_src sh :tangle no :eval no
@@ -3244,8 +3470,8 @@ git push origin master
 
 #+end_src
 
-**** COMMENT working notes                             
-***** TODO secure encrypted disk partition
+*** COMMENT working notes                             
+**** TODO secure encrypted disk partition
 The exhaustive approach:
 http://www.rationallyparanoid.com/articles/ubuntu-12-lts-security.html
 http://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part-1-basics
@@ -3281,8 +3507,8 @@ THIS WILL BE REQUIRED IF YOU NEED TO RECOVER YOUR DATA AT A LATER TIME.
 ecryptfs-unwrap-passphrase
 
 
-***** set up git user
-****** background
+**** set up git user
+***** background
 #+name:Private Git-hub
 #+begin_src sh :session *shell* :tangle no  :eval no
   http://blog.goosoftware.co.uk/2012/02/07/quick-git-server/
@@ -3322,7 +3548,7 @@ ecryptfs-unwrap-passphrase
       Create a directory in git’s home directory for storing my repositories
       For each repository I want to host: log in to git’s account on my Mac mini and initialise a new Git repository.
 #+end_src  
-******  Step 1: Create the git user
+*****  Step 1: Create the git user
 #+begin_src sh :session *shell* :tangle no  :eval no  
   The steps on how to do this will vary depending on your operating system. The git user doesn’t need (indeed, shouldn’t have) administrator or sudo privileges; a plain old user account will do fine.
   
@@ -3426,7 +3652,7 @@ The next time you connect with SSH you should not have to enter your password.
 #+end_src
 
     
-*** True-Crypt encrypted volumes
+** True-Crypt encrypted volumes
 The servers are secure but we will sometimes want local copies and so should use truecrypt or another option.  I am using Ubuntu as my desktop so here is the instructions.
 #+name:True-Crypt Encrypted Volumes
 #+begin_src R :session *R* :tangle no :eval no
@@ -3452,7 +3678,7 @@ sudo apt-get update && sudo apt-get install truecrypt
 # DIDN'T TRY  http://vinnn.blogspot.com.au/2009/01/tryecrypt-6-on-centos-5.html
 #+end_src
 
-*** TODO ResearchData storage
+** TODO ResearchData storage
 #+name:ResearchData
 #+begin_src R :session *R* :tangle no :eval no
 ################################################################
@@ -3626,8 +3852,8 @@ When adding users go to the oraphi and track their permissions
 *** r-nceph
 production goes thru david fisher
 testbed done by me
-*** brains
-**** linux user
+** brains
+*** linux user
 #+name:add-linux-user
 #+begin_src R :session *R* :tangle no  :eval no
 adduser userxxx
@@ -3635,22 +3861,22 @@ passwd userxxx
 # (I use R to randomly generate passwords by mixing words, letters,
 # numbers and symbols) 
 #+end_src
-**** mysql (check ddiindex)
+*** mysql (check ddiindex)
 #+name:add-linux-user
 #+begin_src R :session *R* :tangle no  :eval no
 mysql -u root -p security
 select * from UserEJB;
 insert into UserEJB (id, password, admin) values ('userxxx', 'passwd', 0);
 #+end_src
-******** oracle (oraphi)
+******* oracle (oraphi)
 - log in as admin user to ddiindexdb workspace and go to administration, 
 - on the right there is a tasks pane with create user
-******** github
+******* github
 - downstream users can just download zips from github
 - collaborators need to sign up to github
 - will create a walk through for those 
-*** brawn
-**** TODO postgres
+** brawn
+*** TODO postgres
 Need to find out if this 0.0.0.0/0 is a big no-no?
 #+name:psql
 #+begin_src R :session *R* :tangle no :eval no
@@ -3670,7 +3896,7 @@ Need to find out if this 0.0.0.0/0 is a big no-no?
   select pg_reload_conf();
   # or if not connected just service postgresql-9.2 restart
 #+end_src
-**** geoserver
+*** geoserver
 - general users don't need log in
 - admin users can log on as admin?
 *** alliance wiki
@@ -3678,7 +3904,7 @@ https://alliance.anu.edu.au/welcome/
 uses their anu password
 *** text message the set password
 This solution is adequate.  Might want to invest in a sacrificial SIM card to avoid having too many phone calls?
-*** edits to oraphi via sql 
+** edits to oraphi via sql 
 #+name:to-add-details
 #+begin_src sh :session *shell* :tangle no  :eval no
   update accessors 
@@ -3699,9 +3925,9 @@ userdel -r ivan_hanigan
 *** nearline for potential restore
 *** archive and remove
 
-** Specific
-*** Brains
-**** Backup oraphi
+** General concerns
+** Brains
+*** Backup oraphi
 Needs to be done from Brains as it needs the oracle client set up.
 #+name:backupOraphi-brains
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
@@ -3726,8 +3952,8 @@ Needs to be done from Brains as it needs the oracle client set up.
   
 #+end_src
 
-*** Brawn
-**** Find out how big is it?
+** Brawn
+*** Find out how big is it?
 #+name:dbsize
 #+begin_src sh :session *shell* :tangle no :exports reports :eval no
 
@@ -3746,7 +3972,7 @@ GRANT ALL ON TABLE dbsize TO public_group;
 #+end_src
 
 
-**** Dump and download it to a secure computer 
+*** Dump and download it to a secure computer 
 Backup the pg_dump to your workplace or another VM on the Research Cloud.
 
 First do this to setup the backup directory
@@ -3770,7 +3996,7 @@ cron -e
 #+end_src
 
 Then add this script.
-**** TODO find out more about the -mtime +1 bit.  
+*** TODO find out more about the -mtime +1 bit.  
 if this is not every day is it just +whatever?
 Do old files need to be removed using the rm -f?
 #+name:backup_script.sh
@@ -3790,7 +4016,7 @@ scp  username@the.remote.server.zz:/backup_yyyymmdd.dump /path/to/localbackup
 
 #+end_src
 
-**** TODO restore this dump into a new database on local machine as a failsafe.
+*** TODO restore this dump into a new database on local machine as a failsafe.
 #+name:restore
 #+begin_src sh :session *shell* :tangle no :exports reports :eval no
 ################################################################
@@ -3813,7 +4039,7 @@ gunzip -c ewedb_2013-02-04-1943.gz | psql ewedbbackup
 # if used -Fc format: pg_restore -d ewedbbackup ewedb_2013-02-02-1342.dump
 
 #+end_src
-**** COMMENT TODO experiment with tuning parameters to improve db and also backup/restore
+*** COMMENT TODO experiment with tuning parameters to improve db and also backup/restore
 I think I am at the stage I need to seek advice from a postgres expert on "tuning" database/server performance parameters. 
 I've spent most time doing things to postgresql.conf.
 For eg while trying to improve performance when creating tables/altering sequences (there over 71,100 of them),  "SELECT * INTO" queries and subsequent dump and restore operations I did the following tweaks (with no real significant improvements in performance):
@@ -3870,8 +4096,8 @@ http://michael.otacoo.com/postgresql-2/take-care-of-kernel-memory-limitation-for
 http://www.postgresql.org/docs/9.2/static/kernel-resources.html
 http://www.linux.com/learn/tutorials/394523-configuring-postgresql-for-pretty-good-performance
 
-**** TODO launch a new Nectar VM from the snapshot image
-**** TODO mount the 2nd disc and load/restore the postgres db and data into it
+*** TODO launch a new Nectar VM from the snapshot image
+*** TODO mount the 2nd disc and load/restore the postgres db and data into it
 #+name:scp
 #+begin_src R :session *shell* :tangle no :exports none :eval no
 ###########################################################################
