@@ -236,8 +236,9 @@ The R code produces the plot:
   <ul>
   <li><a href="/postgresql.html">2.3.1 PostgreSQL</a></li>
   <li><a href="/postgis.html">2.3.2 PostGIS</a></li>
-  <li><a href="/sharedmemory.html">2.3.3 Important shared memory settings</a></li>
-  <li><a href="#sec-2-3-3">2.3.4 TODO Test loading some shapefiles</a></li>
+  <li><a href="/postgres-migrate.html">2.3.3 PostgreSQL Migration</a></li>
+  <li><a href="/sharedmemory.html">2.3.4 Important shared memory settings</a></li>
+  <li><a href="#sec-2-3-3">2.3.5 TODO Test loading some shapefiles</a></li>
   </ul>
   </li>
   <li><a href="#sec-2-4">2.4 The Brains</a>
@@ -651,15 +652,15 @@ In the next chunk, insert the relevant ip address and you may have to answer yes
 **** TODO find out about ssh without using -i keypairname?
 I've discovered that on Centos VMs at least, once the root password is set any machine without the ssh key can access this. Restricting access to a dedicated ip address through the firewall should suffice.
 
-*** Setting up the basic server framework
+** Setting up the basic server framework
 This is done in a similar way for both the Brains and the Brawn servers.
-**** Install any updates using the yum package manager
+*** Install any updates using the yum package manager
 This is recommended to do every week to maintain the server in good condition, especially regarding security software. 
 #+name:yumupdate
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 yum update 
 #+end_src
-**** TODO Check these security measures
+*** TODO Check these security measures
 The following section sets some restrictions on the server.
 I would like to know how important it is to restrict root login and also if we can permit login via ssh and port 22 if it is only open to the NCEPH VPN range?  If so I just leave the below as yes yes yes?
 I had to get a bit of advice from a sysadmin at work about the following but I am sure it is still pretty unsecure.  
@@ -676,8 +677,8 @@ There are various TODOs hidden in the source code document.
 #PubkeyAuthentication yes
 #AuthorizedKeysFile	.ssh/authorized_keys
 #+end_src
-**** COMMENT  setting password authentication to no?
-***** TODO TODO Sounds like a bad idea, I decided not to follow the advice here:
+*** COMMENT  setting password authentication to no?
+**** TODO TODO Sounds like a bad idea, I decided not to follow the advice here:
 #+name:security
 #+begin_src sh :tangle no :exports reports :eval no
 # scroll down to the text:
@@ -687,8 +688,8 @@ There are various TODOs hidden in the source code document.
 PasswordAuthentication yes
 # change to no?
 #+end_src
-**** COMMENT get a few examples from other servers
-***** TODO check out best practice
+*** COMMENT get a few examples from other servers
+**** TODO check out best practice
 #+name:security
 #+begin_src sh :tangle no :exports none :eval no
 # Example of one of Dave Fisher's (MHS CMBE).
@@ -725,7 +726,7 @@ IgnoreUserKnownHosts no
 #PermitEmptyPasswords no
 PasswordAuthentication no
 #+end_src
-**** Restrict ssh access to a specific ip address/range
+*** Restrict ssh access to a specific ip address/range
 In the security group we allowed access via port 22 however we will now restrict the firewall to this port to allow access only from specified ip addresses.
 #+name:setting-ports
 #+begin_src sh :session *shell* :tangle no :exports reports :eval no
@@ -739,16 +740,16 @@ vi /etc/sysconfig/iptables
 # might want to add other port now if you are familiar with this, otherwise see below for specific modifications.
 service iptables restart
 #+end_src
-**** COMMENT restrict to VPN?
-***** TODO I'd like to restrict ssh access to the ncephgis VPN group, and
+*** COMMENT restrict to VPN?
+**** TODO I'd like to restrict ssh access to the ncephgis VPN group, and
 #add the restriction to use keypair's.
 # -A INPUT -s vpn.ip.range.0/255.255.255.0 -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
 # NB only works for servers on your VPN network
 # service iptables restart
 # instead just allow VPN access to the Office machine, and then ssh from there.
 # the office machine is only accessible via ANU VPN group 'ncephgis' on port 22
-**** COMMENT set a domain name
-***** TODO get a domain name
+*** COMMENT set a domain name
+**** TODO get a domain name
 I haven't attempted this yet but found the following info at the blog http://helmingstay.blogspot.com.au/2012/02/adduser-myusername-adduser-myusername.html
 there is a well described process to set up an R server on the amazon EC2 cloud.
 They had registered their own domain and added it to the amazon system. Then used a script file made specifically to work with AWS -- "it's very self-explanatory".  
@@ -761,9 +762,9 @@ They had registered their own domain and added it to the amazon system. Then use
 sudo vi /etc/hostname
 sudo /etc/init.d/hostname restart
 #+end_src
-**** Security Enhanced Linux (selinux)
+*** Security Enhanced Linux (selinux)
 To run the Database and the Rstudio server it is best to disable the selinux.  
-***** TODO Find out if this is necessary for PostgreSQL as well as Rstudio.
+**** TODO Find out if this is necessary for PostgreSQL as well as Rstudio.
 #+name:seconfig
 #+begin_src sh :session *shell* :tangle no  :eval no
 # selinux config
@@ -777,8 +778,8 @@ SELINUX=enforcing
 # Change SELINUX=enforcing to disabled
 #+end_src
 
-**** COMMENT Some other things, these might be deprecated
-***** TODO deprecated?
+*** COMMENT Some other things, these might be deprecated
+**** TODO deprecated?
 # and you must reboot the server after applying the change.
 # also the following 
 # chkconfig httpd on
@@ -820,20 +821,20 @@ chkconfig `servicename' on
 # or
 chkconfig `servicename' off
 #+end_src
-**** Install some base packages
+*** Install some base packages
 There are a few commonly used packages recommended for both Brawn and Brains.
 # kudos 2 http://rlamp.blogspot.com.au/2010/03/getting-started-setting-up-rapache.html
 #+name:foundations
 #+begin_src sh :session *shell* :results silent :reports none :eval no 
 yum install gcc-gfortran gcc-c++ readline-devel libpng-devel libX11-devel libXt-devel texinfo-tex.x86_64 tetex-dvips docbook-utils-pdf cairo-devel java-1.6.0-openjdk-devel libxml2-devel make unzip hdparm
 #+end_src
-**** Describe the system
+*** Describe the system
 Now we will note the size and number of the disc partitions.
 #+name:partitions
 #+begin_src sh :session *shell* :exports reports :results silent  :eval no
 df -h
 #+end_src
-**** TODO Add swap space
+*** TODO Add swap space
 #+begin_src markdown :tangle swapon.md :exports reports :eval no :padline no
 --- 
 name: swapon
@@ -867,7 +868,7 @@ Add swap file with this:
       free -m | grep Swap
 #+end_src
 
-**** Persistent Net Rules Should Be Avoided On Centos
+*** Persistent Net Rules Should Be Avoided On Centos
 The current "CentOS 6.2 amd64" image (ID 21401), if launched and
 snapshotted, is not connectible when launched from this snapshot due
 to networking.  (davidjb, Mon Mar 26, 2012 support.rc.nectar.org.au/forum).
@@ -884,7 +885,7 @@ to networking.  (davidjb, Mon Mar 26, 2012 support.rc.nectar.org.au/forum).
 rm /lib/udev/write_net_rules
 rm /etc/udev/rules.d/70-persistent-net.rules
 #+end_src
-***** COMMENT source
+**** COMMENT source
 http://support.rc.nectar.org.au/forum/viewtopic.php?f=6&t=191
 CentOS 6.2 image snapshot networking issue
 
@@ -1138,6 +1139,9 @@ name: postgresql
 layout: default
 title: PostgreSQL
 ---
+<li><a href="/postgresql.html">Previous: Brawn</a></li>
+<li><a href="/postgis.html">Next: PostGIS</a></li>
+
 #+end_src
 
 #+begin_src markdown :tangle postgresql.md :exports reports :eval no :padline no
@@ -1312,6 +1316,10 @@ name: postgis
 layout: default
 title: PostGIS
 ---
+
+<li><a href="/postgresql.html">Previous: PostgreSQL</a></li>
+<li><a href="/postres-migrate.html">Next: PostgreSQL Migrate</a></li>
+
 
 ## Install PostGIS 2.0
 The PostGIS suite enables a PostgreSQL database with spatial data types and analysis functions.
@@ -1502,11 +1510,20 @@ grant select on all sequences in schema public to gislibrary;
 grant all on table geometry_columns to gislibrary;
 #+end_src
 **** Move the postgres data folder to Secondary Disk
-#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+#+begin_src markdown :tangle postgres-migrate.md :exports reports :eval no :padline no
+---
+name: postgres-migrate
+layout: default
+title: PostgreSQL migration from default location
+---
+
+<li><a href="/postgis.html">Previous: PostGIS</a></li>
+<li><a href="/sharedmemory.html">Next: Important shared memory settings</a></li>
+
 To take advantage of the extra storage on the secondary disk we mounted in the initial configuration then do the following.
 #+end_src
 
-#+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
+#+begin_src sh :session *shell* :tangle postgres-migrate.md :exports reports :eval no
   #### Code: Migrate PostgreSQL Data
       service postgresql-9.2 stop
       #     Copy the pgsql directory from /var/lib (or customer install directory) location to another location
@@ -1524,6 +1541,7 @@ To take advantage of the extra storage on the secondary disk we mounted in the i
       rm -r -f /var/lib/pgsql/9.2/data?
   
 #+end_src
+
 **** TODO need to set up backups from here to a secure location at my work.
 ***** COMMENT  REFERENCES
 # http://docs.fedoraproject.org/en-US/Fedora/13/html/Managing_Confined_Services/sect-Managing_Confined_Services-PostgreSQL-Configuration_Examples.html

@@ -3,6 +3,8 @@ name: postgresql
 layout: default
 title: PostgreSQL
 ---
+<li><a href="/postgresql.html">Previous: Brawn</a></li>
+<li><a href="/postgis.html">Next: PostGIS</a></li>
 ## Install PostgreSQL 9.2 
 PostgreSQL is an Open Source database that can be extended with GIS functionality using the PostGIS tools.  The latest version is 9.2.  Please see [this link](http://people.planetpostgresql.org/devrim/index.php?/archives/70-How-to-install-PostgreSQL-9.2-on-RHELCentOSScientific-Linux-5-and-6.html)  for the orginial documentation I used to install this on Centos or Redhat 6.4.  Check the correct download from [this link](http://yum.postgresql.org/repopackages.php#pg92). Please note that this didn't work on Ubuntu 12.04 LTS for me in early 2013 because PostGIS 2.0 was not included in their repositories.  I ended up rolling back to PostgreSQL 9.1 on that machine.
 #### Code

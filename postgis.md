@@ -4,6 +4,10 @@ layout: default
 title: PostGIS
 ---
 
+<li><a href="/postgresql.html">Previous: PostgreSQL</a></li>
+<li><a href="/postres-migrate.html">Next: PostgreSQL Migrate</a></li>
+
+
 ## Install PostGIS 2.0
 The PostGIS suite enables a PostgreSQL database with spatial data types and analysis functions.
 
@@ -83,21 +87,3 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
     select geocode, geoname, st_transform(geom, 4283) as the_geom
     into schema.gda94_table
     from  schema.agd66_table;
-
-To take advantage of the extra storage on the secondary disk we mounted in the initial configuration then do the following.
-
-#### Code: Migrate PostgreSQL Data
-    service postgresql-9.2 stop
-    #     Copy the pgsql directory from /var/lib (or customer install directory) location to another location
-    cp -r /var/lib/pgsql /home/pgsql
-    chown -R postgres:postgres /home/pgsql
-    #     Navigate to /etc/init.d location
-    #     Edit the start script 'postgresql'
-    #     Search for parameter PGDATA which would be entered as "PGDATA=/var/lib/pgsql"
-    #     Edit the line such that PGDATA points to the new location. For e.g. "PGDATA=/newloc/pgsql"
-    #     ALSO DO PGLOG, and PGUPLOG
-    #     Save and exit the file
-    #     Start PostgreSQL Service 
-    service postgresql-9.2 start
-    # tidy up but not too much, just data?
-    rm -r -f /var/lib/pgsql/9.2/data?

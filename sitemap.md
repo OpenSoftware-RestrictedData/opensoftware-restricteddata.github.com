@@ -27,8 +27,9 @@ title: Site Map
 <ul>
 <li><a href="/postgresql.html">2.3.1 PostgreSQL</a></li>
 <li><a href="/postgis.html">2.3.2 PostGIS</a></li>
-<li><a href="/sharedmemory.html">2.3.3 Important shared memory settings</a></li>
-<li><a href="#sec-2-3-3">2.3.4 TODO Test loading some shapefiles</a></li>
+<li><a href="/postgres-migrate.html">2.3.3 PostgreSQL Migration</a></li>
+<li><a href="/sharedmemory.html">2.3.4 Important shared memory settings</a></li>
+<li><a href="#sec-2-3-3">2.3.5 TODO Test loading some shapefiles</a></li>
 </ul>
 </li>
 <li><a href="#sec-2-4">2.4 The Brains</a>
