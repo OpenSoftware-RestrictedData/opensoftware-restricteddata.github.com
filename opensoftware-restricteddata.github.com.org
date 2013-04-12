@@ -406,7 +406,7 @@ The R code produces the plot:
   <li><a href="#sec-7-4">TODO 7.4 Brawn</a>
   <ul>
   <li><a href="#sec-7-4-1">TODO 7.4.1 Find out how big is it?</a></li>
-  <li><a href="#sec-7-4-2">TODO 7.4.2 Dump and download it to a secure computer</a></li>
+  <li><a href="/backup-brawn-filesystem.html">TODO 7.4.2 Dump and download it to a secure computer</a></li>
   <li><a href="#sec-7-4-3">TODO 7.4.3 find out more about the -mtime +1 bit.</a></li>
   <li><a href="#sec-7-4-4">TODO 7.4.4 restore this dump into a new database on local machine as a failsafe.</a></li>
   <li><a href="#sec-7-4-5">TODO 7.4.5 launch a new Nectar VM from the snapshot image</a></li>
@@ -4077,6 +4077,29 @@ GRANT ALL ON TABLE dbsize TO public_group;
 
 
 *** Dump and download it to a secure computer 
+**** file system backup
+** backup-brawn-filesystem
+*** backup-brawn-filesystem header
+#+name:backup-brawn-filesystem-header
+#+begin_src markdown :tangle backup-brawn-filesystem.md :exports none :eval no :padline no
+---
+name: backup-brawn-filesystem
+layout: default
+title: backup-brawn-filesystem
+---
+
+TODO look at [this link](http://www.cyberciti.biz/faq/howto-use-tar-command-through-network-over-ssh-session/)
+#+end_src
+*** backup-brawn-filesystem code
+#+name:backup-brawn-filesystem-code
+#+begin_src sh :session *shell* :tangle backup-brawn-filesystem.md :exports none :eval no
+#### Code:backup-brawn-filesystem
+    mkdir /home/backup
+    cd /home/backup     
+    tar -cf ewedb-backup-20130411.tar /home/pgsql/9.2/data
+#+end_src
+
+**** pgdump
 Backup the pg_dump to your workplace or another VM on the Research Cloud.
 
 First do this to setup the backup directory
