@@ -4114,7 +4114,7 @@ Backup the pg_dump to your workplace or another VM on the Research Cloud.
 # important to make sure database and users/permissions exist on target server first.
 # also that source server is in iptables and pg_hba.conf on destination
 # su - postgres
-# /usr/pgsql-9.2/bin/pg_dump -U postgres geoserver  | psql -h 115.146.92.162 geoserver
+# /usr/pgsql-9.2/bin/pg_dump -U postgres geoserver  | psql -h destination.ip.address geoserver
 
 First do this to setup the backup directory
 #+name:setup
