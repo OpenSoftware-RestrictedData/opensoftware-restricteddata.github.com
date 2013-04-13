@@ -532,7 +532,8 @@ The R code produces the plot:
 #+end_src
 
 * COMMENT TODO-list
-- TODO Thanks to Ali Emirlioglu and Rahul Khanna
+- TODO check http://forum.worldwindcentral.com/showthread.php?t=21409
+#http://anotherdatabaseblog.blogspot.com.au/2012/04/installing-mapserv-on-centos-6.html
 - TODO Tomcat is primary security concern, don't host on Postgres box (also due to resource sharing)
 - TODO recommend regular updates and patchs to Tomcat
 - TODO recommendations for password management (KeyPassX?)
@@ -2161,10 +2162,10 @@ Include /etc/httpd/sites/
 /etc/init.d/httpd restart
 
 # weird error? ignore?
-# Stopping httpd: [60G[FAILED]
+# Stopping httpd: [60G[FAILED]
 # Starting httpd: httpd: apr_sockaddr_info_get() failed for i-00002979
 # httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
-# [60G[  OK  ]
+# [60G[  OK  ]
 
 sudo chkconfig httpd on
 # sudo vi /etc/sysconfig/iptables 
@@ -4097,10 +4098,23 @@ TODO look at [this link](http://www.cyberciti.biz/faq/howto-use-tar-command-thro
     mkdir /home/backup
     cd /home/backup     
     tar -cf ewedb-backup-20130411.tar /home/pgsql/9.2/data
+    # or if not enough room to store it locally
+    # on destination initdb
+    # then on source server
+    tar czvf - /var/lib/pgsql/9.2/data | ssh user@host "tar xvzf - -C /home/pgsql/9.2/data"
+    # on destination
+    service postgresql-9.2 start
+    # 
 #+end_src
 
 **** pgdump
 Backup the pg_dump to your workplace or another VM on the Research Cloud.
+
+# dump and restore via a pipe. 
+# important to make sure database and users/permissions exist on target server first.
+# also that source server is in iptables and pg_hba.conf on destination
+# su - postgres
+# /usr/pgsql-9.2/bin/pg_dump -U postgres geoserver  | psql -h 115.146.92.162 geoserver
 
 First do this to setup the backup directory
 #+name:setup
