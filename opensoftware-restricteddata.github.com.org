@@ -4090,10 +4090,7 @@ title: backup-brawn-filesystem
 ---
 
 TODO look at [this link](http://www.cyberciti.biz/faq/howto-use-tar-command-through-network-over-ssh-session/)
-#+end_src
-*** backup-brawn-filesystem code
-#+name:backup-brawn-filesystem-code
-#+begin_src sh :session *shell* :tangle backup-brawn-filesystem.md :exports none :eval no
+
 #### Code:backup-brawn-filesystem
     mkdir /home/backup
     cd /home/backup     
@@ -4104,7 +4101,7 @@ TODO look at [this link](http://www.cyberciti.biz/faq/howto-use-tar-command-thro
     tar czvf - /var/lib/pgsql/9.2/data | ssh user@host "tar xvzf - -C /home/pgsql/9.2/data"
     # on destination
     service postgresql-9.2 start
-    # 
+
 #+end_src
 
 **** pgdump
