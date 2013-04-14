@@ -4079,8 +4079,7 @@ GRANT ALL ON TABLE dbsize TO public_group;
 
 *** Dump and download it to a secure computer 
 **** file system backup
-** backup-brawn-filesystem
-*** backup-brawn-filesystem header
+**** backup-brawn-filesystem header
 #+name:backup-brawn-filesystem-header
 #+begin_src markdown :tangle backup-brawn-filesystem.md :exports none :eval no :padline no
 ---
