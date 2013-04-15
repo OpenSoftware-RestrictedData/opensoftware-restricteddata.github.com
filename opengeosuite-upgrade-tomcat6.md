@@ -29,14 +29,7 @@ Once you are up-to-date you can bulk load layers from the postgis store with [th
     <user name="tomcat" password="password" roles="admin,manager" />
     
     #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,
-    ./bin/startup.sh
-    #[root@server /usr/share/apache-tomcat-6.0.36]#     ./bin/startup.sh
-    #Using CATALINA_BASE:   /var/tomcat
-    #Using CATALINA_HOME:   /usr/local/tomcat7/default
-    #Using CATALINA_TMPDIR: /var/tomcat/temp
-    #Using JRE_HOME:        /usr/java/default
-    #Using CLASSPATH:       /usr/local/tomcat7/default/bin/bootstrap.jar
-     
+    ./bin/startup.sh     
     ./bin/shutdown.sh
 
     # make a script for starting
@@ -52,7 +45,7 @@ Once you are up-to-date you can bulk load layers from the postgis store with [th
     export JAVA_HOME  
     PATH=$JAVA_HOME/bin:$PATH  
     export PATH  
-    CATALINA_HOME=/usr/share/apache-tomcat-7.0.37  
+    CATALINA_HOME=/usr/share/apache-tomcat-6.0.36  
       
     case $1 in  
     start)  
@@ -89,18 +82,8 @@ Once you are up-to-date you can bulk load layers from the postgis store with [th
     cp -r geoexplorer /usr/share/apache-tomcat-6.0.36/webapps            
     cp -r recipes /usr/share/apache-tomcat-6.0.36/webapps                
     cd /usr/share/apache-tomcat-6.0.36
-    ./bin/startup.sh
-    ./bin/shutdown.sh
-     
-    # edit
-    cd /etc/init.d  
-    vi tomcat
-    chkconfig --add tomcat  
-    chkconfig --level 234 tomcat on  
-    # verify
-    chkconfig --list tomcat  
-    service tomcat start  
-    
+    service tomcat start
+
     #now you have installed the suite go into the geoserver website  
     # http://ip.address.of.server:8181/dashboard
     # then go to the geoserver and log in as admin with password geoserver

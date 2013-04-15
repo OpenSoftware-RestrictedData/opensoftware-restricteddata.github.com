@@ -193,14 +193,13 @@ title: Site Map
 <li><a href="#sec-7-3-1">TODO 7.3.1 Backup oraphi</a></li>
 </ul>
 </li>
-<li><a href="#sec-7-4">TODO 7.4 Brawn</a>
+<li><a href="#sec-7-4">7.4 Brawn</a>
 <ul>
-<li><a href="#sec-7-4-1">TODO 7.4.1 Find out how big is it?</a></li>
-<li><a href="/backup-brawn-filesystem.html">TODO 7.4.2 Dump and download it to a secure computer</a></li>
-<li><a href="#sec-7-4-3">TODO 7.4.3 find out more about the -mtime +1 bit.</a></li>
-<li><a href="#sec-7-4-4">TODO 7.4.4 restore this dump into a new database on local machine as a failsafe.</a></li>
-<li><a href="#sec-7-4-5">TODO 7.4.5 launch a new Nectar VM from the snapshot image</a></li>
-<li><a href="#sec-7-4-6">TODO 7.4.6 mount the 2nd disc and load/restore the postgres db and data into it</a></li>
+<li><a href="/brawn-dbsize.html">7.4.1 Find out how big is it?</a></li>
+<li><a href="/backup-brawn-filesystem.html">7.4.2 Dump and download it to a secure computer</a></li>
+<li><a href="/brawn-dump-restore.html">7.4.3 Restore databse dump into a new database on another machine.</a></li>
+<li><a href="#sec-7-4-5">TODO 7.4.4 launch a new Nectar VM from the snapshot image</a></li>
+<li><a href="#sec-7-4-6">TODO 7.4.5 mount the 2nd disc and load/restore the postgres db and data into it</a></li>
 </ul>
 </li>
 <li><a href="#sec-7-5">TODO 7.5 Disaster Recovery Plan</a>

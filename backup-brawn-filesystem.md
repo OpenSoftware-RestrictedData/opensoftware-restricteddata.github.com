@@ -4,6 +4,11 @@ layout: default
 title: backup-brawn-filesystem
 ---
 
+  <li><a href="/brawn-dbsize.html">Previous: Find out how big is it?</a></li>
+  <li><a href="/brawn-dump-restore.html">Next: Restore databse dump into a new database on another machine.</a></li>
+
+<p></p>
+
 TODO look at [this link](http://www.cyberciti.biz/faq/howto-use-tar-command-through-network-over-ssh-session/)
 
 #### Code:backup-brawn-filesystem
