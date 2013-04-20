@@ -1761,8 +1761,9 @@ To take advantage of the extra storage on the secondary disk we mounted in the i
       #     Copy the pgsql directory from /var/lib (or customer install directory) location to another location
       cp -r /var/lib/pgsql /home/pgsql
       chown -R postgres:postgres /home/pgsql
-      #     Navigate to /etc/init.d location
+
       #     Edit the start script 'postgresql'
+      vi /etc/init.d/postgresql-9.2
       #     Search for parameter PGDATA which would be entered as "PGDATA=/var/lib/pgsql"
       #     Edit the line such that PGDATA points to the new location. For e.g. "PGDATA=/newloc/pgsql"
       #     ALSO DO PGLOG, and PGUPLOG
@@ -2951,6 +2952,54 @@ Using RJDBC is what I recommend.  I found ROracle suboptimal.
   
   # OR
   #install.packages('ROracle')
+#+end_src
+
+*** TODO maintenance
+** unlock
+*** unlock header
+#+name:unlock-header
+#+begin_src markdown :tangle no :exports none :eval no :padline no
+  ---
+  name: unlock
+  layout: default
+  title: unlock
+  ---
+  
+  http://riaschissl.blogspot.com.au/2010/07/oracle-unexpire-and-unlock-accounts.html
+  
+  Some of our customers' applications are built around Oracle, so we have to fight the beast from time to time. Unfortunately, some of the surprizes the beast has to offer are quite random and rare, and due to this we tend to simply forget how we fixed and/or circumvented the issues previously.
+  
+  As usual, google is your friend and one of the most valuable resources on the net we've found is www.orafaq.com and most notably its security FAQs [1]
+  
+  So this is just an attempt of a small cheat sheat to help our overloaded brains :-)
+  expired and locked accounts - the basics
+  Now, as of version 11g, Oracle has enabled account expiration per default for many vital accounts (such as SYSMAN, SYS, ...). Quite a weird idea in my view, but who knows what hyper security things some wise engineer had in mind when doing so.
+  
+  Beware that we run Oracle under various Linux flavours, so things might be different for you.
+  
+  become database admin
+  First log into your host running oracle and become the oracle user.
+  
+  #### Code:unlock
+      sqlplus /nolog
+      connect / as SYSDBA
+  
+  
+  
+  find out which accounts are expired
+  select username, account_status from dba_users where ACCOUNT_STATUS LIKE '%EXPIRED%';
+  unexpire an account
+  once an account has been expired, it can only be revived by assigning it a new password:
+  
+  #### code
+      ALTER USER scott IDENTIFIED BY password;
+  
+  
+  unlock an account
+  ALTER USER scott ACCOUNT UNLOCK;
+  disable default password expiry [2]
+  this all depends on the profile a user belongs to, to disable password expiry for all users assigned the default user profile do this:
+  ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;    
 #+end_src
 
 ** OpenGeo Suite /opengeosuite.html
@@ -4179,16 +4228,14 @@ scp  username@the.remote.server.zz:/backup_yyyymmdd.dump /path/to/localbackup
       psql -d ewedbbackup -U postgres  
       CREATE EXTENSION postgis;  
       CREATE EXTENSION postgis_topology;  
-      \q
-      cd /path/to/localbackup
       # make sure the users are all there     
-      
+      \q      
       # now dump and restore via a pipe. 
       # important to make sure database and users/permissions exist on target server first.
       # also that source server is in iptables and pg_hba.conf on destination
-      su - postgres
+      
       /usr/pgsql-9.2/bin/pg_dump -U postgres mydb  | psql -h destination.ip.address mydb
-       
+      # password is postgres on database at destination 
   
 #+end_src
 *** COMMENT deprecated notes
