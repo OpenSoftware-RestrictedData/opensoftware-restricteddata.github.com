@@ -231,22 +231,23 @@ The R code produces the plot:
   <ul>
   <li><a href="#sec-3-1">TODO 3.1 Description</a></li>
   <li><a href="#sec-3-2">TODO 3.2 Accessing Virtual Machines on the Australian  Research Cloud</a>
-  <ul>
-  <li><a href="#sec-3-2-1">TODO 3.2.1 Launch an instance</a></li>
-  <li><a href="#sec-3-2-2">TODO 3.2.2 requesting help</a></li>
-  <li><a href="#sec-3-2-3">TODO 3.2.3 connect using ssh</a></li>
-  </ul>
-  </li>
+  <!-- <ul> -->
+  <!-- <li><a href="#sec-3-2-1">TODO 3.2.1 Launch an instance</a></li> -->
+  <!-- <li><a href="#sec-3-2-2">TODO 3.2.2 requesting help</a></li> -->
+  <!-- <li><a href="#sec-3-2-3">TODO 3.2.3 connect using ssh</a></li> -->
+  <!-- </ul> -->
+  t</li>
   <li><a href="#sec-3-3">TODO 3.3 Setting up the basic server framework</a>
-  <ul>
-  <li><a href="#sec-3-3-1">TODO 3.3.1 Install any updates using the yum package manager</a></li>
-  </ul>
+  <!-- <ul> -->
+  <!-- <li><a href="#sec-3-3-1">TODO 3.3.1 Install any updates using the yum package manager</a></li> -->
+  <!-- </ul> -->
   </li>
-  <li><a href="#sec-3-4">TODO 3.4 Security measures</a>
+  <li><a href="#sec-3-4">3.4 Security measures</a>
   <ul>
-  <li><a href="#sec-3-4-1">TODO 3.4.1 Restrict ssh access to a specific ip address/range</a></li>
-  <li><a href="#sec-3-4-2">TODO 3.4.2 Security Enhanced Linux (selinux)</a></li>
-  <li><a href="#sec-3-4-3">TODO 3.4.3 Install some base packages</a></li>
+  <li><a href="/iptables.html">3.4.1 Restrict firewall to a specific ip address/range</a></li>
+  <li><a href="/setting-the-host-tcp-wrappers.html">3.4.2 Setting the hosts.* TCP wrappers </a></li>
+  <li><a href="#sec-3-4-3">TODO 3.4.2 Security Enhanced Linux (selinux)</a></li>
+  <!-- <li><a href="#sec-3-4-3">TODO 3.4.3 Install some base packages</a></li> -->
   </ul>
   </li>
   <li><a href="#sec-3-5">TODO 3.5 Hardware set-up</a>
@@ -958,18 +959,30 @@ IgnoreUserKnownHosts no
 PasswordAuthentication no
 #+end_src
 *** Restrict ssh access to a specific ip address/range
-In the security group we allowed access via port 22 however we will now restrict the firewall to this port to allow access only from specified ip addresses.
-#+name:setting-ports
-#+begin_src sh :session *shell* :tangle no :exports reports :eval no
-###########################################################################
-# newnode: setting-ports
-vi /etc/sysconfig/iptables 
-# and modify the line
--A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
-# to 
--A INPUT -s your.desk.ip.address -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
-# might want to add other port now if you are familiar with this, otherwise see below for specific modifications.
-service iptables restart
+#+name:iptables-header
+#+begin_src markdown :tangle iptables.md :exports none :eval no :padline no
+  ---
+  name: iptables
+  layout: default
+  title: iptables
+  ---
+  
+  <li><a href="/iptables.html">Previous: Security measures</a></li>
+  <li><a href="/setting-the-host-tcp-wrappers.html">Next: Setting the host.* TCP Wrappers</a></li>
+  <p></p>
+      
+  In the security group we allowed access via port 22 however we will now restrict the firewall to this port to allow access only from specified ip addresses.
+  
+  #### Code:iptables
+      # newnode: setting-ports
+      vi /etc/sysconfig/iptables 
+      # and modify the line
+      -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+      # to 
+      -A INPUT -s your.desk.ip.address -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+      # might want to add other port now if you are familiar with this,
+      # otherwise see below for specific modifications.
+      service iptables restart
 #+end_src
 *** COMMENT restrict to VPN?
 **** TODO I'd like to restrict ssh access to the ncephgis VPN group, and
@@ -993,6 +1006,48 @@ They had registered their own domain and added it to the amazon system. Then use
 sudo vi /etc/hostname
 sudo /etc/init.d/hostname restart
 #+end_src
+** Setting the host.* TCP Wrappers
+*** Setting the host.* TCP Wrappers header
+#+name:Setting the host.* TCP Wrappers-header
+#+begin_src markdown :tangle setting-the-host-tcp-wrappers.md :exports none :eval no :padline no
+  ---
+  name: setting-the-host-tcp-wrappers
+  layout: default
+  title: Setting the host.* TCP Wrappers
+  ---
+  
+    <li><a href="/iptables.html">Previous: Restrict firewall to a specific ip address/range</a></li>
+    <li><a href="#sec-3-4-3">Next: TODO Security Enhanced Linux (selinux)</a></li>
+    <p></p>
+  
+  It is advisable to use the hosts.* TCP wrappers when using SSH to add a further layer of protection. The following site has an excellent example at the bottom that shows how to deny everything that's not explicitly allowed: 
+  
+  [http://www.akadia.com/services/ssh_tcp_wrapper.html](http://www.akadia.com/services/ssh_tcp_wrapper.html)
+  
+  #### Code:Setting the host.* TCP Wrappers
+      vi /etc/hosts.deny
+      # hosts.deny 
+      # 
+      # This file describes the names of the hosts which are
+      # not allowed to use the local INET services, as decided
+      # by the '/usr/sbin/tcpd' server.
+      ALL: ALL EXCEPT 127.0.0.1
+  
+  Then, explicitly list in the hosts.allow file all hosts/domains you want access to your machine. A recommended hosts.allow looks like:
+  
+  
+  #### Code
+      vi /etc/hosts.allow
+      # hosts.allow 
+      #
+      # This file describes the names of the hosts which are
+      # allowed to use the local INET services, as decided
+      # by the '/usr/sbin/tcpd' server.
+      sshd: my.desk.ip.address, another.trusted.ip.address
+  
+   
+#+end_src
+
 *** Security Enhanced Linux (selinux)
 To run the Database and the Rstudio server it is best to disable the selinux.  
 **** TODO Find out if this is necessary for PostgreSQL as well as Rstudio.
@@ -2656,6 +2711,7 @@ Now, you can check your command
 
 Now, it should work. I will be posting a detailed article soon for my readers soon. Thank you for visiting my blog. Feel free to ask any questions in the comments section. Have fun!
 
+# NB noticed this needs a cable plugged in or network service failed to start
 
 *** COMMENT Dave did a bit different
 **** TODO document Dave's different build

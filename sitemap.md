@@ -14,22 +14,23 @@ title: Site Map
 <ul>
 <li><a href="#sec-3-1">TODO 3.1 Description</a></li>
 <li><a href="#sec-3-2">TODO 3.2 Accessing Virtual Machines on the Australian  Research Cloud</a>
-<ul>
-<li><a href="#sec-3-2-1">TODO 3.2.1 Launch an instance</a></li>
-<li><a href="#sec-3-2-2">TODO 3.2.2 requesting help</a></li>
-<li><a href="#sec-3-2-3">TODO 3.2.3 connect using ssh</a></li>
-</ul>
-</li>
+<!-- <ul> -->
+<!-- <li><a href="#sec-3-2-1">TODO 3.2.1 Launch an instance</a></li> -->
+<!-- <li><a href="#sec-3-2-2">TODO 3.2.2 requesting help</a></li> -->
+<!-- <li><a href="#sec-3-2-3">TODO 3.2.3 connect using ssh</a></li> -->
+<!-- </ul> -->
+t</li>
 <li><a href="#sec-3-3">TODO 3.3 Setting up the basic server framework</a>
-<ul>
-<li><a href="#sec-3-3-1">TODO 3.3.1 Install any updates using the yum package manager</a></li>
-</ul>
+<!-- <ul> -->
+<!-- <li><a href="#sec-3-3-1">TODO 3.3.1 Install any updates using the yum package manager</a></li> -->
+<!-- </ul> -->
 </li>
-<li><a href="#sec-3-4">TODO 3.4 Security measures</a>
+<li><a href="#sec-3-4">3.4 Security measures</a>
 <ul>
-<li><a href="#sec-3-4-1">TODO 3.4.1 Restrict ssh access to a specific ip address/range</a></li>
-<li><a href="#sec-3-4-2">TODO 3.4.2 Security Enhanced Linux (selinux)</a></li>
-<li><a href="#sec-3-4-3">TODO 3.4.3 Install some base packages</a></li>
+<li><a href="/iptables.html">3.4.1 Restrict firewall to a specific ip address/range</a></li>
+<li><a href="/setting-the-host-tcp-wrappers.html">3.4.2 Setting the hosts.* TCP wrappers </a></li>
+<li><a href="#sec-3-4-3">TODO 3.4.2 Security Enhanced Linux (selinux)</a></li>
+<!-- <li><a href="#sec-3-4-3">TODO 3.4.3 Install some base packages</a></li> -->
 </ul>
 </li>
 <li><a href="#sec-3-5">TODO 3.5 Hardware set-up</a>

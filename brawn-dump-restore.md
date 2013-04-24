@@ -20,12 +20,11 @@ shared_buffers (1024 or 2048) should be set correctly, maintenance_work_mem (unc
     psql -d ewedbbackup -U postgres  
     CREATE EXTENSION postgis;  
     CREATE EXTENSION postgis_topology;  
-    \q
-    cd /path/to/localbackup
     # make sure the users are all there     
-    
+    \q      
     # now dump and restore via a pipe. 
     # important to make sure database and users/permissions exist on target server first.
     # also that source server is in iptables and pg_hba.conf on destination
-    su - postgres
+    
     /usr/pgsql-9.2/bin/pg_dump -U postgres mydb  | psql -h destination.ip.address mydb
+    # password is postgres on database at destination

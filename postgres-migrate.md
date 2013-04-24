@@ -14,8 +14,9 @@ To take advantage of the extra storage on the secondary disk we mounted in the i
     #     Copy the pgsql directory from /var/lib (or customer install directory) location to another location
     cp -r /var/lib/pgsql /home/pgsql
     chown -R postgres:postgres /home/pgsql
-    #     Navigate to /etc/init.d location
+
     #     Edit the start script 'postgresql'
+    vi /etc/init.d/postgresql-9.2
     #     Search for parameter PGDATA which would be entered as "PGDATA=/var/lib/pgsql"
     #     Edit the line such that PGDATA points to the new location. For e.g. "PGDATA=/newloc/pgsql"
     #     ALSO DO PGLOG, and PGUPLOG
