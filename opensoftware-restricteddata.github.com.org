@@ -3609,6 +3609,17 @@ Before doing this the first time I did the following:
 - restart TOMCAT
 - go to indexer, upload xml
 - hit the 'add to index' button.
+*** COMMENT dave's button
+STOPPED WORKING BUT DOES THE JOB UNDER LINUX?
+#!/bin/bash
+cd /opt/ddiindex/
+rm -Rf nceph*
+cd /usr/share/apache-tomcat-6.0.36/webapps/ddiindex
+rm -f *_full_list_main.jsp
+#rename .html .jsp *.html
+service tomcat restart
+
+
 *** personalise the ddiindex
 ie home.jsp
    <div class="intro">The Graduate Information Literacy Program at ANU now offers resources for researchers and graduate students on data management planning: a comprehensive Manual and a Data Management Planning Template. <a href="http://ilp.anu.edu.au/dm/" target="_blank">http://ilp.anu.edu.au/dm</a></div>
