@@ -538,6 +538,28 @@ The R code produces the plot:
   
 #+end_src
 
+* quick Overview
+the specs of our system
+I've used this section to summarise the requirements we have:
+1 Centos 6.4 with root login enabled
+2 8GB RAM, 1GB swap, 60GB storage 
+3 firewall policy:
+    IP Protocol	From Port	To Port		
+    TCP	22	22	0.0.0.0/0 (CIDR)	
+    TCP	5432	5432	0.0.0.0/0 (CIDR)	
+4 iptables
+-A INPUT -s 150.203.74.0/255.255.255.0 -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+5 hosts.*
+      vi /etc/hosts.deny
+      # hosts.deny 
+      ALL: ALL EXCEPT 127.0.0.1
+  
+      vi /etc/hosts.allow
+      # hosts.allow 
+      sshd: 150.203.74.
+  
+
+
 * COMMENT TODO-list
 - TODO check http://forum.worldwindcentral.com/showthread.php?t=21409
 #http://anotherdatabaseblog.blogspot.com.au/2012/04/installing-mapserv-on-centos-6.html
@@ -833,6 +855,36 @@ The services hosted by the pair of servers will be:
 - launch and note the ip address
 - go to the access and security section and edit the rules (ie for http add a rule to allow access from port 8080 to 9000 with 0.0.0.0/0 (CIDR))
 - Note that this allows access to the whole world, we will think about securing the server later
+
+*** security-groups header
+#+name:security-groups-header
+#+begin_src markdown :tangle no :exports none :eval no :padline no
+---
+name: security-groups
+layout: default
+title: security-groups
+---
+DEFAULT
+
+
+#### Code:Brawn-security-groups
+    Security Group RulesDelete Rules
+    IP Protocol	From Port	To Port	Source	Actions
+    TCP	22	22	0.0.0.0/0 (CIDR)	Delete Rule
+    TCP	5432	5432	0.0.0.0/0 (CIDR)	Delete Rule
+
+#### Code:Brains-security-groups
+Security Group RulesDelete Rules
+	IP Protocol	From Port	To Port	Source	Actions
+	TCP	443	443	0.0.0.0/0 (CIDR)	Delete Rule
+	TCP	8080	8080	0.0.0.0/0 (CIDR)	Delete Rule
+	TCP	8181	8181	0.0.0.0/0 (CIDR)	Delete Rule
+	TCP	1521	1521	0.0.0.0/0 (CIDR)	Delete Rule
+	TCP	5432	5432	0.0.0.0/0 (CIDR)	Delete Rule
+Displaying 5 items
+
+#+end_src
+
 *** requesting help
 To: rc-support@nectar.org.au
 Subject: Request about snapshot status
