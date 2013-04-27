@@ -2146,7 +2146,7 @@ The Brains is a Statistical Analysis engine (running the R environment) integrat
 rpm -Uvh http://mirror.overthewire.com.au/pub/epel/6/i386/epel-release-6-7.noarch.rpm
 yum install R R-devel
 #+end_src
-
+#rpm -Uvh #http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 # NB on redhat 6.3 build we had to register to the optional channel the following command needs to be issued.
 # rhn-channel --add --channel=rhel-x86_64-server-optional-6
 # then yum install texinfo-tex.x86_64
