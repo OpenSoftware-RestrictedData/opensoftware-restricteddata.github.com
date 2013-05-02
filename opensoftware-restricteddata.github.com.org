@@ -4107,7 +4107,7 @@ The procedure for ending access aims to ensure that data are both securely and s
 When adding users go to the oraphi and track their permissions
 *** lodge request in user db
 - new study into nceph ddiindexdb 
-- new file with filelocation = brawns schema, working directory
+- new file with filelocation = brawns EWEDB schema, working directory
 - access requestor, accessors add accessor, date to end
 - finalise approval
 *** r-nceph
@@ -4153,6 +4153,9 @@ Need to find out if this 0.0.0.0/0 is a big no-no?
   GRANT gislibrary TO userxxx;
   CREATE SCHEMA userxxx;
   grant ALL on schema userxxx to userxxx;
+  GRANT ALL ON ALL TABLES IN SCHEMA userxxx TO userxxx;
+  grant ALL on all functions in schema userxxx to userxxx;
+  grant ALL on all sequences in schema userxxx to userxxx; 
   # might want to set a date for expiry?  now 
   select pg_reload_conf();
   # or if not connected just service postgresql-9.2 restart
