@@ -4370,9 +4370,10 @@ I've spent most time doing things to postgresql.conf.
 For eg while trying to improve performance when creating tables/altering sequences (there over 71,100 of them),  "SELECT * INTO" queries and subsequent dump and restore operations I did the following tweaks (with no real significant improvements in performance):
 
 shared_buffers = 1024MB (also tried 2048)
-work mem 4MB
+work mem 4MB (also tried 2GB)
+maintenance_work_mem = 1GB
 full_page_writes set to off
-wal_buffers increased (from -1) to 16MB
+wal_buffers increased (from -1) to 16MB (ordinarily go for 64kB)
 checkpoint_segments  increased (from 3) to 16 
 auto_vacuum disable (just during pg_restore, then enabled again - currently enabled)
 max_locks_per_transaction set to 1000 up from 64, then down again to 100.
