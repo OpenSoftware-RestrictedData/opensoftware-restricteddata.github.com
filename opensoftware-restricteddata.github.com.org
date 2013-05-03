@@ -1597,7 +1597,7 @@ CREATE ROLE gislibrary LOGIN PASSWORD 'gislibrary';
 #yum erase postgresql91*
 # show listen_addresses;
 # show port;
-
+     
 *** Configure PostgreSQL connection settings
 #+begin_src markdown :tangle postgresql.md :exports reports :eval no
   #### Code
@@ -4368,6 +4368,7 @@ For eg while trying to improve performance when creating tables/altering sequenc
 
 shared_buffers = 1024MB (also tried 2048)
 work mem 4MB
+maintenance_work_mem doubled from 16 to 32MB
 full_page_writes set to off
 wal_buffers increased (from -1) to 16MB
 checkpoint_segments  increased (from 3) to 16 
