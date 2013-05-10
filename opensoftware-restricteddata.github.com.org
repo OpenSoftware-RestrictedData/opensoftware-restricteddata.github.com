@@ -1597,7 +1597,7 @@ CREATE ROLE gislibrary LOGIN PASSWORD 'gislibrary';
 #yum erase postgresql91*
 # show listen_addresses;
 # show port;
-
+     
 *** Configure PostgreSQL connection settings
 #+begin_src markdown :tangle postgresql.md :exports reports :eval no
   #### Code
@@ -4397,8 +4397,13 @@ I've spent most time doing things to postgresql.conf.
 For eg while trying to improve performance when creating tables/altering sequences (there over 71,100 of them),  "SELECT * INTO" queries and subsequent dump and restore operations I did the following tweaks (with no real significant improvements in performance):
 
 shared_buffers = 1024MB (also tried 2048)
+<<<<<<< HEAD
+work mem 4MB
+maintenance_work_mem doubled from 16 to 32MB
+=======
 work mem 4MB (also tried 2GB)
 maintenance_work_mem = 1GB
+>>>>>>> e903b53424deb268a983977e55677d9d5f703004
 full_page_writes set to off
 wal_buffers increased (from -1) to 16MB (ordinarily go for 64kB)
 checkpoint_segments  increased (from 3) to 16 
