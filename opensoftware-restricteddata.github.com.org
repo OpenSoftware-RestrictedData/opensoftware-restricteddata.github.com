@@ -4108,7 +4108,7 @@ When adding users go to the oraphi and track their permissions
 *** lodge request in user db
 - new study into nceph ddiindexdb 
 - new file with filelocation = brawns EWEDB schema, working directory
-- access requestor, accessors add accessor, date to end
+- in primary database record (not project) add access requestor, accessors add accessor, date to end
 - finalise approval
 *** r-nceph
 production goes thru david fisher
@@ -4166,6 +4166,33 @@ Need to find out if this 0.0.0.0/0 is a big no-no?
 *** alliance wiki
 https://alliance.anu.edu.au/welcome/ 
 uses their anu password
+*** email details without password
+
+Dear user,
+
+The new EWEDB server is now ready.
+You can configure your Kepler environment by following the tutorial at http://swish-climate-impact-assessment.github.io/2013/05/hello-ewedb/
+
+The server details are:
+ database = ewedb
+ host = ipaddress
+ user = user_name
+
+Your password will be sent to you as an SMS to your designated mobile phone number.
+
+NB Please note that the connection information will be saved in plain text to your user profile. As this presents a security risk we request that you only use this service from a secure computer.
+
+Thankyou,
+Ivan Hanigan
+Data Management Officer.
+National Centre for Epidemiology and Population Health.
+College of Medicine, Biology and Environment.
+Australian National University Canberra, ACT, 0200.
+Ph: +61 2 6125 7767.
+Fax: +61 2 6125 0740.
+Mob: 0428 265 976.
+CRICOS provider #00120C.
+
 *** text message the set password
 This solution is adequate.  Might want to invest in a sacrificial SIM card to avoid having too many phone calls?
 ** edits to oraphi via sql 
