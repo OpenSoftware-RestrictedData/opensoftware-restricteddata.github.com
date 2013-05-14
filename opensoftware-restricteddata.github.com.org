@@ -2199,8 +2199,8 @@ check out the RSudio versions at: http://rstudio.org/download/server
 # yum install openssl098e.x86_64
 # yum list compat-libgfortran*
 # yum install compat-libgfortran-41.x86_64 
-wget http://download2.rstudio.org/rstudio-server-0.97.173-x86_64.rpm
-sudo yum install --nogpgcheck rstudio-server-0.97.173-x86_64.rpm
+wget http://download2.rstudio.org/rstudio-server-0.97.551-x86_64.rpm
+sudo yum install --nogpgcheck rstudio-server-0.97.551-x86_64.rpm
 rstudio-server verify-installation
 #+end_src
 *** firewall access
