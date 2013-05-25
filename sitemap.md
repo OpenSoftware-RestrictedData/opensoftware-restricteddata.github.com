@@ -133,7 +133,7 @@ t</li>
 <li><a href="#sec-5-5-10">TODO 5.5.10 personalise the ddiindex</a></li>
 </ul>
 </li>
-<li><a href="#sec-5-6">TODO 5.6 Set up a private git lab for data and code</a>
+<li><a href="/private-git.html">TODO 5.6 Set up a private git lab for data and code</a>
 <ul>
 <li><a href="#sec-5-6-1">TODO 5.6.1 Firewall</a></li>
 <li><a href="#sec-5-6-2">TODO 5.6.2 SSH server</a></li>
