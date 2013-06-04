@@ -2988,7 +2988,9 @@ Now log on:
 - log in, change password
 - log in again
 Now create Workspace:
-- DDIINDEXDB
+- Workspace Name = DDIINDEXDB
+- next page say existing schema "no" and write DDIINDEXDB into the schema Name
+- schema password same as the user you want
 - 100MB
 - admin user IVAN
 *** import application and set Security
