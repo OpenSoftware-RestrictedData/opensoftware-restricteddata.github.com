@@ -1,11 +1,11 @@
 #################################################################
-# I:\projects\0.3 Catalogue\setup_oracle_of_delphe.r
+# /home/ivan/projects/opensoftware-restricteddata.github.com/lib/setup_oracle_of_delphe.r
 # author:
 # ihanigan
 # date:
-# 2010-10-21
+# 2013-08-14
 # description:
-# testing backups of oracle of delphe on IVAN-PC laptop
+# build tables of oracle of delphe
 #################################################################
 
 # nceph server 03 data management\projects\0.3 Catalogue\backups\f102.sql
