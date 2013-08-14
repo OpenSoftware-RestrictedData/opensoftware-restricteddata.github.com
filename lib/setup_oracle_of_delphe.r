@@ -90,19 +90,19 @@ CREATE TABLE  "STDYDSCR"
 # not working? do this in GUI
 # see set_up_oracle_of_delphe-triggers.sql
 
-## dbSendUpdate(ch,'
-## CREATE OR REPLACE TRIGGER  "bi_STDYDSCR"
-##   before insert on "STDYDSCR"
-##   for each row
-## begin
-##   for c1 in (
-##     select "STDYDSCR_SEQ".nextval next_val
-##     from dual
-##   ) loop
-##     :new."PKEY" :=  c1.next_val;
-##   end loop;
-## end;
-## ')
+dbSendUpdate(ch,'
+CREATE OR REPLACE TRIGGER  "bi_STDYDSCR"
+  before insert on "STDYDSCR"
+  for each row
+begin
+  for c1 in (
+    select "STDYDSCR_SEQ".nextval next_val
+    from dual
+  ) loop
+    :new."PKEY" :=  c1.next_val;
+  end loop;
+end;
+')
 
 dbSendUpdate(ch,'
 ALTER TRIGGER  "bi_STDYDSCR" ENABLE
@@ -128,19 +128,19 @@ CREATE TABLE  "FILEDSCR"
    )
 ')
 
-## dbSendUpdate(ch,'
-## CREATE OR REPLACE TRIGGER  "bi_FILEDSCR"
-##   before insert on "FILEDSCR"
-##   for each row
-## begin
-##   for c1 in (
-##     select "FILEDSCR_SEQ".nextval next_val
-##     from dual
-##   ) loop
-##     :new."FILEID" :=  c1.next_val;
-##   end loop;
-## end;
-## ')
+dbSendUpdate(ch,'
+CREATE OR REPLACE TRIGGER  "bi_FILEDSCR"
+  before insert on "FILEDSCR"
+  for each row
+begin
+  for c1 in (
+    select "FILEDSCR_SEQ".nextval next_val
+    from dual
+  ) loop
+    :new."FILEID" :=  c1.next_val;
+  end loop;
+end;
+')
 
 dbSendUpdate(ch,'
 ALTER TRIGGER  "bi_FILEDSCR" ENABLE
@@ -157,19 +157,19 @@ CREATE TABLE  "KEYWORDS"
    )
 ')
 
-## dbSendUpdate(ch,'
-## CREATE OR REPLACE TRIGGER  "bi_KEYWORDS"
-##   before insert on "KEYWORDS"
-##   for each row
-## begin
-##   for c1 in (
-##     select "KEYWORD_SEQ".nextval next_val
-##     from dual
-##   ) loop
-##     :new."PKEY" :=  c1.next_val;
-##   end loop;
-## end;
-## ')
+dbSendUpdate(ch,'
+CREATE OR REPLACE TRIGGER  "bi_KEYWORDS"
+  before insert on "KEYWORDS"
+  for each row
+begin
+  for c1 in (
+    select "KEYWORD_SEQ".nextval next_val
+    from dual
+  ) loop
+    :new."PKEY" :=  c1.next_val;
+  end loop;
+end;
+')
 
 dbSendUpdate(ch,'
 ALTER TRIGGER  "bi_KEYWORDS" ENABLE
@@ -188,19 +188,19 @@ CREATE TABLE  "DATADSCR"
    )
 ')
 
-## ## dbSendUpdate(ch,'
-## CREATE OR REPLACE TRIGGER  "bi_DATADSCR"
-##   before insert on "DATADSCR"
-##   for each row
-## begin
-##   for c1 in (
-##     select "DATADSCR_SEQ".nextval next_val
-##     from dual
-##   ) loop
-##     :new."PKEY" :=  c1.next_val;
-##   end loop;
-## end;
-## ')
+dbSendUpdate(ch,'
+CREATE OR REPLACE TRIGGER  "bi_DATADSCR"
+  before insert on "DATADSCR"
+  for each row
+begin
+  for c1 in (
+    select "DATADSCR_SEQ".nextval next_val
+    from dual
+  ) loop
+    :new."PKEY" :=  c1.next_val;
+  end loop;
+end;
+')
 
 dbSendUpdate(ch,'
 ALTER TRIGGER  "bi_DATADSCR" ENABLE
@@ -223,19 +223,19 @@ CREATE TABLE  "ACCESSSTDY"
    )
 ')
 
-## dbSendUpdate(ch,'
-## CREATE OR REPLACE TRIGGER  "bi_ACCESSSTDY"
-##   before insert on "ACCESSSTDY"
-##   for each row
-## begin
-##   for c1 in (
-##     select "ACCESSSTDY_SEQ".nextval next_val
-##     from dual
-##   ) loop
-##     :new."REQID" :=  c1.next_val;
-##   end loop;
-## end;
-## ')
+dbSendUpdate(ch,'
+CREATE OR REPLACE TRIGGER  "bi_ACCESSSTDY"
+  before insert on "ACCESSSTDY"
+  for each row
+begin
+  for c1 in (
+    select "ACCESSSTDY_SEQ".nextval next_val
+    from dual
+  ) loop
+    :new."REQID" :=  c1.next_val;
+  end loop;
+end;
+')
 
 dbSendUpdate(ch,'
 ALTER TRIGGER  "bi_ACCESSSTDY" ENABLE
@@ -258,19 +258,19 @@ CREATE TABLE  "ACCESSORS"
    )
 ')
 
-## dbSendUpdate(ch,'
-## CREATE OR REPLACE TRIGGER  "bi_ACCESSORS"
-##   before insert on "ACCESSORS"
-##   for each row
-## begin
-##   for c1 in (
-##     select "ACCESSORS_SEQ".nextval next_val
-##     from dual
-##   ) loop
-##     :new."PKEY" :=  c1.next_val;
-##   end loop;
-## end;
-## ')
+dbSendUpdate(ch,'
+CREATE OR REPLACE TRIGGER  "bi_ACCESSORS"
+  before insert on "ACCESSORS"
+  for each row
+begin
+  for c1 in (
+    select "ACCESSORS_SEQ".nextval next_val
+    from dual
+  ) loop
+    :new."PKEY" :=  c1.next_val;
+  end loop;
+end;
+')
 
 dbSendUpdate(ch,'
 ALTER TRIGGER  "bi_ACCESSORS" ENABLE
@@ -285,8 +285,8 @@ dbSendUpdate(ch,'ALTER TABLE stdydscr ADD CHECKED NUMBER')
 dbSendUpdate(ch,'ALTER TABLE filedscr ADD reqid NUMBER')
 
 # NOW WE CAN QUERY WHICH FILES ARE RELATED TO EACH REQID
-dbGetQuery(ch,'SELECT * FROM ACCESSSTDY JOIN filedscr ON ACCESSSTDY.REQID = filedscr.REQID
-where requester like \'MICHAEL%\'')
+## dbGetQuery(ch,'SELECT * FROM ACCESSSTDY JOIN filedscr ON ACCESSSTDY.REQID = filedscr.REQID
+## where requester like \'MICHAEL%\'')
 
  # add a indicator if intended to publish to ddiindex
 dbSendUpdate(ch,'ALTER TABLE filedscr ADD publishddi NUMBER')
