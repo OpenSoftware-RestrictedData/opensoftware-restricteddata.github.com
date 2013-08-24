@@ -46,12 +46,16 @@ t</li>
 <li><a href="/opengeosuite-restricted.html">4.1 Install OpenGeo-Suite </a>
 <ul>
 <li><a href="#sec-4-1-1">TODO 4.1.1 Create a Backup Server with Disabled Tomcat </a></li>
-<li><a href="#sec-4-1-2">TODO 4.1.2 Create the Main Server </a></li>
+<li><a href="/opengeosuite.html">TODO 4.1.2 Create the Main Server </a></li>
+<li><a href="/opengeosuite-upgrade-tomcat6.html">4.1.3 Upgrade to latest tomcat6 version</a></li>
+<li><a href="#sec-5-4-3">TODO 4.1.4 Otherwise just install normal geoserver</a></li>
+<li><a href="#sec-5-4-4">TODO 4.1.5 configure geoserver</a></li>
+<li><a href="#sec-5-4-5">TODO 4.1.6 expose spatial data</a></li>
 </ul>
 </li>
-<li><a href="/postgresql.html">4.2 PostgreSQL </a>
+<li><a href="/postgresql.html">4.2 Configuting PostgreSQL </a>
 <ul>
-<li><a href="#sec-4-1-1">TODO 4.2.1 Configure PostgreSQL connection settings</a></li>
+<li><a href="#sec-4-1-1">TODO 4.2.1 PostgreSQL connection settings</a></li>
 <li><a href="#sec-4-1-2">TODO 4.2.2 Allow connection to postgres through the firewall</a></li>
 </ul>
 </li>
@@ -114,15 +118,6 @@ t</li>
 <li><a href="#sec-5-3-6">TODO 5.3.6 import application and set Security</a></li>
 <li><a href="#sec-5-3-7">TODO 5.3.7 explain the table creation script</a></li>
 <li><a href="#sec-5-3-8">TODO 5.3.8 set up R, RJDBC and ROracle</a></li>
-</ul>
-</li>
-<li><a href="/opengeosuite.html">5.4 Install an open OpenGeo Suite </a>
-<ul>
-<li><a href="/opengeosuite.html">5.4.1 The OpenGeo Suite Installer</a></li>
-<li><a href="/opengeosuite-upgrade-tomcat6.html">5.4.2 Upgrade to latest tomcat6 version</a></li>
-<li><a href="#sec-5-4-3">TODO 5.4.3 Otherwise just install normal geoserver</a></li>
-<li><a href="#sec-5-4-4">TODO 5.4.4 configure geoserver</a></li>
-<li><a href="#sec-5-4-5">TODO 5.4.5 expose spatial data</a></li>
 </ul>
 </li>
 <li><a href="#sec-5-5">TODO 5.5 DDIindex</a>
