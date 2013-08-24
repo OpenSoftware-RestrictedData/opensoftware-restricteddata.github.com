@@ -43,30 +43,36 @@ t</li>
 </li>
 <li><a href="#sec-4">TODO 4 The Brawn</a>
 <ul>
-<li><a href="/postgresql.html">4.1 PostgreSQL </a>
+<li><a href="/opengeosuite-restricted.html">4.1 Install OpenGeo-Suite </a>
 <ul>
-<li><a href="#sec-4-1-1">TODO 4.1.1 Configure PostgreSQL connection settings</a></li>
-<li><a href="#sec-4-1-2">TODO 4.1.2 Allow connection to postgres through the firewall</a></li>
+<li><a href="#sec-4-1-1">TODO 4.1.1 Create a Backup Server with Disabled Tomcat </a></li>
+<li><a href="#sec-4-1-2">TODO 4.1.2 Create the Main Server </a></li>
 </ul>
 </li>
-<li><a href="/postgis.html">4.2 PostGIS 2.0 </a>
+<li><a href="/postgresql.html">4.2 PostgreSQL </a>
 <ul>
-<li><a href="/postgis.html">4.2.1 Postgis</a></li>
-<li><a href="#sec-4-2-2">TODO 4.2.2 GDAL, PROJ and GEOS</a></li>
-<li><a href="#sec-4-2-3">TODO 4.2.3 Create Database</a></li>
-<li><a href="#sec-4-2-4">TODO 4.2.4 Create a GIS user and a group</a></li>
-<li><a href="#sec-4-2-5">TODO 4.2.5 Specific transformations grid for Australian projections AGD66 to GDA94</a></li>
-<li><a href="#sec-4-2-6">TODO 4.2.6 Test transform</a></li>
+<li><a href="#sec-4-1-1">TODO 4.2.1 Configure PostgreSQL connection settings</a></li>
+<li><a href="#sec-4-1-2">TODO 4.2.2 Allow connection to postgres through the firewall</a></li>
 </ul>
 </li>
-<li><a href="/postgres-migrate.html">4.3 PostgreSQL Migration </a>
+<li><a href="/postgis.html">4.3 PostGIS 2.0 </a>
 <ul>
-<li><a href="/postgres-migrate.html">4.3.1 Migrate the data</a></li>
-<li><a href="#sec-4-3-2">TODO 4.3.2 Set up backups</a></li>
+<li><a href="/postgis.html">4.3.1 Postgis</a></li>
+<li><a href="#sec-4-2-2">TODO 4.3.2 GDAL, PROJ and GEOS</a></li>
+<li><a href="#sec-4-2-3">TODO 4.3.3 Create Database</a></li>
+<li><a href="#sec-4-2-4">TODO 4.3.4 Create a GIS user and a group</a></li>
+<li><a href="#sec-4-2-5">TODO 4.3.5 Specific transformations grid for Australian projections AGD66 to GDA94</a></li>
+<li><a href="#sec-4-2-6">TODO 4.3.6 Test transform</a></li>
 </ul>
 </li>
-<li><a href="/sharedmemory.html">4.4 Important shared memory settings </a></li>
-<li><a href="#sec-4-5">TODO 4.5 Test loading some shapefiles</a></li>
+<li><a href="/postgres-migrate.html">4.4 PostgreSQL Migration </a>
+<ul>
+<li><a href="/postgres-migrate.html">4.4.1 Migrate the data</a></li>
+<li><a href="#sec-4-3-2">TODO 4.4.2 Set up backups</a></li>
+</ul>
+</li>
+<li><a href="/sharedmemory.html">4.5 Important shared memory settings </a></li>
+<li><a href="#sec-4-5">TODO 4.6 Test loading some shapefiles</a></li>
 </ul>
 </li>
 <li><a href="#sec-5">TODO 5 The Brains</a>
@@ -110,7 +116,7 @@ t</li>
 <li><a href="#sec-5-3-8">TODO 5.3.8 set up R, RJDBC and ROracle</a></li>
 </ul>
 </li>
-<li><a href="/opengeosuite.html">5.4 OpenGeo Suite </a>
+<li><a href="/opengeosuite.html">5.4 Install an open OpenGeo Suite </a>
 <ul>
 <li><a href="/opengeosuite.html">5.4.1 The OpenGeo Suite Installer</a></li>
 <li><a href="/opengeosuite-upgrade-tomcat6.html">5.4.2 Upgrade to latest tomcat6 version</a></li>

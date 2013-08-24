@@ -260,30 +260,36 @@ The R code produces the plot:
   </li>
   <li><a href="#sec-4">TODO 4 The Brawn</a>
   <ul>
-  <li><a href="/postgresql.html">4.1 PostgreSQL </a>
+  <li><a href="/opengeosuite-restricted.html">4.1 Install OpenGeo-Suite </a>
   <ul>
-  <li><a href="#sec-4-1-1">TODO 4.1.1 Configure PostgreSQL connection settings</a></li>
-  <li><a href="#sec-4-1-2">TODO 4.1.2 Allow connection to postgres through the firewall</a></li>
+  <li><a href="#sec-4-1-1">TODO 4.1.1 Create a Backup Server with Disabled Tomcat </a></li>
+  <li><a href="#sec-4-1-2">TODO 4.1.2 Create the Main Server </a></li>
   </ul>
   </li>
-  <li><a href="/postgis.html">4.2 PostGIS 2.0 </a>
+  <li><a href="/postgresql.html">4.2 PostgreSQL </a>
   <ul>
-  <li><a href="/postgis.html">4.2.1 Postgis</a></li>
-  <li><a href="#sec-4-2-2">TODO 4.2.2 GDAL, PROJ and GEOS</a></li>
-  <li><a href="#sec-4-2-3">TODO 4.2.3 Create Database</a></li>
-  <li><a href="#sec-4-2-4">TODO 4.2.4 Create a GIS user and a group</a></li>
-  <li><a href="#sec-4-2-5">TODO 4.2.5 Specific transformations grid for Australian projections AGD66 to GDA94</a></li>
-  <li><a href="#sec-4-2-6">TODO 4.2.6 Test transform</a></li>
+  <li><a href="#sec-4-1-1">TODO 4.2.1 Configure PostgreSQL connection settings</a></li>
+  <li><a href="#sec-4-1-2">TODO 4.2.2 Allow connection to postgres through the firewall</a></li>
   </ul>
   </li>
-  <li><a href="/postgres-migrate.html">4.3 PostgreSQL Migration </a>
+  <li><a href="/postgis.html">4.3 PostGIS 2.0 </a>
   <ul>
-  <li><a href="/postgres-migrate.html">4.3.1 Migrate the data</a></li>
-  <li><a href="#sec-4-3-2">TODO 4.3.2 Set up backups</a></li>
+  <li><a href="/postgis.html">4.3.1 Postgis</a></li>
+  <li><a href="#sec-4-2-2">TODO 4.3.2 GDAL, PROJ and GEOS</a></li>
+  <li><a href="#sec-4-2-3">TODO 4.3.3 Create Database</a></li>
+  <li><a href="#sec-4-2-4">TODO 4.3.4 Create a GIS user and a group</a></li>
+  <li><a href="#sec-4-2-5">TODO 4.3.5 Specific transformations grid for Australian projections AGD66 to GDA94</a></li>
+  <li><a href="#sec-4-2-6">TODO 4.3.6 Test transform</a></li>
   </ul>
   </li>
-  <li><a href="/sharedmemory.html">4.4 Important shared memory settings </a></li>
-  <li><a href="#sec-4-5">TODO 4.5 Test loading some shapefiles</a></li>
+  <li><a href="/postgres-migrate.html">4.4 PostgreSQL Migration </a>
+  <ul>
+  <li><a href="/postgres-migrate.html">4.4.1 Migrate the data</a></li>
+  <li><a href="#sec-4-3-2">TODO 4.4.2 Set up backups</a></li>
+  </ul>
+  </li>
+  <li><a href="/sharedmemory.html">4.5 Important shared memory settings </a></li>
+  <li><a href="#sec-4-5">TODO 4.6 Test loading some shapefiles</a></li>
   </ul>
   </li>
   <li><a href="#sec-5">TODO 5 The Brains</a>
@@ -327,7 +333,7 @@ The R code produces the plot:
   <li><a href="#sec-5-3-8">TODO 5.3.8 set up R, RJDBC and ROracle</a></li>
   </ul>
   </li>
-  <li><a href="/opengeosuite.html">5.4 OpenGeo Suite </a>
+  <li><a href="/opengeosuite.html">5.4 Install an open OpenGeo Suite </a>
   <ul>
   <li><a href="/opengeosuite.html">5.4.1 The OpenGeo Suite Installer</a></li>
   <li><a href="/opengeosuite-upgrade-tomcat6.html">5.4.2 Upgrade to latest tomcat6 version</a></li>
@@ -1474,6 +1480,144 @@ root ALL=(ALL) ALL
 
 * The Brawn
 The Brawn is a PostgreSQL Geographical Information System (GIS) Database server.
+** Restricted OpenGeo Suite /opengeosuite-restricted.html
+*** The OpenGeo Suite Installer
+#+begin_src markdown :tangle opengeosuite-restricted.md :exports reports :eval no :padline no
+--- 
+name: opengeosuite-restricted
+layout: default
+title: Restricted OpenGeo Suite
+---
+
+  <li><a href="#sec-5-3-8">TODO Previous: </a></li>
+  <li><a href="/opengeosuite-upgrade-tomcat6.html">Next: Disable Tomcat</a></li>
+<p></p>
+
+The OpenGeo Suite provides a complete spatial data server software stack.  I use this for the batch install and configuration (TODO look into the individual components offered by OpenGeo). I don't want the Brawn server to run the tomcat etc.  [Installation instructions are here](http://suite.opengeo.org/opengeo-docs/installation/linux/centos/suite.html) but beware that the Redhat version requires the optional channel to be enabled. 
+
+#+end_src
+
+#+begin_src markdown :tangle opengeosuite-restricted.md :exports reports :eval no :padline no
+#### Code Centos
+    # find out your os
+    cat /etc/issue
+    uname -r
+    # if centos
+    cd /etc/yum.repos.d
+    wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
+    yum install opengeo-suite
+#+end_src  
+
+#+begin_src markdown :tangle opengeosuite-restricted.md :exports reports :eval no :padline no
+#### Code Redhat
+    cd /etc/yum.repos.d
+    wget http://yum.opengeo.org/suite/v3/rhel/6/x86_64/OpenGeo.repo
+    yum install opengeo-suite
+#+end_src  
+
+*** Disable tomcat6 
+
+
+#+begin_src markdown :tangle opengeosuite-disable-tomcat6.md :exports none :eval no :padline no
+---
+name: opengeosuite-upgrade-tomcat6
+layout: default 
+title: Opengeosuite upgrade tomcat6
+---
+
+  <li><a href="/opengeosuite.html">Previous: The OpenGeo Suite Installer</a></li>
+  <li><a href="#sec-5-4-3">TODO Next: Otherwise just install normal geoserver</a></li>
+<p></p>
+
+The installer pulls down tomcat6 version 6.0.24 (even if there is a later version installed and running (as at April 2013) which has [vulnerabilities](http://tomcat.apache.org/security-6.html#Apache_Tomcat_6.x_vulnerabilities) so upgrade that to the latest tomcat6 (NOT tomcat 7).
+
+Once you are up-to-date you can bulk load layers from the postgis store with [these instructions](http://workshops.opengeo.org/suiteintro/geoserver/importdb.html#import-from-postgis-store).
+
+#+end_src
+
+#+begin_src markdown :tangle opengeosuite-disable-tomcat6.md :exports reports :eval no 
+  #### Code
+      service tomcat6 stop
+      chkconfig tomcat6 off
+            
+      wget http://mirror.overthewire.com.au/pub/apache/tomcat/tomcat-6/v6.0.36/bin/apache-tomcat-6.0.36.tar.gz
+      mv apache-tomcat-6.0.36.tar.gz  /usr/share/
+      cd /usr/share
+      tar -xzf apache-tomcat-6.0.36.tar.gz
+      #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,
+      cd /usr/share/apache-tomcat-6.0.36
+      vi conf/server.xml
+      # change <Connector port="8181"/> from 8080
+      vi conf/tomcat-users.xml
+      #add a user with roles of admin,manager like this
+      <user name="tomcat" password="password" roles="admin,manager" />
+      
+      #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,
+      ./bin/startup.sh     
+      ./bin/shutdown.sh
+  
+      # make a script for starting
+      cd /etc/init.d  
+      vi tomcat
+      # add this  
+      # to find java_home "update-alternatives --display java" and remove bin/java
+      #!/bin/bash  
+      # description: Tomcat Start Stop Restart  
+      # processname: tomcat  
+      # chkconfig: 234 20 80  
+      JAVA_HOME=/usr/lib/jvm/jre-1.6.0-openjdk.x86_64
+      export JAVA_HOME  
+      PATH=$JAVA_HOME/bin:$PATH  
+      export PATH  
+      CATALINA_HOME=/usr/share/apache-tomcat-6.0.36  
+        
+      case $1 in  
+      start)  
+      sh $CATALINA_HOME/bin/startup.sh  
+      ;;   
+      stop)     
+      sh $CATALINA_HOME/bin/shutdown.sh  
+      ;;   
+      restart)  
+      sh $CATALINA_HOME/bin/shutdown.sh  
+      sh $CATALINA_HOME/bin/startup.sh  
+      ;;   
+      esac      
+      exit 0  
+      # now
+      chmod 755 tomcat  
+      chkconfig --add tomcat  
+      chkconfig --level 234 tomcat on  
+      # verify
+      chkconfig --list tomcat  
+      service tomcat start  
+      # test stop, start, restart
+      more /usr/share/apache-tomcat-6.0.36/logs/catalina.out  
+      # to check for errors, but is all greek to me
+      # so assuming ddiindex was previously running on tomcat6
+      service tomcat stop
+  
+  
+      cd /usr/share/tomcat6/webapps
+      cp -r dashboard /usr/share/apache-tomcat-6.0.36/webapps
+      cp -r geowebcache /usr/share/apache-tomcat-6.0.36/webapps
+      cp -r geoserver /usr/share/apache-tomcat-6.0.36/webapps    
+      cp -r opengeo-docs /usr/share/apache-tomcat-6.0.36/webapps        
+      cp -r geoexplorer /usr/share/apache-tomcat-6.0.36/webapps            
+      cp -r recipes /usr/share/apache-tomcat-6.0.36/webapps                
+      cd /usr/share/apache-tomcat-6.0.36
+      service tomcat start
+
+      #now you have installed the suite go into the geoserver website  
+      # http://ip.address.of.server:8181/dashboard
+      # then go to the geoserver and log in as admin with password geoserver
+      # follow instructions there to enhance the security
+
+      # for The default user/group service should use digest password encoding see
+      #  http://suite.opengeo.org/docs/geoserver/security/tutorials/digest/index.html
+#+end_src  
+
+ 
 ** PostgreSQL /postgresql.html
 #+begin_src markdown :tangle postgresql.md :exports none :eval no :padline no
 --- 

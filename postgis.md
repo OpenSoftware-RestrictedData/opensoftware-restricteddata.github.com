@@ -28,6 +28,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
     yum install gdal-devel.x86_64 
     yum install proj-devel.x86_64
     yum install proj-nad.x86_64
+    yum install proj-epsg.x86_64 
     yum install geos-devel.x86_64
     #to update
     yum remove gdal*
