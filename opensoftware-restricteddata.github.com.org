@@ -1475,8 +1475,9 @@ root ALL=(ALL) ALL
 
 * The Brawn
 The Brawn is a PostgreSQL Geographical Information System (GIS) Database server.
-** Restricted OpenGeo Suite /opengeosuite-restricted.html
-*** The OpenGeo Suite Installer
+** OpenGeo Suite (Postgres and friends)
+*** Restricted OpenGeo Suite /opengeosuite-restricted.html
+**** The OpenGeo Suite Installer
 #+begin_src markdown :tangle opengeosuite-restricted.md :exports reports :eval no :padline no
 --- 
 name: opengeosuite-restricted
@@ -1510,7 +1511,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
     yum install opengeo-suite
 #+end_src  
 
-*** Disable tomcat6 
+**** Disable tomcat6 
 
 
 #+begin_src markdown :tangle opengeosuite-disable-tomcat6.md :exports none :eval no :padline no
@@ -1612,8 +1613,8 @@ Once you are up-to-date you can bulk load layers from the postgis store with [th
       #  http://suite.opengeo.org/docs/geoserver/security/tutorials/digest/index.html
 #+end_src  
 
-** OpenGeo Suite /opengeosuite.html
-*** The OpenGeo Suite Installer
+*** OpenGeo Suite /opengeosuite.html
+**** The OpenGeo Suite Installer
 #+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
 --- 
 name: opengeosuite
@@ -1637,7 +1638,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 #+end_src  
 
 
-*** Upgrade to latest tomcat6 version
+**** Upgrade to latest tomcat6 version
 
 
 #+begin_src markdown :tangle opengeosuite-upgrade-tomcat6.md :exports none :eval no :padline no
@@ -1739,7 +1740,7 @@ Once you are up-to-date you can bulk load layers from the postgis store with [th
       #  http://suite.opengeo.org/docs/geoserver/security/tutorials/digest/index.html
 #+end_src  
 
-*** COMMENT notes re OpenGeo Suite installer
+**** COMMENT notes re OpenGeo Suite installer
 # broke, couldn't stop
 reboot now
 chkconfig tomcat off
@@ -1802,7 +1803,7 @@ cp -avr geowebcache /usr/share/apache-tomcat-6.0.36/webapps/
 service tomcat restart
 #+end_src
 
-*** Otherwise just install normal geoserver
+**** Otherwise just install normal geoserver
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 ################################################################
 
@@ -1846,14 +1847,15 @@ login as admin, geoserver
 
 
 #+end_src
-*** TODO configure geoserver
+**** TODO configure geoserver
 # DEADLINK? http://www.gistutor.com/geoserver/21-intermediate-geoserver-tutorials/38-configuring-geoserver-proxy-for-public-and-remote-data-access.html
 NB is the default memory setting too low?  Ran out of memory pretty quick.
-*** expose spatial data
+**** expose spatial data
 # publish
 http://docs.geoserver.org/stable/en/user/gettingstarted/postgis-quickstart/index.html
  
-** PostgreSQL /postgresql.html
+** Postgres standalone
+*** PostgreSQL /postgresql.html
 #+begin_src markdown :tangle postgresql.md :exports none :eval no :padline no
 --- 
 name: postgresql
@@ -1887,8 +1889,8 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 #+end_src
 
 
-*** COMMENT for 9.1
-**** TODO DEPRECATED  upgrade from 8.4 using opengeo
+**** COMMENT for 9.1
+***** TODO DEPRECATED  upgrade from 8.4 using opengeo
 not installing tomcat6-admin-webapps
 "You have to subscribe to the "RHEL Server Optional" channel in order to get this package available through yum." commented by anonymous at
 http://dougbunger.blogspot.com.au/2010/05/redhat-tomcat-6-with-web-manager.html
@@ -1921,7 +1923,7 @@ cd /etc/yum.repos.d
 #CentOS 6, 64 bit
 wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
 yum install opengeo-suite
-**** TODO upgrade 9.1 to 9.2 Ubuntu
+***** TODO upgrade 9.1 to 9.2 Ubuntu
 The upgrade process I'm following is:
 
  sudo add-apt-repository ppa:pitti/postgresql
@@ -1934,8 +1936,8 @@ The upgrade process I'm following is:
 #   pg_dropcluster 9.1 main
 #http://stackoverflow.com/questions/12944830/error-upgrading-postgresql-cluster-from-9-1-to-9-2
 
-**** TODO delete the deprecated postgres 9.1 junk
-**** install pg9.1
+***** TODO delete the deprecated postgres 9.1 junk
+***** install pg9.1
 kudos2 http://wiki.postgresql.org/wiki/YUM_Installation
 #+name:postgres
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
@@ -1961,7 +1963,7 @@ rpm -ivh pgdg-centos91-9.1-4.noarch.rpm
 yum install postgresql91-server postgresql91 postgresql91-devel postgresql91-libs postgresql91-contrib
 #+end_src
 
-**** init postgres9.1
+***** init postgres9.1
 #+name:initialise postgres
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 service postgresql-9.1 initdb
@@ -1974,14 +1976,14 @@ psql postgres postgres
 alter user postgres with password 'password';
 CREATE ROLE gislibrary LOGIN PASSWORD 'gislibrary';
 #+end_src
-**** deprecated?
+***** deprecated?
 # failed to start.
 #GIVING UP 
 #yum erase postgresql91*
 # show listen_addresses;
 # show port;
      
-*** Configure PostgreSQL connection settings
+**** Configure PostgreSQL connection settings
 #+begin_src markdown :tangle postgresql.md :exports reports :eval no
   #### Code
       #edit your pg_hba.conf file under /var/lib/pgsql/9.2/data
@@ -2019,7 +2021,7 @@ Now make the server listen for any connection requests from anywhere in the worl
       sudo service postgresql-9.2 restart
       #then reboot and confirm postgres started
 #+end_src
-*** Allow connection to postgres through the firewall
+**** Allow connection to postgres through the firewall
 
 #+begin_src sh :session *shell* :tangle postgresql.md :exports reports :eval no
 #### Code: setting-ports
@@ -2029,8 +2031,8 @@ Now make the server listen for any connection requests from anywhere in the worl
     service iptables restart
 #+end_src
 
-** PostGIS 2.0 /postgis.html
-*** Postgis
+*** PostGIS 2.0 /postgis.html
+**** Postgis
 #+begin_src markdown :tangle postgis.md :exports reports :eval no :padline no
 --- 
 name: postgis
@@ -2065,7 +2067,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 #+end_src
 
 
-*** GDAL, PROJ and GEOS
+**** GDAL, PROJ and GEOS
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no :results silent
   #### Code
       sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
@@ -2081,7 +2083,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
       yum install gdal-devel.x86_64 
 #+end_src
 
-*** Create Database
+**** Create Database
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
   #### Code: Create Database
       su - postgres 
@@ -2093,7 +2095,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 #+end_src
 
 
-*** Create a GIS user and a group
+**** Create a GIS user and a group
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
   #### Code: Create a GIS user and a group
       CREATE ROLE public_group;
@@ -2113,7 +2115,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
       exit
 #+end_src
 
-*** Specific transformations grid for Australian projections AGD66 to GDA94
+**** Specific transformations grid for Australian projections AGD66 to GDA94
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
 #### Additional Reprojection File
 A special transformations grid file is required to be added to the PROJ.4 files for reprojecting the Australian projections AGD66 to GDA94.
@@ -2144,7 +2146,7 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
       exit
 #+end_src
 
-*** Test transform
+**** Test transform
 #+begin_src sh :session *shell* :tangle postgis.md :exports reports :eval no
   #### Code: test transformation from AGD66 to GDA94
       select geocode, geoname, st_transform(geom, 4283) as the_geom
@@ -2173,7 +2175,7 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
   cat(sql)
   
 #+end_src
-*** COMMENT DEPRECATED Specific transformations grid for Australian projections AGD66 to GDA94
+**** COMMENT DEPRECATED Specific transformations grid for Australian projections AGD66 to GDA94
 #+name:proper transforms
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 cd /usr/share/proj
@@ -2183,8 +2185,8 @@ unzip national66.zip
 mv "A66 National (13.09.01).gsb" aust_national_agd66_13.09.01.gsb
 #+end_src
 
-*** COMMENT 2.0 was not working 
-**** TODO remove redundant old crap re postgis not working
+**** COMMENT 2.0 was not working 
+***** TODO remove redundant old crap re postgis not working
 http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos
 
 #+name:postgis2
@@ -2208,7 +2210,7 @@ failed due to depends?
 # # success!
 # # but now postgis not working.  reinstall and it works
 
-**** TODO remove PostGIS 1.5
+***** TODO remove PostGIS 1.5
 Requires postgres, gdal, geos http://postgis.refractions.net/docs/postgis_installation.html
 
 http://www.davidghedini.com/pg/entry/install_postgresql_9_on_centos
@@ -2218,7 +2220,7 @@ http://www.davidghedini.com/pg/entry/install_postgresql_9_on_centos
 # yum list postgis*  
 yum install postgis91.x86_64 postgis91-utils.x86_64
 #+end_src
-**** TODO remove Create Database
+***** TODO remove Create Database
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 su - postgres 
 createdb ewedb
@@ -2231,8 +2233,8 @@ grant execute on all functions in schema public to gislibrary;
 grant select on all sequences in schema public to gislibrary;
 grant all on table geometry_columns to gislibrary;
 #+end_src
-** PostgreSQL Migration /postgres-migrate.html
-*** Migrate the data
+*** PostgreSQL Migration /postgres-migrate.html
+**** Migrate the data
 #+begin_src markdown :tangle postgres-migrate.md :exports reports :eval no :padline no
 ---
 name: postgres-migrate
@@ -2266,9 +2268,9 @@ To take advantage of the extra storage on the secondary disk we mounted in the i
   
 #+end_src
 
-*** Set up backups
+**** Set up backups
 From here to a secure location at my work.
-**** COMMENT  REFERENCES
+***** COMMENT  REFERENCES
 # http://docs.fedoraproject.org/en-US/Fedora/13/html/Managing_Confined_Services/sect-Managing_Confined_Services-PostgreSQL-Configuration_Examples.html
 # If you want to move the postgres database after installation then this should work.
 # How do I move the PostgreSQL database from one location to another on Linux?
@@ -2302,7 +2304,8 @@ vi /etc/init.d/postgresql
 #     Then Start Tomcat Service 
 #+end_src
 
-** Important shared memory settings /sharedmemory.html
+** Tuning Postgres Performance
+*** Important shared memory settings /sharedmemory.html
 
 #+begin_src markdown :tangle sharedmemory.md :exports reports :eval no :padline no
 --- 
@@ -2365,14 +2368,16 @@ The default settings in PostgreSQL are usually pretty good but these memory sett
       # work mem 4MB
 #+end_src
 
-** Test loading some shapefiles
+*** TODO Postgres conf
+I noticed when installing opengeo on RHEL and Ubuntu that the installer changes more parameters on the Ubuntu conf file.  Compare these with diff and update RHEL to reflect the settings for ubuntu.
+*** Test loading some shapefiles
 on your ubuntu desktop install postgis and gdal (see above)
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 ################################################################
 sudo apt-get install postgis
 #+end_src
 then let's demo the Tasmanian SLAs:
-**** download the shapefiles
+***** download the shapefiles
 #+name:tassla01
 #+begin_src R :session *R* :tangle no :exports reports :eval no
     ################################################################
@@ -2421,7 +2426,7 @@ then let's demo the Tasmanian SLAs:
     
 #+end_src
 
-**** upload the shp2psql
+***** upload the shp2psql
 #+begin_src sh :session *shell* :exports reports :eval no
   # psql -d ewedb -U postgres -h 115.146.94.209
   # CREATE SCHEMA abs_sla;
@@ -2435,7 +2440,7 @@ then let's demo the Tasmanian SLAs:
   # GRANT select ON ALL TABLES IN SCHEMA public TO gislibrary;
 #+end_src
 
-**** COMMENT DEPRECATED, TODO change to swishdbtools version = add metadata using df2ddi
+***** COMMENT DEPRECATED, TODO change to swishdbtools version = add metadata using df2ddi
 #+name:add_ddi
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
   ################################################################
@@ -4627,16 +4632,13 @@ I've spent most time doing things to postgresql.conf.
 For eg while trying to improve performance when creating tables/altering sequences (there over 71,100 of them),  "SELECT * INTO" queries and subsequent dump and restore operations I did the following tweaks (with no real significant improvements in performance):
 
 shared_buffers = 1024MB (also tried 2048)
-<<<<<<< HEAD
-work mem 4MB
-maintenance_work_mem doubled from 16 to 32MB
-=======
 work mem 4MB (also tried 2GB)
-maintenance_work_mem = 1GB
->>>>>>> e903b53424deb268a983977e55677d9d5f703004
+maintenance_work_mem = increased 32MB? 1GB?
 full_page_writes set to off
 wal_buffers increased (from -1) to 16MB (ordinarily go for 64kB)
 checkpoint_segments  increased (from 3) to 16 
+logging collector off
+log_truncate_on_rotation off
 auto_vacuum disable (just during pg_restore, then enabled again - currently enabled)
 max_locks_per_transaction set to 1000 up from 64, then down again to 100.
  
