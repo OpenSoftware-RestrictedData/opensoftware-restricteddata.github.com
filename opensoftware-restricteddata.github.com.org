@@ -565,6 +565,8 @@ I've used this section to summarise the requirements we have:
 - TODO check http://forum.worldwindcentral.com/showthread.php?t=21409
 #http://anotherdatabaseblog.blogspot.com.au/2012/04/installing-mapserv-on-centos-6.html
 - TODO Tomcat is primary security concern, don't host on Postgres box (also due to resource sharing)
+- TODO Security is your responsibility when using the Research Cloud, be sure to
+    read and implement the guidelines at http://support.rc.nectar.org.au/technical_guides/security.html
 - TODO recommend regular updates and patchs to Tomcat
 - TODO recommendations for password management (KeyPassX?)
 - TODO Logging, Syslogging and correlation analysis
@@ -3350,6 +3352,7 @@ su - root
 # vi /etc/sysconfig/iptables
 # copy -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
 # twice and modify for 8080 and 1521
+# restrict 1521 to your administration IP address
 # will also need the port 8080 enabled on the research cloud firewall
 service iptables restart
 #+end_src
