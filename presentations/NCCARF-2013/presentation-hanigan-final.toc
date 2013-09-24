@@ -1,0 +1,7 @@
+\beamer@endinputifotherversion {3.10pt}
+\beamer@sectionintoc {1}{Aim}{2}{0}{1}
+\beamer@sectionintoc {2}{Methods}{3}{0}{2}
+\beamer@sectionintoc {3}{Results}{4}{0}{3}
+\beamer@sectionintoc {4}{Conclusion}{6}{0}{4}
+\beamer@sectionintoc {5}{Acknowledgements}{7}{0}{5}
+\beamer@sectionintoc {6}{References}{8}{0}{6}
