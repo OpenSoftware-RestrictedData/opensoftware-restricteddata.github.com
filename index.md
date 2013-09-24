@@ -33,4 +33,4 @@ enhance reproducibility and accessibility.  The system implementation
 is described specifically for the [Australian National Research Cloud
 provided by the NeCTAR group](http://www.nectar.org.au/research-cloud/).
 
-[Presentation](/presentations/NCCARF-2013/hanigan-presentation-final.pdf)
+[Presentation](/presentations-nccarf-2013/presentation-hanigan-final.pdf)
