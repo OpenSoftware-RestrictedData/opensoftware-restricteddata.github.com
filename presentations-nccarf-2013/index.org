@@ -4,26 +4,6 @@
 
 #+EMAIL:     ivan.hanigan@anu.edu.au
 #+DATE:      \today
-#+DESCRIPTION:
-#+KEYWORDS:
-#+LANGUAGE:  en
-#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
-#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
-#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
-#+EXPORT_SELECT_TAGS: export
-#+EXPORT_EXCLUDE_TAGS: noexport
-#+LINK_UP:   
-#+LINK_HOME: 
-#+XSLT:
-#+LaTeX_CLASS: beamer
-#+BEAMER_HEADER_EXTRA: \institute[NCEPH]{$^1$National Centre for Epidemiology and Population Health (ANU) \\ $^2$Information Technology Services (ANU) \\ $^3$Australian Data Archives (ANU)}
-#+LaTeX_CLASS_OPTIONS: [bigger]
-#+latex_header: \mode<beamer>{\usetheme{Madrid}}
-#+latex_header: \usepackage{verbatim}
-#+latex_header: \usepackage{color}
-#+latex_header: \usepackage{amsmath,amsfonts,amssymb}
-#+BEAMER_FRAME_LEVEL: 2
-#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
 * COMMENT Notes
 ** TODO get the original from dropbox
 *** COMMENT get-orig-code
@@ -39,7 +19,10 @@
 * Introduction
 This was presented as:
 
-\textbf{Hanigan IC}, Fisher D and McEachern S. Open Software for Restricted Data: a Climate/Suicide Health Impact Assessment Example. Speedtalk and Poster. National Climate Change Adaptation Research Facility  Conference 'Climate Adaptation knowledge and partnership'. June 2013, Sydney.
+Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Climate/Suicide Health Impact Assessment Example. Speedtalk and Poster. National Climate Change Adaptation Research Facility  Conference 'Climate Adaptation knowledge and partnership'. June 2013, Sydney.
+
+- [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/presentations-nccarf-2013/poster.pdf][Poster]]
+- [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/presentation-hanigan-final.pdf][Speedtalk]]
 
 * Aim
 ** Aim
@@ -48,7 +31,7 @@ This was presented as:
 \indent \textbf{Replicability Crisis}, (Peng 2011, \emph{Science}, 334).
 - We built a safe Sever/Client IT environment for this. 
 - We show a Case Study of Suicide and Climate Impacts research.
-* Methods
+* COMMENT Methods
 ** Methods
 \begin{figure}[!h]
 \centering
@@ -57,7 +40,7 @@ This was presented as:
 \label{fig:sys}
 \end{figure}
 
-* Results
+* COMMENT Results
 ** Results (Hanigan et al, 2012, \emph{PNAS}, 109)
 \begin{footnotesize}
 \begin{itemize}
@@ -95,7 +78,7 @@ ${\color{red}X_{lm}}$ = Projected Future ExposureVariables {\color{red} with Res
 {\color{blue}Population$_{jklm}$} = projected populations by age$_j$, sex$_k$, zone$_l$ and time$_m$ {\color{blue} (With Less Restrictions)}\\
 
 \end{footnotesize}
-* Conclusion
+* COMMENT Conclusion
 ** Conclusion
 This system:
 \begin{itemize}
@@ -109,7 +92,7 @@ This system:
 \end{large}
 \end{itemize}
 
-* Acknowledgements
+* COMMENT Acknowledgements
 ** Acknowledgements
 \includegraphics[width=4cm]{ANU_LOGO_cmyk_56mm.png}
 \includegraphics[width=2cm]{andslogo.pdf}
@@ -122,7 +105,7 @@ More information from \texttt{ivan.hanigan@gmail.com} or at \texttt{http://opens
 \end{footnotesize}
 
 
-* References
+* COMMENT References
 ** References
 \begin{footnotesize}
 \begin{thebibliography}{1}
