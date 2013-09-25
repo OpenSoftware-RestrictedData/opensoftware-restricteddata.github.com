@@ -1,0 +1,150 @@
+#+TITLE:     Open Software - Restricted Data:  A Suicide/Climate Case Study.
+#+AUTHOR:  Ivan Hanigan$^1$, David Fisher$^2$, Steven McEachern$^3$
+
+
+#+EMAIL:     ivan.hanigan@anu.edu.au
+#+DATE:      \today
+#+DESCRIPTION:
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:t toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+LaTeX_CLASS: beamer
+#+BEAMER_HEADER_EXTRA: \institute[NCEPH]{$^1$National Centre for Epidemiology and Population Health (ANU) \\ $^2$Information Technology Services (ANU) \\ $^3$Australian Data Archives (ANU)}
+#+LaTeX_CLASS_OPTIONS: [bigger]
+#+latex_header: \mode<beamer>{\usetheme{Madrid}}
+#+latex_header: \usepackage{verbatim}
+#+latex_header: \usepackage{color}
+#+latex_header: \usepackage{amsmath,amsfonts,amssymb}
+#+BEAMER_FRAME_LEVEL: 2
+#+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+* COMMENT Notes
+** TODO get the original from dropbox
+*** COMMENT get-orig-code
+#+name:get-orig
+#+begin_src R :session *R* :tangle no :exports none :eval no
+  ################################################################
+  # name:get-orig
+  fpath  <- "~/Dropbox/projects/IvanPhD/Papers/NCCARF/poster-deprecated-see-github"
+  dir(fpath, pattern="poster")
+  file.copy(file.path(fpath, "poster.pdf"), "poster.pdf")
+  getwd()
+#+end_src
+* Introduction
+This was presented as:
+
+\textbf{Hanigan IC}, Fisher D and McEachern S. Open Software for Restricted Data: a Climate/Suicide Health Impact Assessment Example. Speedtalk and Poster. National Climate Change Adaptation Research Facility  Conference 'Climate Adaptation knowledge and partnership'. June 2013, Sydney.
+
+* Aim
+** Aim
+- Restrictions data have increased recently. 
+- Access to data and analytic software addresses the:\\
+\indent \textbf{Replicability Crisis}, (Peng 2011, \emph{Science}, 334).
+- We built a safe Sever/Client IT environment for this. 
+- We show a Case Study of Suicide and Climate Impacts research.
+* Methods
+** Methods
+\begin{figure}[!h]
+\centering
+\includegraphics[width=.65\textwidth]{opensoft.pdf}
+\caption{1. System Design}
+\label{fig:sys}
+\end{figure}
+
+* Results
+** Results (Hanigan et al, 2012, \emph{PNAS}, 109)
+\begin{footnotesize}
+\begin{itemize}
+\item {\color{red}Restricted Health and Drought data} and 
+\item {\color{blue}Less Restricted Population data} 
+\end{itemize}
+(Colours refer to data storage and access rules shown in Figure 1).
+\begin{eqnarray*}
+        log({\color{red} O_{ijk}})  & = & s({\color{red}ExposureVariable})  + {\color{blue} OtherExplanators}  \\
+        & &   + AgeGroup_{i} + Sex_{j} \\
+        & &   + {\color{blue} SpatialZone_{k}}  \\
+        & &  + sin(Time \times 2 \times \pi) + cos(Time \times 2 \times \pi) \\
+        & &  + Trend \\
+        & &   + offset({\color{blue} log(Pop_{ijk})})\\
+\end{eqnarray*}
+\end{footnotesize}
+\begin{tiny}
+\noindent Where:\\
+        \indent ${\color{red}O_{ijk}}$ = Outcome (counts) by Age$_{i}$, Sex$_{j}$ and SpatialZone$_{k}$ \\
+        \indent {\color{red}ExposureVariable} = Data with {\color{red}Restrictive Intellectual Property~(IP)} \\
+        \indent {\color{blue}OtherExplanators} = Other {\color{blue}Less Restricted}  Explanatory variables \\
+        \indent s( ) = penalized regression splines \\
+        \indent ${\color{blue} SpatialZone_{k}}$  = {\color{blue} Less Restricted} data representing the $SpatialZone_{k}$  \\
+        \indent Trend = Longterm smooth trend(s) \\
+        \indent ${\color{blue}Pop_{ijk}}$ = interpolated Census populations, by time in each group\\
+\end{tiny}
+
+** Future (Bambrick et al, 2008, Garnaut Review)
+\begin{footnotesize}
+$$Y_{ijk}=\sum_{lm}(e^{(\beta_{ijk} \times {\color{red} X_{lm}})} - 1) \times {\color{red}BaselineRate_{jkl}} \times {\color{blue} Population_{jklm}}$$
+\noindent Where:\\
+$\beta_{ijk}$ = the ExposureVariable coefficient for zone$_i$, age$_j$ and sex$_{k}$ \\
+${\color{red}X_{lm}}$ = Projected Future ExposureVariables {\color{red} with Restrictive IP} \\
+{\color{red}BaselineRate$_{jkl}$} = {\color{red}avgDeathsPerTime}/{\color{blue}avgPopPerTime} in age$_j$, sex$_k$ and zone$_l$ \\
+{\color{blue}Population$_{jklm}$} = projected populations by age$_j$, sex$_k$, zone$_l$ and time$_m$ {\color{blue} (With Less Restrictions)}\\
+
+\end{footnotesize}
+* Conclusion
+** Conclusion
+This system:
+\begin{itemize}
+\item Enables data analysis in a safe environment
+\item Allows comparison of multiple climate scenarios and assumptions
+\item Demonstrated with a Climate/Health Impact Assessment
+\end{itemize}
+\begin{itemize}
+\begin{large}
+\item And this is Reproducible
+\end{large}
+\end{itemize}
+
+* Acknowledgements
+** Acknowledgements
+\includegraphics[width=4cm]{ANU_LOGO_cmyk_56mm.png}
+\includegraphics[width=2cm]{andslogo.pdf}
+\includegraphics[width=3cm]{deptlogo.pdf} \\
+\begin{footnotesize}
+This project is supported by the Australian National Data Service through the National Collaborative Research Infrastructure Strategy Program and the Education Investment Fund (EIF) Super Science Initiative.
+
+More information from \texttt{ivan.hanigan@gmail.com} or at \texttt{http://opensoftware-restricteddata.github.io}
+
+\end{footnotesize}
+
+
+* References
+** References
+\begin{footnotesize}
+\begin{thebibliography}{1}
+
+\bibitem{Peng2011}
+Roger~D Peng.
+\newblock {Reproducible research in computational science.}
+\newblock {\em Science (New York, N.Y.)}, 334(6060):1226--7, December 2011.
+
+\bibitem{Hanigan2012b}
+I.~C. Hanigan, C.~D. Butler, P.~N. Kokic, and M.~F. Hutchinson.
+\newblock {Suicide and drought in New South Wales, Australia, 1970-2007}.
+\newblock {\em Proceedings of the National Academy of Sciences}, pages
+  1112965109--, August 2012.
+
+\bibitem{Climate2008}
+Hilary~J Bambrick, Keith B~G Dear, RE~Woodruff, Ivan~Charles Hanigan, and
+  Anthony~J McMichael.
+\newblock {The impacts of climate change on three health outcomes:
+  temperature-related mortality and hospitalisations, salmonellosis and other
+  bacterial gastroenteritis, and population at risk from dengue.}
+\newblock Technical report, Garnaut Climate Change Review, Canberra, 2008.
+
+\end{thebibliography}
+\end{footnotesize}
