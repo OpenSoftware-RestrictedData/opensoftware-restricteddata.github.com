@@ -1,9 +1,9 @@
 #+TITLE:     Open Software - Restricted Data:  A Suicide/Climate Case Study.
 #+AUTHOR:  Ivan Hanigan$^1$, David Fisher$^2$, Steven McEachern$^3$
-
-
 #+EMAIL:     ivan.hanigan@anu.edu.au
 #+DATE:      \today
+#+OPTIONS: tex:t 
+
 * COMMENT Notes
 ** TODO get the original from dropbox
 *** COMMENT get-orig-code
@@ -15,6 +15,9 @@
   dir(fpath, pattern="poster")
   file.copy(file.path(fpath, "poster.pdf"), "poster.pdf")
   getwd()
+  dir(fpath, pattern="opensoft")
+  file.copy(file.path(fpath, "opensoft.png"), "opensoft.png")
+  
 #+end_src
 * Introduction
 This was presented as:
@@ -32,8 +35,9 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
 - We built a safe Sever/Client IT environment for this. 
 - We show a Case Study of Suicide and Climate Impacts research.
 
-* COMMENT Methods
-** Methods
+* Methods
+[[file:opensoft.png]]
+** COMMENT Methods
 \begin{figure}[!h]
 \centering
 \includegraphics[width=.65\textwidth]{opensoft.pdf}
@@ -41,14 +45,10 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
 \label{fig:sys}
 \end{figure}
 
-* COMMENT Results
+* Results
 ** Results (Hanigan et al, 2012, \emph{PNAS}, 109)
-\begin{footnotesize}
-\begin{itemize}
-\item {\color{red}Restricted Health and Drought data} and 
-\item {\color{blue}Less Restricted Population data} 
-\end{itemize}
-(Colours refer to data storage and access rules shown in Figure 1).
+
+
 \begin{eqnarray*}
         log({\color{red} O_{ijk}})  & = & s({\color{red}ExposureVariable})  + {\color{blue} OtherExplanators}  \\
         & &   + AgeGroup_{i} + Sex_{j} \\
@@ -57,8 +57,15 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
         & &  + Trend \\
         & &   + offset({\color{blue} log(Pop_{ijk})})\\
 \end{eqnarray*}
-\end{footnotesize}
-\begin{tiny}
+
+** COMMENT cut
+
+- {\color{red}Restricted Health and Drought data} and 
+- {\color{blue}Less Restricted Population data} 
+
+(Colours refer to data storage and access rules shown in Figure 1).
+
+
 \noindent Where:\\
         \indent ${\color{red}O_{ijk}}$ = Outcome (counts) by Age$_{i}$, Sex$_{j}$ and SpatialZone$_{k}$ \\
         \indent {\color{red}ExposureVariable} = Data with {\color{red}Restrictive Intellectual Property~(IP)} \\
@@ -67,9 +74,9 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
         \indent ${\color{blue} SpatialZone_{k}}$  = {\color{blue} Less Restricted} data representing the $SpatialZone_{k}$  \\
         \indent Trend = Longterm smooth trend(s) \\
         \indent ${\color{blue}Pop_{ijk}}$ = interpolated Census populations, by time in each group\\
-\end{tiny}
 
-** Future (Bambrick et al, 2008, Garnaut Review)
+
+** COMMENT Future (Bambrick et al, 2008, Garnaut Review)
 \begin{footnotesize}
 $$Y_{ijk}=\sum_{lm}(e^{(\beta_{ijk} \times {\color{red} X_{lm}})} - 1) \times {\color{red}BaselineRate_{jkl}} \times {\color{blue} Population_{jklm}}$$
 \noindent Where:\\
