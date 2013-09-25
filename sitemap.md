@@ -53,7 +53,7 @@ t</li>
 <li><a href="#sec-5-4-5">TODO 4.1.6 expose spatial data</a></li>
 </ul>
 </li>
-<li><a href="/postgresql.html">4.2 Configuting PostgreSQL </a>
+<li><a href="/postgresql.html">4.2 Configuring PostgreSQL </a>
 <ul>
 <li><a href="#sec-4-1-1">TODO 4.2.1 PostgreSQL connection settings</a></li>
 <li><a href="#sec-4-1-2">TODO 4.2.2 Allow connection to postgres through the firewall</a></li>
