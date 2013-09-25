@@ -21,7 +21,7 @@ This was presented as:
 
 Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Climate/Suicide Health Impact Assessment Example. Speedtalk and Poster. National Climate Change Adaptation Research Facility  Conference 'Climate Adaptation knowledge and partnership'. June 2013, Sydney.
 
-- [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/presentations-nccarf-2013/poster.pdf][Poster]]
+- [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/poster.pdf][Poster]]
 - [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/presentation-hanigan-final.pdf][Speedtalk]]
 
 * Aim
