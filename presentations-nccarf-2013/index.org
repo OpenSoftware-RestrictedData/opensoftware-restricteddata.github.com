@@ -25,12 +25,13 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
 - [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/presentation-hanigan-final.pdf][Speedtalk]]
 
 * Aim
-** Aim
+
 - Restrictions data have increased recently. 
 - Access to data and analytic software addresses the:\\
-\indent \textbf{Replicability Crisis}, (Peng 2011, \emph{Science}, 334).
+* TODO Addresses the Replicability Crisis, (Peng 2011, Science, 334).
 - We built a safe Sever/Client IT environment for this. 
 - We show a Case Study of Suicide and Climate Impacts research.
+
 * COMMENT Methods
 ** Methods
 \begin{figure}[!h]
