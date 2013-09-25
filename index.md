@@ -32,3 +32,5 @@ appropriate and safe manner whilst allowing use of open software to
 enhance reproducibility and accessibility.  The system implementation
 is described specifically for the [Australian National Research Cloud
 provided by the NeCTAR group](http://www.nectar.org.au/research-cloud/).
+
+[Presentation](/presentations-nccarf-2013/)
