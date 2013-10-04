@@ -1,4 +1,4 @@
-% Created 2013-10-04 Fri 18:48
+% Created 2013-10-05 Sat 01:18
 \documentclass[bigger]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
@@ -9,6 +9,7 @@
 \usepackage{verbatim}
 \usepackage{color}
 \usepackage{amsmath,amsfonts,amssymb}
+\AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 \providecommand{\alert}[1]{\textbf{#1}}
 
 \title{Climate Change Health Impact Assessments:  Farmer Suicide and Drought Case Study.}
@@ -26,30 +27,109 @@
 
 % Org-mode is exporting headings to 3 levels.
 
-
-
 \section{Aim}
 \label{sec-1}
 \begin{frame}
 \frametitle{Aim}
 \label{sec-1-1}
 
+Climate Change Health Impact Assessments (CCHIA) need
 \begin{itemize}
-\item General tools for Climate Change Health Impact Assessments (CCHIA)
-\item Enhanced capacity for experimentation, reviews, revisions and re-iterations
+\item Workflow tools for data management and analysis
+\item Enhanced capacity for experimentation, reviews, revisions
 \end{itemize}
 
-Current approach:
+General approach:
 \begin{itemize}
-\item historical baseline exposure-response functions, control for some covariates
-\item use response function with changed exposures and population at risk
+\item historical exposure-response functions, control covariates
+\item future response with changed exposures and population at risk
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Motivating Case Study: Climate/Suicide}
+\label{sec-1-2}
+
+\begin{itemize}
+\item Suicide has been linked to climate in a variety of studies
+\item Climate change impact on mental health is a gap in knowledge
+\item Use methods to analyse the relationship between Drought/Suicide
+\item Estimate future Climate Change impacts
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{New Tools are Needed}
+\label{sec-1-3}
+
+\begin{itemize}
+\item Restrictions on access to suicide data have increased recently.
+\item Growing concern about the \textbf{Replicability Crisis}, (Peng 2011, \emph{Science}, 334).
+\item Access to data and analytic software addresses this.
+\item We built a safe Sever/Client IT environment.
 \end{itemize}
 \end{frame}
 \section{Methods}
 \label{sec-2}
 \begin{frame}
-\frametitle{Historical (Hanigan et al, 2012, \emph{PNAS}, 109)}
+\frametitle{System Design}
 \label{sec-2-1}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=.65\textwidth]{opensoft.pdf}
+\caption{1. System Design}
+\label{fig:sys}
+\end{figure}
+\end{frame}
+\begin{frame}
+\frametitle{Linux Cluster}
+\label{sec-2-2}
+
+\begin{itemize}
+\item National Research Cloud (www.nectar.org.au/research-cloud)
+\item Centos 6.4 (www.centos.org)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{PostGIS Database (The Brawn)}
+\label{sec-2-3}
+
+\begin{itemize}
+\item PostgreSQL 9.2 (www.postgresql.org)
+\item PostGIS 2.0 (postgis.refractions.net)
+\end{itemize} 
+\end{frame}
+\begin{frame}
+\frametitle{Analysis (The Brains)}
+\label{sec-2-4}
+
+\begin{itemize}
+\item R language for statistical computing (www.r-project.org)
+\item Rstudio server (www.rstudio.com/)
+\item OpenGeo Suite (opengeo.org)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Information Management}
+\label{sec-2-5}
+
+\begin{itemize}
+\item Projects,UsersDB Oracle XE APEX (www.oracle.com)
+\item Data Catalogue (assda.anu.edu.au/ddiindex.html)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{The Client Side}
+\label{sec-2-6}
+
+\begin{itemize}
+\item The Kepler Project (www.kepler-project.org)
+\item pgAdmin (www.pgadmin.org)
+\item Git Version Control and GitHub (github.com)
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Case Study: Historical}
+\label{sec-2-7}
 
 \begin{footnotesize}
 \begin{itemize}
@@ -78,9 +158,10 @@ Current approach:
 \end{tiny}
 \end{frame}
 \begin{frame}
-\frametitle{Historical (Hanigan et al, 2012, \emph{PNAS}, 109)}
-\label{sec-2-2}
+\frametitle{Case Study: Historical}
+\label{sec-2-8}
 
+Hanigan et al, 2012, \emph{PNAS}, 109:
 \begin{itemize}
 \item 38 years suicide rates with drought by 11 regions, age and sex
 \item Estimated 9\% in rural males aged 30-49 due to drought over the period
@@ -89,9 +170,10 @@ Current approach:
 \end{itemize}
 \end{frame}
 \begin{frame}
-\frametitle{Future (Bambrick et al, 2008, Garnaut Review)}
-\label{sec-2-3}
+\frametitle{Case Study: Future}
+\label{sec-2-9}
 
+Bambrick et al, 2008, Garnaut Review:
 \begin{footnotesize}
 $$Y_{ijk}=\sum_{lm}(e^{(\beta_{ijk} \times {\color{red} X_{lm}})} - 1) \times {\color{red}BaselineRate_{jkl}} \times {\color{blue} Population_{jklm}}$$
 \noindent Where:\\
@@ -110,14 +192,16 @@ ${\color{red}X_{lm}}$ = Projected Future ExposureVariables {\color{red} with Res
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=.5\textwidth]{Figure1.png}
+\includegraphics[width=.45\textwidth]{Figure1.png}
 \caption{Figure1.png}
 \label{fig:Figure1.png}
 \end{figure}
 \end{frame}
+\section{Discussion}
+\label{sec-4}
 \begin{frame}
 \frametitle{Criticism}
-\label{sec-3-2}
+\label{sec-4-1}
 
 This model is too static, reductionist, reality is more complex. Need to work more on interactions with non-climate factors especially: 
 \begin{itemize}
@@ -129,23 +213,35 @@ This model is too static, reductionist, reality is more complex. Need to work mo
 \end{itemize}
 \end{frame}
 \section{Conclusion}
-\label{sec-4}
+\label{sec-5}
 \begin{frame}
 \frametitle{Conclusion}
-\label{sec-4-1}
+\label{sec-5-1}
 
 \begin{itemize}
 \item Drought is related to increased suicide risk in Australia
 \item Future Drought associated deaths can be calculated
 \item These estimates will be very uncertain, contentious and difficult to justify
-\item New technology is needed to enable rigorous and transparent exploration
+\item Data management and analysis technology such as that presented is needed to enable rigorous and transparent exploration
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Conclusion}
+\label{sec-5-2}
+
+This system:
+\begin{itemize}
+\item Enables data analysis in a safe environment
+\item Allows comparison of multiple climate scenarios and assumptions
+\item Demonstrated with a Climate/Health Impact Assessment
+\item This is Reproducible
 \end{itemize}
 \end{frame}
 \section{Acknowledgements}
-\label{sec-5}
+\label{sec-6}
 \begin{frame}
 \frametitle{Acknowledgements}
-\label{sec-5-1}
+\label{sec-6-1}
 
 \includegraphics[width=4cm]{ANU_LOGO_cmyk_56mm.png}
 \includegraphics[width=2cm]{andslogo.pdf}
@@ -158,10 +254,10 @@ More information from \texttt{ivan.hanigan@gmail.com} or at \texttt{[[http://ope
 \end{footnotesize}
 \end{frame}
 \section{References}
-\label{sec-6}
+\label{sec-7}
 \begin{frame}
 \frametitle{References}
-\label{sec-6-1}
+\label{sec-7-1}
 
 \begin{footnotesize}
 \begin{thebibliography}{1}

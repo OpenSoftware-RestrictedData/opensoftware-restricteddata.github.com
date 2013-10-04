@@ -1,7 +1,5 @@
 #+TITLE:     Climate Change Health Impact Assessments:  Farmer Suicide and Drought Case Study.
 #+AUTHOR:  Ivan Hanigan$^1$, David Fisher$^2$, Steven McEachern$^3$
-
-
 #+EMAIL:     ivan.hanigan@anu.edu.au
 #+DATE:      \today
 #+DESCRIPTION:
@@ -24,25 +22,62 @@
 #+latex_header: \usepackage{amsmath,amsfonts,amssymb}
 #+BEAMER_FRAME_LEVEL: 2
 #+COLUMNS: %40ITEM %10BEAMER_env(Env) %9BEAMER_envargs(Env Args) %4BEAMER_col(Col) %10BEAMER_extra(Extra)
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
 
 * Aim
 ** Aim
-- Restrictions data have increased recently. 
-- Access to data and analytic software addresses the:\\
-\indent \textbf{Replicability Crisis}, (Peng 2011, \emph{Science}, 334).
-- We built a safe Sever/Client IT environment for this. 
-- We show a Case Study of Suicide and Climate Impacts research.
+Climate Change Health Impact Assessments (CCHIA) need
+- Workflow tools for data management and analysis
+- Enhanced capacity for experimentation, reviews, revisions
+
+General approach:
+- historical exposure-response functions, control covariates
+- future response with changed exposures and population at risk 
+** Motivating Case Study: Climate/Suicide
+- Suicide has been linked to climate in a variety of studies
+- Climate change impact on mental health is a gap in knowledge
+- Use methods to analyse the relationship between Drought/Suicide
+- Estimate future Climate Change impacts
+** New Tools are Needed
+- Restrictions on access to suicide data have increased recently. 
+- Growing concern about the \textbf{Replicability Crisis}, (Peng 2011, \emph{Science}, 334).
+- Access to data and analytic software addresses this.
+- We built a safe Sever/Client IT environment. 
+
 * Methods
-** Methods
+** System Design
 \begin{figure}[!h]
 \centering
 \includegraphics[width=.65\textwidth]{opensoft.pdf}
 \caption{1. System Design}
 \label{fig:sys}
 \end{figure}
+** Linux Cluster
+- National Research Cloud (www.nectar.org.au/research-cloud)
+- Centos 6.4 (www.centos.org)
+** PostGIS Database (The Brawn)
+\begin{itemize}
+\item PostgreSQL 9.2 (www.postgresql.org)
+\item PostGIS 2.0 (postgis.refractions.net)
+\end{itemize} 
 
-* Results
-** Results (Hanigan et al, 2012, \emph{PNAS}, 109)
+** Analysis (The Brains)
+-  R language for statistical computing (www.r-project.org)
+-  Rstudio server (www.rstudio.com/)
+-  OpenGeo Suite (opengeo.org)
+
+
+** Information Management
+- Projects,UsersDB Oracle XE APEX (www.oracle.com)
+- Data Catalogue (assda.anu.edu.au/ddiindex.html)
+
+** The Client Side
+-  The Kepler Project (www.kepler-project.org)
+-  pgAdmin (www.pgadmin.org)
+-  Git Version Control and GitHub (github.com)
+
+
+** Case Study: Historical 
 \begin{footnotesize}
 \begin{itemize}
 \item {\color{red}Restricted Health and Drought data} and 
@@ -69,7 +104,15 @@
         \indent ${\color{blue}Pop_{ijk}}$ = interpolated Census populations, by time in each group\\
 \end{tiny}
 
-** Future (Bambrick et al, 2008, Garnaut Review)
+** Case Study: Historical 
+Hanigan et al, 2012, \emph{PNAS}, 109:
+- 38 years suicide rates with drought by 11 regions, age and sex
+- Estimated 9% in rural males aged 30-49 due to drought over the period
+- Increased for rural males 10-29 y
+- Association with hot temp + spring
+
+** Case Study: Future 
+Bambrick et al, 2008, Garnaut Review:
 \begin{footnotesize}
 $$Y_{ijk}=\sum_{lm}(e^{(\beta_{ijk} \times {\color{red} X_{lm}})} - 1) \times {\color{red}BaselineRate_{jkl}} \times {\color{blue} Population_{jklm}}$$
 \noindent Where:\\
@@ -79,19 +122,43 @@ ${\color{red}X_{lm}}$ = Projected Future ExposureVariables {\color{red} with Res
 {\color{blue}Population$_{jklm}$} = projected populations by age$_j$, sex$_k$, zone$_l$ and time$_m$ {\color{blue} (With Less Restrictions)}\\
 
 \end{footnotesize}
+* Results
+** Drought-suicide response function
+\begin{figure}[!h]
+\centering
+\includegraphics[width=.45\textwidth]{Figure1.png}
+\caption{Figure1.png}
+\label{fig:Figure1.png}
+\end{figure}
+
+
+*** COMMENT get-pic-drt-code
+#+name:get-pic-drt
+#+begin_src R :session *R* :tangle src/get-pic-drt.r :exports none :eval no
+  ################################################################
+  # name:get-pic-drt
+  file.copy("/home/ivan_hanigan/Dropbox/projects/IvanPhD/Papers/Suicide and Drought in NSW/document/submission2/Figure1.tif", "Figure1.tif")
+#+end_src
+* Discussion
+** Criticism
+This model is too static, reductionist, reality is more complex. Need to work more on interactions with non-climate factors especially: 
+- Natural capital
+- Financial capital
+- Social capital
+- Physical capital and
+- Human capital
 * Conclusion
 ** Conclusion
+- Drought is related to increased suicide risk in Australia
+- Future Drought associated deaths can be calculated
+- These estimates will be very uncertain, contentious and difficult to justify
+- Data management and analysis technology such as that presented is needed to enable rigorous and transparent exploration 
+** Conclusion
 This system:
-\begin{itemize}
-\item Enables data analysis in a safe environment
-\item Allows comparison of multiple climate scenarios and assumptions
-\item Demonstrated with a Climate/Health Impact Assessment
-\end{itemize}
-\begin{itemize}
-\begin{large}
-\item And this is Reproducible
-\end{large}
-\end{itemize}
+- Enables data analysis in a safe environment
+- Allows comparison of multiple climate scenarios and assumptions
+- Demonstrated with a Climate/Health Impact Assessment 
+- This is Reproducible
 
 * Acknowledgements
 ** Acknowledgements
@@ -104,7 +171,6 @@ This project is supported by the Australian National Data Service through the Na
 More information from \texttt{ivan.hanigan@gmail.com} or at \texttt{http://opensoftware-restricteddata.github.io}
 
 \end{footnotesize}
-
 
 * References
 ** References
