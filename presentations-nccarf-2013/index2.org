@@ -3,6 +3,8 @@
 #+EMAIL:     ivan.hanigan@anu.edu.au
 #+DATE:      \today
 #+OPTIONS: tex:t 
+#+latex_header: \usepackage{color}
+#+latex_header: \usepackage{amsmath,amsfonts,amssymb}
 
 * COMMENT Notes
 ** TODO get the original from dropbox
@@ -35,7 +37,7 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
 - We built a safe Sever/Client IT environment for this. 
 - We show a Case Study of Suicide and Climate Impacts research.
 
-* COMMENT Methods
+* Methods
 [[file:opensoft.png]]
 ** COMMENT Methods
 \begin{figure}[!h]
@@ -45,8 +47,14 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
 \label{fig:sys}
 \end{figure}
 
-* COMMENT Results
-** Results (Hanigan et al, 2012, \emph{PNAS}, 109)
+* Results
+** Results (Hanigan et al, 2012, PNAS, 109)
+\begin{eqnarray*}
+Colours & = & - {\color{red}Restricted Health and Drought data} and \\
+        & & - {\color{blue}Less Restricted Population data} \\
+\end{eqnarray*}
+
+(Colours refer to data storage and access rules shown in Figure 1).
 
 
 \begin{eqnarray*}
@@ -59,11 +67,6 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
 \end{eqnarray*}
 
 ** COMMENT cut
-
-- {\color{red}Restricted Health and Drought data} and 
-- {\color{blue}Less Restricted Population data} 
-
-(Colours refer to data storage and access rules shown in Figure 1).
 
 
 \noindent Where:\\
