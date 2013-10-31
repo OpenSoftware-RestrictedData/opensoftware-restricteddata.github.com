@@ -4712,6 +4712,7 @@ Future ideas to try:
 - see if R connections are not being closed properly and causing issues with max connections (dbDisconnect(con))
 - investigate file system differences, ext3?  
 - seperate out the transaction log - pg_xlog (journaling not required)
+- add recommendation to do  vacuumdb -a -z (equivalent of VACUUM ANALYZE on each)
 
 References:
 http://stackoverflow.com/a/2095283
