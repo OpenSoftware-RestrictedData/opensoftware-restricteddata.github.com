@@ -1645,6 +1645,49 @@ Once you are up-to-date you can bulk load layers from the postgis store with [th
       # save
 #+end_src  
 
+
+**** Secure tomcat
+- We have a service called Nessus that reviewed the VM tomcat port 
+- found some minor issues
+***** Apache Tomcat servlet/JSP container default files
+Synopsis
+The remote web server contains example files.
+Description
+Example JSPs and Servlets are installed in the remote Apache Tomcat servlet/JSP container. These files should be
+removed as they may help an attacker uncover information about the remote Tomcat install or host itself. Or they may
+themselves contain vulnerabilities such as cross-site scripting issues.
+Solution
+Review the files and delete those that are not needed.
+Risk Factor
+Medium
+CVSS Base Score
+6.8 (CVSS2#AV:N/AC:M/Au:N/C:P/I:P/A:P)
+Plugin Information:
+Publication date: 2004/03/02, Modification date: 2012/01/20
+Ports
+tcp/8081
+ 
+The following default files were found :
+ 
+ /examples/servlets/index.html
+ /examples/jsp/snp/snoop.jsp
+ /examples/jsp/index.html
+
+Just remove this dir?
+cd /usr/share/apache-tomcat-6.0.37/webapps
+rm -R -f examples/
+
+***** CGI Generic Cross-Site Scripting (persistent, 3rd Pass)
+A CGI application hosted on the remote web server is potentially prone to cross-site scripting attacks.
+Description
+The remote web server hosts one or more CGI scripts that fail to adequately sanitize request strings containing
+malicious JavaScript. By leveraging this issue, an attacker may be able to cause arbitrary HTML and script code to be
+executed in a user's browser within the security context of the affected site.
+This script identified patterns that were injected to test 'reflected'
+(aka 'non-persistent') XSS. The issues are likely to be 'persistent' (or 'stored') after all
+Solution
+Restrict access to the vulnerable application and contact the vendor for a patch or upgrade
+
 *** COMMENT DEPRECATED? OpenGeo Suite /opengeosuite.html
 **** COMMENT DEPRECATED? The OpenGeo Suite Installer
 #+begin_src markdown :tangle opengeosuite.md :exports reports :eval no :padline no
