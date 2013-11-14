@@ -216,7 +216,7 @@ The R code produces the plot:
 [1]: http://www.nectar.org.au/research-cloud/ "Nectar"
 #+end_src
 
-* Site map
+* COMMENT Site map
 #+name:introduction
 #+begin_src html :tangle sitemap.md :exports none :eval no :padline no
   --- 
@@ -543,7 +543,7 @@ The R code produces the plot:
   
 #+end_src
 
-* quick Overview
+* COMMENT quick Overview
 the specs of our system
 I've used this section to summarise the requirements we have:
 1 Centos 6.4 with root login enabled
