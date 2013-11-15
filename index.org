@@ -4792,6 +4792,8 @@ Load the tables to the new ORAPHI.
 In the event of an upgrade to a tested replacement you may find that the contents on the running VM that is getting retired is more current than the old stuff in the replacement tested server so will need to sync.
 * Examples
 ** Pumilio for Bioacoustics
+[[~/projects/pumilio-bushfm/index.org]]
+
 #+name:copy
 #+begin_src sh :session *shell* :tangle no :exports none :eval yes
   ################################################################
