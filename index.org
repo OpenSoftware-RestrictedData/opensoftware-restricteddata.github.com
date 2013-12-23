@@ -972,6 +972,31 @@ There are various TODOs hidden in the source code document.
 #PubkeyAuthentication yes
 #AuthorizedKeysFile	.ssh/authorized_keys
 #+end_src
+*** TODO add a ssh key
+- get the private/public key generated
+- insert the public key
+
+#+name:insert-ssh-key
+#+begin_src sh :session *shell* :tangle no :exports none :eval no
+ssh root@your-server
+sudo the-user-you-want-to-allow
+cd .ssh
+nano authorized_keys
+# copy paste the contents of yourkey.pub
+# C-x to close and save
+sudo nano /etc/ssh/sshd_config
+# make sure PubkeyAuthentication yes
+# is it OK for PasswordAuthentication yes?
+# uncomment AuthorizedKeysFile     %h/.ssh/authorized_keys
+sudo /etc/init.d/ssh restart
+
+#if that works you should be able to access from local
+cd .ssh
+ssh -i yourkey user@your-server
+
+
+#+end_src
+
 *** COMMENT  setting password authentication to no?
 **** TODO TODO Sounds like a bad idea, I decided not to follow the advice here:
 #+name:security
