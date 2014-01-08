@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Open Software for Restricted Data: an Environmental Epidemiology example"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-11-14T21:03+1100"/>
+<meta name="generated" content="2014-01-08T12:42+1100"/>
 <meta name="author" content="Ivan Hanigan, Steven McEachern and David Fisher "/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -142,7 +142,8 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#sec-3-4">3.4 Security measures</a>
 <ul>
-<li><a href="#sec-3-4-1">3.4.1 Restrict ssh access to a specific ip address/range</a></li>
+<li><a href="#sec-3-4-1">3.4.1 add a ssh key</a></li>
+<li><a href="#sec-3-4-2">3.4.2 Restrict ssh access to a specific ip address/range</a></li>
 </ul>
 </li>
 <li><a href="#sec-3-5">3.5 Setting the host.* TCP Wrappers</a>
@@ -576,7 +577,7 @@ In the next chunk, insert the relevant ip address and you may have to answer yes
 </p>
 
 
-<pre class="src src-sh"><span style="color: #839496; font-weight: bold;">cd</span> ~/.ssh
+<pre class="src src-sh"><span style="color: #268bd2; font-style: italic;">cd</span> ~/.ssh
 ssh -i keypairname root@your.new.ip.address
 <span style="color: #586e75;"># </span><span style="color: #586e75;">it is prudent to set a hideously long password for root</span>
 <span style="color: #586e75;"># </span><span style="color: #586e75;">passwd root</span>
@@ -636,13 +637,31 @@ There are various TODOs hidden in the source code document.
 </pre>
 
 
+</div>
+
+<div id="outline-container-3-4-1" class="outline-4">
+<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> <span class="todo TODO">TODO</span> add a ssh key</h4>
+<div class="outline-text-4" id="text-3-4-1">
+
+<ul>
+<li>get the private/public key generated
+</li>
+<li>insert the public key
+</li>
+</ul>
+
+
+
+
 
 
 </div>
 
-<div id="outline-container-3-4-1" class="outline-4">
-<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> Restrict ssh access to a specific ip address/range</h4>
-<div class="outline-text-4" id="text-3-4-1">
+</div>
+
+<div id="outline-container-3-4-2" class="outline-4">
+<h4 id="sec-3-4-2"><span class="section-number-4">3.4.2</span> Restrict ssh access to a specific ip address/range</h4>
+<div class="outline-text-4" id="text-3-4-2">
 
 
 
@@ -738,7 +757,7 @@ vi /etc/selinux/config
 <pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
 <span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">swapon</span>
 <span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-size: 140%; font-weight: bold;">title: Swap space</span>
+<span style="color: #268bd2; font-weight: bold;">title: Swap space</span>
 <span style="color: #268bd2; font-weight: bold;">---</span>
 
 For some reason the Research Cloud Centos VMs do not have any swap space.
@@ -898,7 +917,7 @@ print buckets
 <pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
 <span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">opengeosuite-restricted</span>
 <span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-size: 140%; font-weight: bold;">title: Restricted OpenGeo Suite</span>
+<span style="color: #268bd2; font-weight: bold;">title: Restricted OpenGeo Suite</span>
 <span style="color: #268bd2; font-weight: bold;">---</span>
 
   &lt;li&gt;&lt;a href="#sec-5-3-8"&gt;TODO Previous: &lt;/a&gt;&lt;/li&gt;
@@ -911,7 +930,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">Code Centos</span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code Centos</span>
 <span style="color: #268bd2; font-weight: bold;">    # find out your os</span>
 <span style="color: #268bd2; font-weight: bold;">    cat /etc/issue</span>
 <span style="color: #268bd2; font-weight: bold;">    uname -r</span>
@@ -923,7 +942,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">Code Redhat</span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code Redhat</span>
 <span style="color: #268bd2; font-weight: bold;">    cd /etc/yum.repos.d</span>
 <span style="color: #268bd2; font-weight: bold;">    wget http://yum.opengeo.org/suite/v3/rhel/6/x86_64/OpenGeo.repo</span>
 <span style="color: #268bd2; font-weight: bold;">    yum install opengeo-suite</span>
@@ -941,7 +960,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">Code</span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
 <span style="color: #268bd2; font-weight: bold;">    service tomcat6 stop</span>
 <span style="color: #268bd2; font-weight: bold;">    chkconfig tomcat6 off</span>
 <span style="color: #268bd2; font-weight: bold;">    cd /usr/share          </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
@@ -1132,14 +1151,14 @@ Restrict access to the vulnerable application and contact the vendor for a patch
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-size: 140%; font-weight: bold;">Install PostgreSQL 9.2</span> 
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">Install PostgreSQL 9.2</span> 
 PostgreSQL is an Open Source database that can be extended with GIS functionality using the PostGIS tools.  The latest version is 9.2.  Please see <span style="color: #859900; font-weight: bold;">[this link]</span><span style="color: #2aa198;">(http://people.planetpostgresql.org/devrim/index.php?/archives/70-How-to-install-PostgreSQL-9.2-on-RHELCentOSScientific-Linux-5-and-6.html)</span>  for the orginial documentation I used to install this on Centos or Redhat 6.4.  Check the correct download from <span style="color: #859900; font-weight: bold;">[this link]</span><span style="color: #2aa198;">(http://yum.postgresql.org/repopackages.php#pg92)</span>. Please note that this didn't work on Ubuntu 12.04 LTS for me in early 2013 because PostGIS 2.0 was not included in their repositories.  I ended up rolling back to PostgreSQL 9.1 on that machine.
 
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">Code</span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
 <span style="color: #268bd2; font-weight: bold;">    # install the PostgreSQL 9.2 repo package</span>
 <span style="color: #268bd2; font-weight: bold;">    rpm -ivh http://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/pgdg-centos92-9.2-6.noarch.rpm</span>
 <span style="color: #268bd2; font-weight: bold;">    # install PostgreSQL 9.2 with single command:</span>
@@ -1161,7 +1180,7 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">Code</span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
 <span style="color: #268bd2; font-weight: bold;">    #edit your pg_hba.conf file under /var/lib/pgsql/9.2/data</span>
 <span style="color: #268bd2; font-weight: bold;">    #I added a super user from my ip address and allowed all the local ip addresses access</span>
 <span style="color: #268bd2; font-weight: bold;">    host    all             postgres        my.desk.ip.address/32       md5</span>
@@ -1173,7 +1192,7 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">Code</span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
 <span style="color: #268bd2; font-weight: bold;">    #connect to psql</span>
 <span style="color: #268bd2; font-weight: bold;">    #Set postgres Password</span>
 <span style="color: #268bd2; font-weight: bold;">    su - postgres</span>
@@ -1192,7 +1211,7 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">Code</span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
 <span style="color: #268bd2; font-weight: bold;">    # First locate the postgresql.conf file under /var/lib/pgsql/9.2/data.</span>
 <span style="color: #268bd2; font-weight: bold;">    # uncomment and change from localhost</span>
 <span style="color: #268bd2; font-weight: bold;">    # listen_addresses = '*'</span>
@@ -1235,21 +1254,21 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 <pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
 <span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">postgis</span>
 <span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-size: 140%; font-weight: bold;">title: PostGIS</span>
+<span style="color: #268bd2; font-weight: bold;">title: PostGIS</span>
 <span style="color: #268bd2; font-weight: bold;">---</span>
 
 &lt;li&gt;&lt;a href="/postgresql.html"&gt;Previous: PostgreSQL&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="/postgres-migrate.html"&gt;Next: PostgreSQL Migrate&lt;/a&gt;&lt;/li&gt;
 
 
-<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-size: 140%; font-weight: bold;">Install PostGIS 2.0</span>
+<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">Install PostGIS 2.0</span>
 The PostGIS suite enables a PostgreSQL database with spatial data types and analysis functions.
 
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-size: 130%; font-weight: bold;">References</span> <span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
+<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">References</span> <span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
  <span style="color: #859900; font-weight: bold;">[http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos]</span><span style="color: #2aa198;">([http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos])</span>
     <span style="color: #859900; font-weight: bold;">[http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html]</span><span style="color: #2aa198;">(http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html)</span>
     <span style="color: #859900; font-weight: bold;">[http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html]</span><span style="color: #2aa198;">(http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html)</span>
@@ -1349,7 +1368,7 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
 
 
 <pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: transformations grid for Australian projections</span>
-    <span style="color: #839496; font-weight: bold;">cd</span> /usr/share/proj
+    <span style="color: #268bd2; font-style: italic;">cd</span> /usr/share/proj
     <span style="color: #586e75;"># </span><span style="color: #586e75;">the original was moved</span>
     <span style="color: #586e75;"># </span><span style="color: #586e75;">wget http://www.icsm.gov.au/icsm/gda/gdatm/national66.zip</span>
     wget http://www.icsm.gov.au/gda/gdatm/national66.zip
@@ -1428,7 +1447,7 @@ cat(sql)
 <pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">---</span>
 <span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">postgres-migrate</span>
 <span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-size: 140%; font-weight: bold;">title: PostgreSQL migration from default location</span>
+<span style="color: #268bd2; font-weight: bold;">title: PostgreSQL migration from default location</span>
 <span style="color: #268bd2; font-weight: bold;">---</span>
 
 &lt;li&gt;&lt;a href="/postgis.html"&gt;Previous: PostGIS&lt;/a&gt;&lt;/li&gt;
@@ -1491,13 +1510,13 @@ From here to a secure location at my work.
 <pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
 <span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">sharedmemory</span>
 <span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-size: 140%; font-weight: bold;">title: Important Shared Memory Settings</span>
+<span style="color: #268bd2; font-weight: bold;">title: Important Shared Memory Settings</span>
 <span style="color: #268bd2; font-weight: bold;">---</span>
 
-<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-size: 140%; font-weight: bold;">Managing memory settings</span>
+<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">Managing memory settings</span>
 The default settings in PostgreSQL are usually pretty good but these memory settings are conservative to start with and often need modifications.
 
-<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-size: 140%; font-weight: bold;">References</span>
+<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">References</span>
 
 <span style="color: #859900; font-weight: bold;">[Kernal memory limitations]</span><span style="color: #2aa198;">(http://michael.otacoo.com/postgresql-2/take-care-of-kernel-memory-limitation-for-postgresql-shared-buffers/)</span>
 
@@ -1639,7 +1658,7 @@ download.file(<span style="color: #2aa198;">'http://www.abs.gov.au/AUSSTATS/subs
 <pre class="src src-sh"><span style="color: #586e75;"># </span><span style="color: #586e75;">psql -d ewedb -U postgres -h 115.146.94.209</span>
 <span style="color: #586e75;"># </span><span style="color: #586e75;">CREATE SCHEMA abs_sla;</span>
 <span style="color: #586e75;"># </span><span style="color: #586e75;">grant ALL on schema abs_sla to gislibrary;</span>
-<span style="color: #839496; font-weight: bold;">cd</span> data
+<span style="color: #268bd2; font-style: italic;">cd</span> data
 shp2pgsql -s 4283 -D tassla06.shp public.tassla06 &gt; tassla06.sql
 <span style="color: #586e75;"># </span><span style="color: #586e75;">psql -d ewedb -U gislibrary -W -h 115.146.94.209 -f tassla06.sql</span>
 <span style="color: #586e75;"># </span><span style="color: #586e75;">warning terminal not fully functional?  ran from normal terminal</span>
@@ -1830,7 +1849,7 @@ Include /etc/httpd/sites/
 &lt;VirtualHost *:80&gt;
 
   ServerName rstudio.ivan.com
-  RedirectMatch ^(<span style="color: #839496; font-weight: bold;">.</span>*)$ https://rstudio.ivan.com$<span style="color: #268bd2;">1</span>
+  RedirectMatch ^(<span style="color: #268bd2; font-style: italic;">.</span>*)$ https://rstudio.ivan.com$<span style="color: #268bd2;">1</span>
 
 &lt;/VirtualHost&gt;
 <span style="color: #586e75;"># </span><span style="color: #586e75;">goodo</span>
@@ -2060,7 +2079,7 @@ yum install <span style="color: #2aa198;">'graphviz*'</span>
 
 <span style="color: #586e75;"># </span><span style="color: #586e75;">as root</span>
 R
-<span style="color: #839496; font-weight: bold;">source</span>(<span style="color: #2aa198;">'http://bioconductor.org/biocLite.R'</span>)
+<span style="color: #268bd2; font-style: italic;">source</span>(<span style="color: #2aa198;">'http://bioconductor.org/biocLite.R'</span>)
 <span style="color: #268bd2;">biocLite</span>(<span style="color: #2aa198;">"Rgraphviz"</span>)
 <span style="color: #268bd2;">q</span>()
 </pre>
@@ -2202,9 +2221,9 @@ mkdir /projects/OpenSoftware-RestrictedData/Archives
 <span style="color: #586e75;"># </span><span style="color: #586e75;">on your remote server</span>
 
 ssh root@ip.address.of.server
-<span style="color: #839496; font-weight: bold;">cd</span> /
+<span style="color: #268bd2; font-style: italic;">cd</span> /
 mkdir backups
-<span style="color: #839496; font-weight: bold;">cd</span> backups
+<span style="color: #268bd2; font-style: italic;">cd</span> backups
 zip -r homebackup_yyyymmdd /home
 <span style="color: #586e75;">#</span><span style="color: #586e75;">scp homebackup_yyyymmdd.zip root@ip.address.of.server:/Archives</span>
 <span style="color: #586e75;">#</span><span style="color: #586e75;">or use the R studio download file function</span>
@@ -2213,7 +2232,7 @@ zip -r homebackup_yyyymmdd /home
 scp /Archives/homebackup.zip root@ipaddress:/home
 <span style="color: #586e75;"># </span><span style="color: #586e75;">and unzip (TODO need to mv these up to the /home/ level after unzip)</span>
 ssh root@ip.address.of.server
-<span style="color: #839496; font-weight: bold;">cd</span> home
+<span style="color: #268bd2; font-style: italic;">cd</span> home
 unzip homebackup.zip
 rm homebackup.zip
 </pre>
@@ -2845,8 +2864,15 @@ sudo apt-get update &amp;&amp; sudo apt-get install truecrypt
 <span style="color: #586e75;"># </span><span style="color: #586e75;">name:ResearchData</span>
 cd /home
 mkdir ResearchData
-chmod 0777 /home/ResearchData
-<span style="color: #586e75;"># </span><span style="color: #586e75;">TODO check the security of this</span>
+<span style="color: #586e75;"># </span><span style="color: #586e75;">and them to a particular group</span>
+groupadd researchdata
+usermod -a -G researchdata username
+chown -R root:researchdata /home/ResearchData
+<span style="color: #586e75;"># </span><span style="color: #586e75;">TODO check what the security numeric codes do</span>
+chmod -R 0777 /home/ResearchData
+chmod -R 0750 /home/ResearchData
+service rstudio-server restart
+<span style="color: #586e75;"># </span><span style="color: #586e75;">user may need to q() from R session and sign out of rstudio?</span>
 </pre>
 
 
@@ -3142,7 +3168,7 @@ CRICOS provider #00120C.
 
 
 <pre class="src src-sh">update accessors 
-<span style="color: #839496; font-weight: bold;">set</span> othermat = <span style="color: #2aa198;">'phone number'</span>
+<span style="color: #268bd2; font-style: italic;">set</span> othermat = <span style="color: #2aa198;">'phone number'</span>
 where accessornames = <span style="color: #2aa198;">'username'</span>;
 </pre>
 
@@ -3422,6 +3448,8 @@ In the event of an upgrade to a tested replacement you may find that the content
 <h3 id="sec-8-1"><span class="section-number-3">8.1</span> Pumilio for Bioacoustics</h3>
 <div class="outline-text-3" id="text-8-1">
 
+<p><a href="file:///home/ivan/projects/pumilio-bushfm/index.html">~/projects/pumilio-bushfm/index.org</a>
+</p>
 
 
 
