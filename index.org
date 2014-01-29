@@ -4294,6 +4294,81 @@ service rstudio-server restart
 #+end_src
 
 
+** TODO Share with windows network
+*** COMMENT share-with-windows-code
+#+name:share-with-windows
+#+begin_src R :session *R* :tangle src/share-with-windows.r :exports none :eval no
+  ################################################################
+  # source http://www.howtogeek.com/176471/how-to-share-files-between-windows-and-linux/
+  yum install samba.x86_64
+  smbpasswd -a username
+  # Note: In this example, we already have a Linux user with that name – but you can choose any name you’d like.
+  # Now, use your favorite editor to configure the smb.conf file.
+  sudo vi /etc/samba/smb.conf
+  # Scroll down to the end of the file and add these lines:
+  
+      [<folder_name>]
+      path = /home/<user_name>/<folder_name>
+      available = yes
+      valid users = <user_name>
+      read only = no
+      browsable = yes
+      public = yes
+      writable = yes
+  # Obviously, you’ll need to replace some of the values with your personal settings.
+  #Save the file and close your editor.  Now, restart the SMB service for the changes to take effect.
+  
+  sudo service smbd restart
+  
+  #Your shared folder should now be accessible from a Windows PC.
+  
+  # change the iptables to allow access
+  #http://www.cyberciti.biz/faq/what-ports-need-to-be-open-for-samba-to-communicate-with-other-windowslinux-systems/
+  grep -i NETBIOS /etc/services 
+
+make changes to nectar security groups
+  # and http://troy.jdmz.net/samba/fw/
+  # just before the line with "-j REJECT" in it: 
+  -A INPUT -p udp -m udp --dport 137 -j ACCEPT
+  -A INPUT -p udp -m udp --dport 138 -j ACCEPT
+  -A INPUT -m state --state NEW -m tcp -p tcp --dport 139 -j ACCEPT
+  -A INPUT -m state --state NEW -m tcp -p tcp --dport 445 -j ACCEPT
+  # also try
+  -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 137 -j ACCEPT
+  -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 138 -j ACCEPT
+  -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 139 -j ACCEPT
+  -A INPUT -s 192.168.1.0/24 -m state --state NEW -p tcp --dport 445 -j ACCEPT
+  
+  service iptables restart
+  # http://wiki.centos.org/HowTos/SetUpSamba
+-A RH-Firewall-1-INPUT -s 192.168.10.0/24 -m state --state NEW -m tcp -p tcp --dport 445 -j ACCEPT
+-A RH-Firewall-1-INPUT -s 192.168.10.0/24 -m state --state NEW -m udp -p udp --dport 445 -j ACCEPT
+
+Don't be scared of the syntax. I'm not going to cover firewalls but understand the basics.
+
+-s (ip address) limits to the Class C ip addresses of your installation. Of course you need to modify to your own network and this makes is far more secure than giving the entire world access to your network.
+
+--state NEW [basically means a new rule.]
+
+-p [the port you want to open up which is either tcp or udp. I've done the hard work for you so you don't have to figure out which type to open up]
+
+dport 445 [This is the port number. Again for AD we use port 445.
+
+Now, if your Samba setup demands the old netbios calls:
+
+-A RH-Firewall-1-INPUT -s 192.168.10.0/24 -m state --state NEW -m udp -p udp --dport 137 -j ACCEPT
+-A RH-Firewall-1-INPUT -s 192.168.10.0/24 -m state --state NEW -m udp -p udp --dport 138 -j ACCEPT
+-A RH-Firewall-1-INPUT -s 192.168.10.0/24 -m state --state NEW -m tcp -p tcp --dport 139 -j ACCEPT
+
+# next tried http://rbgeek.wordpress.com/2012/05/25/how-to-install-samba-server-on-centos-6/
+[global]
+ workgroup = WORKGROUP
+ security = share
+ map to guest = bad user
+
+# give up, comment out the iptables rules
+#+end_src
+
 * Procedures for add users to the system.
 ** Description of the access procedure
 *** Getting Access
