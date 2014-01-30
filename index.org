@@ -4769,6 +4769,13 @@ Then SCP to your local copy
 scp  username@the.remote.server.zz:/backup_yyyymmdd.dump /path/to/localbackup
 
 #+end_src
+*** or simple home backup 
+#(set up passwordless ssh)
+#http://www.linuxproblem.org/art_9.html
+
+chrontab -e
+15 0 * * * rsync -arvR /home/ root@my.server.ip:/ 
+:wq
 
 *** Restore databse dump into a new database on another machine.
 #+name:brawn-dump-restore-header
