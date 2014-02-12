@@ -3558,7 +3558,7 @@ Using RJDBC is what I recommend.  I found ROracle suboptimal.
 ** unlock
 *** unlock header
 #+name:unlock-header
-#+begin_src markdown :tangle no :exports none :eval no :padline no
+#+begin_src markdown :tangle no :exports reports :eval no :padline no
   ---
   name: unlock
   layout: default

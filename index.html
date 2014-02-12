@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Open Software for Restricted Data: an Environmental Epidemiology example"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2014-01-08T12:42+1100"/>
+<meta name="generated" content="2014-02-12T17:24+1100"/>
 <meta name="author" content="Ivan Hanigan, Steven McEachern and David Fisher "/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -244,6 +244,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-5-6">5.6 Set up a private git server for data and code</a></li>
 <li><a href="#sec-5-7">5.7 True-Crypt encrypted volumes</a></li>
 <li><a href="#sec-5-8">5.8 ResearchData storage</a></li>
+<li><a href="#sec-5-9">5.9 Share with windows network</a></li>
 </ul>
 </li>
 <li><a href="#sec-6">6 Procedures for add users to the system.</a>
@@ -301,9 +302,10 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-7-4-1">7.4.1 Find out how big is it?</a></li>
 <li><a href="#sec-7-4-2">7.4.2 Dump and download it to a secure computer</a></li>
-<li><a href="#sec-7-4-3">7.4.3 Restore databse dump into a new database on another machine.</a></li>
-<li><a href="#sec-7-4-4">7.4.4 launch a new Nectar VM from the snapshot image</a></li>
-<li><a href="#sec-7-4-5">7.4.5 mount the 2nd disc and load/restore the postgres db and data into it</a></li>
+<li><a href="#sec-7-4-3">7.4.3 or simple home backup</a></li>
+<li><a href="#sec-7-4-4">7.4.4 Restore databse dump into a new database on another machine.</a></li>
+<li><a href="#sec-7-4-5">7.4.5 launch a new Nectar VM from the snapshot image</a></li>
+<li><a href="#sec-7-4-6">7.4.6 mount the 2nd disc and load/restore the postgres db and data into it</a></li>
 </ul>
 </li>
 <li><a href="#sec-7-5">7.5 Disaster Recovery Plan</a>
@@ -411,7 +413,7 @@ access data such as the Australian Deaths dataset.
 
 
 
-<pre class="src src-markdown">We present an environment for analysing restricted data using open
+<pre class="example">We present an environment for analysing restricted data using open
 software.  The system is described using an analysis of the historical
 association of suicides with drought in Australia; and extrapolate
 this under climate change and adaptation scenarios.  These tools were
@@ -569,7 +571,7 @@ If your on linux then orgmode can execute these chunks using C-c C-c.
 </p>
 
 
-<pre class="src src-sh">whoami
+<pre class="example">whoami
 </pre>
 
 <p>
@@ -577,10 +579,10 @@ In the next chunk, insert the relevant ip address and you may have to answer yes
 </p>
 
 
-<pre class="src src-sh"><span style="color: #268bd2; font-style: italic;">cd</span> ~/.ssh
+<pre class="example">cd ~/.ssh
 ssh -i keypairname root@your.new.ip.address
-<span style="color: #586e75;"># </span><span style="color: #586e75;">it is prudent to set a hideously long password for root</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">passwd root</span>
+# it is prudent to set a hideously long password for root
+# passwd root
 </pre>
 
 
@@ -606,7 +608,7 @@ ssh -i keypairname root@your.new.ip.address
 </p>
 
 
-<pre class="src src-sh">yum update 
+<pre class="example">yum update 
 </pre>
 
 </div>
@@ -626,14 +628,14 @@ There are various TODOs hidden in the source code document.
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:security</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">visit </span>
+<pre class="example">################################################################
+# name:security
+#visit 
 /etc/ssh/sshd_config
-<span style="color: #586e75;">#</span><span style="color: #586e75;">under authentication remark out </span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">RSAAuthentication yes</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">PubkeyAuthentication yes</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">AuthorizedKeysFile     .ssh/authorized_keys</span>
+#under authentication remark out 
+#RSAAuthentication yes
+#PubkeyAuthentication yes
+#AuthorizedKeysFile     .ssh/authorized_keys
 </pre>
 
 
@@ -698,15 +700,15 @@ There are various TODOs hidden in the source code document.
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;"># </span><span style="color: #586e75;">selinux config</span>
+<pre class="example"># selinux config
 vi /etc/selinux/config
-<span style="color: #586e75;"># </span><span style="color: #586e75;">This file controls the state of SELinux on the system.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">SELINUX= can take one of these three values:</span>
-<span style="color: #586e75;">#     </span><span style="color: #586e75;">enforcing - SELinux security policy is enforced.</span>
-<span style="color: #586e75;">#     </span><span style="color: #586e75;">permissive - SELinux prints warnings instead of enforcing.</span>
-<span style="color: #586e75;">#     </span><span style="color: #586e75;">disabled - No SELinux policy is loaded.</span>
-<span style="color: #268bd2;">SELINUX</span>=enforcing
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Change SELINUX=enforcing to disabled</span>
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# Change SELINUX=enforcing to disabled
 </pre>
 
 
@@ -725,7 +727,7 @@ vi /etc/selinux/config
 </p>
 
 
-<pre class="src src-sh">yum install gcc-gfortran gcc-c++ readline-devel libpng-devel libX11-devel libXt-devel texinfo-tex.x86_64 tetex-dvips docbook-utils-pdf cairo-devel java-1.6.0-openjdk-devel libxml2-devel make unzip hdparm
+<pre class="example">yum install gcc-gfortran gcc-c++ readline-devel libpng-devel libX11-devel libXt-devel texinfo-tex.x86_64 tetex-dvips docbook-utils-pdf cairo-devel java-1.6.0-openjdk-devel libxml2-devel make unzip hdparm
 </pre>
 
 </div>
@@ -741,7 +743,7 @@ vi /etc/selinux/config
 </p>
 
 
-<pre class="src src-sh">df -h
+<pre class="example">df -h
 </pre>
 
 
@@ -754,11 +756,11 @@ vi /etc/selinux/config
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
-<span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">swapon</span>
-<span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-weight: bold;">title: Swap space</span>
-<span style="color: #268bd2; font-weight: bold;">---</span>
+<pre class="example">--- 
+name: swapon
+layout: default
+title: Swap space
+---
 
 For some reason the Research Cloud Centos VMs do not have any swap space.
 I added one GB swapfile, but was advised to enable about the same amount as we have RAM.
@@ -767,23 +769,23 @@ I will come back and review this, also I was too lazy to add to boot so just do 
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code</span>
+<pre class="example">#### Code
     free -m | grep Swap
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2;">Add swap file with this</span>:
+<pre class="example">Add swap file with this:
 </pre>
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">Create an empty file called /swapfile (here over 2 GB is required for oracle but for just one GB it is count = 1024, need to come back and review)</span>
-    dd <span style="color: #268bd2;">if</span>=/dev/zero <span style="color: #268bd2;">of</span>=/swapfile <span style="color: #268bd2;">bs</span>=1024000 <span style="color: #268bd2;">count</span>=3000
-    <span style="color: #586e75;">#</span><span style="color: #586e75;">Format the new file to make it a swap file</span>
+<pre class="example">#### Code
+    # Create an empty file called /swapfile (here over 2 GB is required for oracle but for just one GB it is count = 1024, need to come back and review)
+    dd if=/dev/zero of=/swapfile bs=1024000 count=3000
+    #Format the new file to make it a swap file
     mkswap /swapfile
-    <span style="color: #586e75;">#</span><span style="color: #586e75;">Enable the new swapfile. </span>
+    #Enable the new swapfile. 
     swapon /swapfile
     free -m | grep Swap
 </pre>
@@ -804,13 +806,13 @@ to networking.  (davidjb, Mon Mar 26, 2012 support.rc.nectar.org.au/forum).
 
 
 
-<pre class="src src-R"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:netrulses</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Just remove the /lib/udev/write_net_rules file (and</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">/etc/udev/rules.d/70-persistent-net.rules for good measure), and then</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">any further instances will always have their networking adapter as</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">eth0. There's probably a better way to do this, but that's working for</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">me now</span>
+<pre class="example">################################################################
+# name:netrulses
+# Just remove the /lib/udev/write_net_rules file (and
+# /etc/udev/rules.d/70-persistent-net.rules for good measure), and then
+# any further instances will always have their networking adapter as
+# eth0. There's probably a better way to do this, but that's working for
+# me now
 rm /lib/udev/write_net_rules
 rm /etc/udev/rules.d/70-persistent-net.rules
 </pre>
@@ -831,14 +833,14 @@ rm /etc/udev/rules.d/70-persistent-net.rules
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">######################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Mount the drive to /home eg.</span>
+<pre class="example">######################################################################
+# Mount the drive to /home eg.
 mount -t ext3 /dev/vdb /home
-<span style="color: #586e75;"># </span><span style="color: #586e75;">df -h</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">once successful edit /etc/fstab to mount the drive at boot e.g.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">/dev/vdb    /home    ext3     defaults    0 0</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Reboot the server to ensure that the drive mounts on boot.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">check performance</span>
+# df -h
+# once successful edit /etc/fstab to mount the drive at boot e.g.
+# /dev/vdb    /home    ext3     defaults    0 0
+# Reboot the server to ensure that the drive mounts on boot.
+# check performance
 hdparm -tT /dev/vdb
 </pre>
 
@@ -914,38 +916,38 @@ print buckets
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
-<span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">opengeosuite-restricted</span>
-<span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-weight: bold;">title: Restricted OpenGeo Suite</span>
-<span style="color: #268bd2; font-weight: bold;">---</span>
+<pre class="example">--- 
+name: opengeosuite-restricted
+layout: default
+title: Restricted OpenGeo Suite
+---
 
   &lt;li&gt;&lt;a href="#sec-5-3-8"&gt;TODO Previous: &lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href="/opengeosuite-upgrade-tomcat6.html"&gt;Next: Disable Tomcat&lt;/a&gt;&lt;/li&gt;
 &lt;p&gt;&lt;/p&gt;
 
-The OpenGeo Suite provides a complete spatial data server software stack.  I use this for the batch install and configuration (TODO look into the individual components offered by OpenGeo). I don't want the Brawn server to run the tomcat etc.  <span style="color: #859900; font-weight: bold;">[Installation instructions are here]</span><span style="color: #2aa198;">(http://suite.opengeo.org/opengeo-docs/installation/linux/centos/suite.html)</span> but beware that the Redhat version requires the optional channel to be enabled. 
+The OpenGeo Suite provides a complete spatial data server software stack.  I use this for the batch install and configuration (TODO look into the individual components offered by OpenGeo). I don't want the Brawn server to run the tomcat etc.  [Installation instructions are here](http://suite.opengeo.org/opengeo-docs/installation/linux/centos/suite.html) but beware that the Redhat version requires the optional channel to be enabled. 
 
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code Centos</span>
-<span style="color: #268bd2; font-weight: bold;">    # find out your os</span>
-<span style="color: #268bd2; font-weight: bold;">    cat /etc/issue</span>
-<span style="color: #268bd2; font-weight: bold;">    uname -r</span>
-<span style="color: #268bd2; font-weight: bold;">    # if centos</span>
-<span style="color: #268bd2; font-weight: bold;">    cd /etc/yum.repos.d</span>
-<span style="color: #268bd2; font-weight: bold;">    wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo</span>
-<span style="color: #268bd2; font-weight: bold;">    yum install opengeo-suite</span>
+<pre class="example">#### Code Centos
+    # find out your os
+    cat /etc/issue
+    uname -r
+    # if centos
+    cd /etc/yum.repos.d
+    wget http://yum.opengeo.org/suite/v3/centos/6/x86_64/OpenGeo.repo
+    yum install opengeo-suite
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code Redhat</span>
-<span style="color: #268bd2; font-weight: bold;">    cd /etc/yum.repos.d</span>
-<span style="color: #268bd2; font-weight: bold;">    wget http://yum.opengeo.org/suite/v3/rhel/6/x86_64/OpenGeo.repo</span>
-<span style="color: #268bd2; font-weight: bold;">    yum install opengeo-suite</span>
+<pre class="example">#### Code Redhat
+    cd /etc/yum.repos.d
+    wget http://yum.opengeo.org/suite/v3/rhel/6/x86_64/OpenGeo.repo
+    yum install opengeo-suite
 </pre>
 
 
@@ -960,111 +962,111 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
-<span style="color: #268bd2; font-weight: bold;">    service tomcat6 stop</span>
-<span style="color: #268bd2; font-weight: bold;">    chkconfig tomcat6 off</span>
-<span style="color: #268bd2; font-weight: bold;">    cd /usr/share          </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    wget http://mirror.overthewire.com.au/pub/apache/tomcat/tomcat-6/v6.0.37/bin/apache-tomcat-6.0.37.tar.gz</span>
+<pre class="example">#### Code
+    service tomcat6 stop
+    chkconfig tomcat6 off
+    cd /usr/share            
+    wget http://mirror.overthewire.com.au/pub/apache/tomcat/tomcat-6/v6.0.37/bin/apache-tomcat-6.0.37.tar.gz
 
-<span style="color: #268bd2; font-weight: bold;">    tar -xzf apache-tomcat-6.0.37.tar.gz</span>
-<span style="color: #268bd2; font-weight: bold;">    #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,</span>
-<span style="color: #268bd2; font-weight: bold;">    cd /usr/share/apache-tomcat-6.0.37</span>
-<span style="color: #268bd2; font-weight: bold;">    vi conf/server.xml</span>
-<span style="color: #268bd2; font-weight: bold;">    # change &lt;Connector port="8081"/&gt; from 8080</span>
-<span style="color: #268bd2; font-weight: bold;">    # use vi /etc/sysconfig/iptables to check this port is open in firewall</span>
+    tar -xzf apache-tomcat-6.0.37.tar.gz
+    #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,
+    cd /usr/share/apache-tomcat-6.0.37
+    vi conf/server.xml
+    # change &lt;Connector port="8081"/&gt; from 8080
+    # use vi /etc/sysconfig/iptables to check this port is open in firewall
 
-<span style="color: #268bd2; font-weight: bold;">    vi conf/tomcat-users.xml</span>
-<span style="color: #268bd2; font-weight: bold;">    #if you want to use the manager, I did not for security reasons</span>
-<span style="color: #268bd2; font-weight: bold;">    #add a user with roles of admin,manager-gui like this</span>
-<span style="color: #268bd2; font-weight: bold;">    #&lt;role rolename="manager-gui"/&gt;</span>
-<span style="color: #268bd2; font-weight: bold;">    #&lt;user username="tomcat" password="s3cret" roles="manager-gui"/&gt;</span>
-<span style="color: #268bd2; font-weight: bold;">    </span>
-<span style="color: #268bd2; font-weight: bold;">    #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,</span>
-<span style="color: #268bd2; font-weight: bold;">    ./bin/startup.sh   </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    ./bin/shutdown.sh</span>
+    vi conf/tomcat-users.xml
+    #if you want to use the manager, I did not for security reasons
+    #add a user with roles of admin,manager-gui like this
+    #&lt;role rolename="manager-gui"/&gt;
+    #&lt;user username="tomcat" password="s3cret" roles="manager-gui"/&gt;
+    
+    #To start Tomcat, go to the bin folder of Tomcat installation and then run the startup.sh script,
+    ./bin/startup.sh     
+    ./bin/shutdown.sh
 
-<span style="color: #268bd2; font-weight: bold;">    # make a script for starting</span>
-<span style="color: #268bd2; font-weight: bold;">    cd /etc/init.d</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    vi tomcat</span>
-<span style="color: #268bd2; font-weight: bold;">    # add this</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # to find java_home "update-alternatives --display java" and remove bin/java</span>
-<span style="color: #268bd2; font-weight: bold;">    ####</span>
-<span style="color: #268bd2; font-weight: bold;">    #!/bin/bash</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # description: Tomcat Start Stop Restart</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # processname: tomcat</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # chkconfig: 234 20 80</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    JAVA_HOME=/usr/lib/jvm/jre-1.6.0-openjdk.x86_64</span>
-<span style="color: #268bd2; font-weight: bold;">    export JAVA_HOME</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    PATH=$JAVA_HOME/bin:$PATH</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    export PATH</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    CATALINA_HOME=/usr/share/apache-tomcat-6.0.37</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">      </span>
-<span style="color: #268bd2; font-weight: bold;">    case $1 in</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    start)</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    sh $CATALINA_HOME/bin/startup.sh</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    ;; </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    stop)   </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    sh $CATALINA_HOME/bin/shutdown.sh</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    ;; </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    restart)</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    sh $CATALINA_HOME/bin/shutdown.sh</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    sh $CATALINA_HOME/bin/startup.sh</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    ;; </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    esac    </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    exit 0</span>
-<span style="color: #268bd2; font-weight: bold;">    ####</span>
+    # make a script for starting
+    cd /etc/init.d  
+    vi tomcat
+    # add this  
+    # to find java_home "update-alternatives --display java" and remove bin/java
+    ####
+    #!/bin/bash  
+    # description: Tomcat Start Stop Restart  
+    # processname: tomcat  
+    # chkconfig: 234 20 80  
+    JAVA_HOME=/usr/lib/jvm/jre-1.6.0-openjdk.x86_64
+    export JAVA_HOME  
+    PATH=$JAVA_HOME/bin:$PATH  
+    export PATH  
+    CATALINA_HOME=/usr/share/apache-tomcat-6.0.37  
+      
+    case $1 in  
+    start)  
+    sh $CATALINA_HOME/bin/startup.sh  
+    ;;   
+    stop)     
+    sh $CATALINA_HOME/bin/shutdown.sh  
+    ;;   
+    restart)  
+    sh $CATALINA_HOME/bin/shutdown.sh  
+    sh $CATALINA_HOME/bin/startup.sh  
+    ;;   
+    esac      
+    exit 0
+    ####
 
-<span style="color: #268bd2; font-weight: bold;">    # now</span>
-<span style="color: #268bd2; font-weight: bold;">    chmod 755 tomcat</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    chkconfig --add tomcat</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    chkconfig --level 234 tomcat on</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # verify</span>
-<span style="color: #268bd2; font-weight: bold;">    chkconfig --list tomcat</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    service tomcat start</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # test stop, start, restart</span>
-<span style="color: #268bd2; font-weight: bold;">    more /usr/share/apache-tomcat-6.0.37/logs/catalina.out</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # to check for errors, but is all greek to me</span>
-<span style="color: #268bd2; font-weight: bold;">    # so assuming ddiindex was previously running on tomcat6</span>
-<span style="color: #268bd2; font-weight: bold;">    service tomcat stop</span>
+    # now
+    chmod 755 tomcat  
+    chkconfig --add tomcat  
+    chkconfig --level 234 tomcat on  
+    # verify
+    chkconfig --list tomcat  
+    service tomcat start  
+    # test stop, start, restart
+    more /usr/share/apache-tomcat-6.0.37/logs/catalina.out  
+    # to check for errors, but is all greek to me
+    # so assuming ddiindex was previously running on tomcat6
+    service tomcat stop
 
 
-<span style="color: #268bd2; font-weight: bold;">    cd /usr/share/tomcat6/webapps</span>
-<span style="color: #268bd2; font-weight: bold;">    cp -r dashboard /usr/share/apache-tomcat-6.0.37/webapps</span>
-<span style="color: #268bd2; font-weight: bold;">    cp -r geowebcache /usr/share/apache-tomcat-6.0.37/webapps</span>
-<span style="color: #268bd2; font-weight: bold;">    cp -r geoserver /usr/share/apache-tomcat-6.0.37/webapps  </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    cp -r opengeo-docs /usr/share/apache-tomcat-6.0.37/webapps      </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    cp -r geoexplorer /usr/share/apache-tomcat-6.0.37/webapps          </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    cp -r recipes /usr/share/apache-tomcat-6.0.37/webapps              </span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    cd /usr/share/apache-tomcat-6.0.37</span>
-<span style="color: #268bd2; font-weight: bold;">    service tomcat start</span>
+    cd /usr/share/tomcat6/webapps
+    cp -r dashboard /usr/share/apache-tomcat-6.0.37/webapps
+    cp -r geowebcache /usr/share/apache-tomcat-6.0.37/webapps
+    cp -r geoserver /usr/share/apache-tomcat-6.0.37/webapps    
+    cp -r opengeo-docs /usr/share/apache-tomcat-6.0.37/webapps        
+    cp -r geoexplorer /usr/share/apache-tomcat-6.0.37/webapps            
+    cp -r recipes /usr/share/apache-tomcat-6.0.37/webapps                
+    cd /usr/share/apache-tomcat-6.0.37
+    service tomcat start
 
-<span style="color: #268bd2; font-weight: bold;">    #now you have installed the suite go into the geoserver website</span><span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
-<span style="color: #268bd2; font-weight: bold;">    # http://ip.address.of.server:8081/dashboard</span>
-<span style="color: #268bd2; font-weight: bold;">    # then go to the geoserver and log in as admin with password geoserver</span>
-<span style="color: #268bd2; font-weight: bold;">    # follow instructions there to enhance the security</span>
+    #now you have installed the suite go into the geoserver website  
+    # http://ip.address.of.server:8081/dashboard
+    # then go to the geoserver and log in as admin with password geoserver
+    # follow instructions there to enhance the security
 
-<span style="color: #268bd2; font-weight: bold;">    # for The default user/group service should use digest password encoding see</span>
-<span style="color: #268bd2; font-weight: bold;">    #  http://suite.opengeo.org/docs/geoserver/security/tutorials/digest/index.html</span>
+    # for The default user/group service should use digest password encoding see
+    #  http://suite.opengeo.org/docs/geoserver/security/tutorials/digest/index.html
 
-<span style="color: #268bd2; font-weight: bold;">    # Configure the Digest authentication filter</span>
-<span style="color: #268bd2; font-weight: bold;">    # </span>
-<span style="color: #268bd2; font-weight: bold;">    # Start GeoServer and login to the web admin interface as the admin user.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Click the Authentication link located under the Security section of the navigation sidebar.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Scroll down to the Authentication Filters panel and click the Add new link.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Click the Digest link.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Fill in the fields of the settings form as follows:</span>
-<span style="color: #268bd2; font-weight: bold;">    # Set Name to &#8220;digest&#8221;</span>
-<span style="color: #268bd2; font-weight: bold;">    # Set User group service to &#8220;default&#8221;</span>
-<span style="color: #268bd2; font-weight: bold;">    # Save.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Back on the authentication page scroll down to the Filter Chains panel.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Select &#8220;Default&#8221; from the Request type drop down.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Unselect the basic filter and select the digest filter. Position the the digest filter before the anonymous filter.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Save</span>
-<span style="color: #268bd2; font-weight: bold;">    # </span>
-<span style="color: #268bd2; font-weight: bold;">    # now go to users, groups, roles</span>
-<span style="color: #268bd2; font-weight: bold;">    # under User Group Services, click default</span>
-<span style="color: #268bd2; font-weight: bold;">    # under Password encryption, change to digest</span>
-<span style="color: #268bd2; font-weight: bold;">    # save</span>
+    # Configure the Digest authentication filter
+    # 
+    # Start GeoServer and login to the web admin interface as the admin user.
+    # Click the Authentication link located under the Security section of the navigation sidebar.
+    # Scroll down to the Authentication Filters panel and click the Add new link.
+    # Click the Digest link.
+    # Fill in the fields of the settings form as follows:
+    # Set Name to “digest”
+    # Set User group service to “default”
+    # Save.
+    # Back on the authentication page scroll down to the Filter Chains panel.
+    # Select “Default” from the Request type drop down.
+    # Unselect the basic filter and select the digest filter. Position the the digest filter before the anonymous filter.
+    # Save
+    # 
+    # now go to users, groups, roles
+    # under User Group Services, click default
+    # under Password encryption, change to digest
+    # save
 </pre>
 
 
@@ -1151,25 +1153,25 @@ Restrict access to the vulnerable application and contact the vendor for a patch
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">Install PostgreSQL 9.2</span> 
-PostgreSQL is an Open Source database that can be extended with GIS functionality using the PostGIS tools.  The latest version is 9.2.  Please see <span style="color: #859900; font-weight: bold;">[this link]</span><span style="color: #2aa198;">(http://people.planetpostgresql.org/devrim/index.php?/archives/70-How-to-install-PostgreSQL-9.2-on-RHELCentOSScientific-Linux-5-and-6.html)</span>  for the orginial documentation I used to install this on Centos or Redhat 6.4.  Check the correct download from <span style="color: #859900; font-weight: bold;">[this link]</span><span style="color: #2aa198;">(http://yum.postgresql.org/repopackages.php#pg92)</span>. Please note that this didn't work on Ubuntu 12.04 LTS for me in early 2013 because PostGIS 2.0 was not included in their repositories.  I ended up rolling back to PostgreSQL 9.1 on that machine.
+<pre class="example">## Install PostgreSQL 9.2 
+PostgreSQL is an Open Source database that can be extended with GIS functionality using the PostGIS tools.  The latest version is 9.2.  Please see [this link](http://people.planetpostgresql.org/devrim/index.php?/archives/70-How-to-install-PostgreSQL-9.2-on-RHELCentOSScientific-Linux-5-and-6.html)  for the orginial documentation I used to install this on Centos or Redhat 6.4.  Check the correct download from [this link](http://yum.postgresql.org/repopackages.php#pg92). Please note that this didn't work on Ubuntu 12.04 LTS for me in early 2013 because PostGIS 2.0 was not included in their repositories.  I ended up rolling back to PostgreSQL 9.1 on that machine.
 
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
-<span style="color: #268bd2; font-weight: bold;">    # install the PostgreSQL 9.2 repo package</span>
-<span style="color: #268bd2; font-weight: bold;">    rpm -ivh http://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/pgdg-centos92-9.2-6.noarch.rpm</span>
-<span style="color: #268bd2; font-weight: bold;">    # install PostgreSQL 9.2 with single command:</span>
-<span style="color: #268bd2; font-weight: bold;">    yum groupinstall "PostgreSQL Database Server PGDG"</span>
-<span style="color: #268bd2; font-weight: bold;">    # This will install PostgreSQL 9.2 server, along with -contrib subpackage.</span>
-<span style="color: #268bd2; font-weight: bold;">    # Once it is installed, first initialize the cluster:</span>
-<span style="color: #268bd2; font-weight: bold;">    service postgresql-9.2 initdb</span>
-<span style="color: #268bd2; font-weight: bold;">    # Now, you can start PostgreSQL 9.2:</span>
-<span style="color: #268bd2; font-weight: bold;">    service postgresql-9.2 start</span>
-<span style="color: #268bd2; font-weight: bold;">    # If you want PostgreSQL 9.2 to start everytime on boot, run this:</span>
-<span style="color: #268bd2; font-weight: bold;">    chkconfig postgresql-9.2 on</span>
+<pre class="example">#### Code
+    # install the PostgreSQL 9.2 repo package
+    rpm -ivh http://yum.postgresql.org/9.2/redhat/rhel-6-x86_64/pgdg-centos92-9.2-6.noarch.rpm
+    # install PostgreSQL 9.2 with single command:
+    yum groupinstall "PostgreSQL Database Server PGDG"
+    # This will install PostgreSQL 9.2 server, along with -contrib subpackage.
+    # Once it is installed, first initialize the cluster:
+    service postgresql-9.2 initdb
+    # Now, you can start PostgreSQL 9.2:
+    service postgresql-9.2 start
+    # If you want PostgreSQL 9.2 to start everytime on boot, run this:
+    chkconfig postgresql-9.2 on
 </pre>
 
 
@@ -1180,44 +1182,44 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
-<span style="color: #268bd2; font-weight: bold;">    #edit your pg_hba.conf file under /var/lib/pgsql/9.2/data</span>
-<span style="color: #268bd2; font-weight: bold;">    #I added a super user from my ip address and allowed all the local ip addresses access</span>
-<span style="color: #268bd2; font-weight: bold;">    host    all             postgres        my.desk.ip.address/32       md5</span>
-<span style="color: #268bd2; font-weight: bold;">    # if you want to allow data sharing on a specific database then create a public user</span>
-<span style="color: #268bd2; font-weight: bold;">    # host    dbname        publicdata      0.0.0.0/0                   md5</span>
-<span style="color: #268bd2; font-weight: bold;">    # if you want people to access from a subnet at your work</span>
-<span style="color: #268bd2; font-weight: bold;">    # host    dbname        username        ip.address.range.0/24        md5</span>
+<pre class="example">#### Code
+    #edit your pg_hba.conf file under /var/lib/pgsql/9.2/data
+    #I added a super user from my ip address and allowed all the local ip addresses access
+    host    all             postgres        my.desk.ip.address/32       md5
+    # if you want to allow data sharing on a specific database then create a public user
+    # host    dbname        publicdata      0.0.0.0/0                   md5
+    # if you want people to access from a subnet at your work
+    # host    dbname        username        ip.address.range.0/24        md5
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
-<span style="color: #268bd2; font-weight: bold;">    #connect to psql</span>
-<span style="color: #268bd2; font-weight: bold;">    #Set postgres Password</span>
-<span style="color: #268bd2; font-weight: bold;">    su - postgres</span>
-<span style="color: #268bd2; font-weight: bold;">    psql postgres postgres</span>
-<span style="color: #268bd2; font-weight: bold;">    alter user postgres with password 'password';</span>
-<span style="color: #268bd2; font-weight: bold;">    select pg_reload_conf();</span>
-<span style="color: #268bd2; font-weight: bold;">    # close the psql using \q</span>
-<span style="color: #268bd2; font-weight: bold;">    # change back to root</span>
-<span style="color: #268bd2; font-weight: bold;">    exit</span>
+<pre class="example">#### Code
+    #connect to psql
+    #Set postgres Password
+    su - postgres
+    psql postgres postgres
+    alter user postgres with password 'password';
+    select pg_reload_conf();
+    # close the psql using \q
+    # change back to root
+    exit
 </pre>
 
 
 
-<pre class="src src-markdown">Now make the server listen for any connection requests from anywhere in the world.
+<pre class="example">Now make the server listen for any connection requests from anywhere in the world.
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">Code</span>
-<span style="color: #268bd2; font-weight: bold;">    # First locate the postgresql.conf file under /var/lib/pgsql/9.2/data.</span>
-<span style="color: #268bd2; font-weight: bold;">    # uncomment and change from localhost</span>
-<span style="color: #268bd2; font-weight: bold;">    # listen_addresses = '*'</span>
-<span style="color: #268bd2; font-weight: bold;">    # then restart the server</span>
-<span style="color: #268bd2; font-weight: bold;">    sudo service postgresql-9.2 restart</span>
-<span style="color: #268bd2; font-weight: bold;">    #then reboot and confirm postgres started</span>
+<pre class="example">#### Code
+    # First locate the postgresql.conf file under /var/lib/pgsql/9.2/data.
+    # uncomment and change from localhost
+    # listen_addresses = '*'
+    # then restart the server
+    sudo service postgresql-9.2 restart
+    #then reboot and confirm postgres started
 </pre>
 
 </li>
@@ -1228,9 +1230,9 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: setting-ports</span>
+<pre class="example">#### Code: setting-ports
     vi /etc/sysconfig/iptables 
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">and add the line</span>
+    # and add the line
     -A INPUT -m state --state NEW -m tcp -p tcp --dport 5432 -j ACCEPT
     service iptables restart
 </pre>
@@ -1251,32 +1253,32 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
-<span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">postgis</span>
-<span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-weight: bold;">title: PostGIS</span>
-<span style="color: #268bd2; font-weight: bold;">---</span>
+<pre class="example">--- 
+name: postgis
+layout: default
+title: PostGIS
+---
 
 &lt;li&gt;&lt;a href="/postgresql.html"&gt;Previous: PostgreSQL&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="/postgres-migrate.html"&gt;Next: PostgreSQL Migrate&lt;/a&gt;&lt;/li&gt;
 
 
-<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">Install PostGIS 2.0</span>
+## Install PostGIS 2.0
 The PostGIS suite enables a PostgreSQL database with spatial data types and analysis functions.
 
 </pre>
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">####</span> <span style="color: #268bd2; font-weight: bold;">References</span> <span style="color: #268bd2; font-weight: bold; text-decoration: underline;">  </span>
- <span style="color: #859900; font-weight: bold;">[http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos]</span><span style="color: #2aa198;">([http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos])</span>
-    <span style="color: #859900; font-weight: bold;">[http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html]</span><span style="color: #2aa198;">(http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html)</span>
-    <span style="color: #859900; font-weight: bold;">[http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html]</span><span style="color: #2aa198;">(http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html)</span>
+<pre class="example">#### References   
+ [http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos]([http://www.davidghedini.com/pg/entry/postgis_2_0_on_centos])
+    [http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html](http://people.planetpostgresql.org/devrim/index.php?/archives/64-PostGIS-2.0.0,-RPMs-and-so..html)
+    [http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html](http://people.planetpostgresql.org/devrim/index.php?/archives/65-Installing-PostGIS-2.0.X-on-RHELCentOSScientific-Linux-5-and-6-Fedora-That-is-easy!.html)
 </pre>
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">code: install-postgis2</span>
+<pre class="example">#### code: install-postgis2
     yum list postgis*
     yum install postgis2_92.x86_64 
     yum install postgis2_92-devel.x86_64
@@ -1293,16 +1295,16 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code</span>
+<pre class="example">#### Code
     sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
     sudo rpm -Uvh http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-7.noarch.rpm
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">yum list gdal*</span>
+    # yum list gdal*
     yum install gdal-devel.x86_64 
     yum install proj-devel.x86_64
     yum install proj-nad.x86_64
     yum install proj-epsg.x86_64 
     yum install geos-devel.x86_64
-    <span style="color: #586e75;">#</span><span style="color: #586e75;">to update</span>
+    #to update
     yum remove gdal*
     yum install gdal-devel.x86_64 
 </pre>
@@ -1315,7 +1317,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: Create Database</span>
+<pre class="example">#### Code: Create Database
     su - postgres 
     createdb mydb
     psql -d mydb -U postgres  
@@ -1333,22 +1335,22 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: Create a GIS user and a group</span>
+<pre class="example">#### Code: Create a GIS user and a group
     CREATE ROLE public_group;
-    CREATE ROLE ivan_hanigan LOGIN PASSWORD <span style="color: #2aa198;">'password'</span>;
+    CREATE ROLE ivan_hanigan LOGIN PASSWORD 'password';
     GRANT public_group TO ivan_hanigan;
 
     grant usage on schema public to public_group;
     GRANT select ON ALL TABLES IN SCHEMA public TO public_group;
-    grant execute on all functions<span style="color: #859900; font-weight: bold;"> in</span> schema public to public_group;
-    grant select on all sequences<span style="color: #859900; font-weight: bold;"> in</span> schema public to public_group;
+    grant execute on all functions in schema public to public_group;
+    grant select on all sequences in schema public to public_group;
     grant select on table geometry_columns to public_group;
     grant select on table spatial_ref_sys to public_group;
     grant select on table geography_columns to public_group;
     grant select on table raster_columns to public_group;
     grant select on table raster_overviews to public_group;
     \q
-    <span style="color: #859900; font-weight: bold;">exit</span>
+    exit
 </pre>
 
 
@@ -1359,34 +1361,34 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Additional Reprojection File</span>
+<pre class="example">#### Additional Reprojection File
 A special transformations grid file is required to be added to the PROJ.4 files for reprojecting the Australian projections AGD66 to GDA94.
 
-Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markham](http://stackoverflow.com/users/103225/fmark) <span style="color: #859900; font-weight: bold;">for</span> providing this solution.
+Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markham](http://stackoverflow.com/users/103225/fmark) for providing this solution.
 </pre>
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: transformations grid for Australian projections</span>
-    <span style="color: #268bd2; font-style: italic;">cd</span> /usr/share/proj
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">the original was moved</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">wget http://www.icsm.gov.au/icsm/gda/gdatm/national66.zip</span>
+<pre class="example">#### Code: transformations grid for Australian projections
+    cd /usr/share/proj
+    # the original was moved
+    # wget http://www.icsm.gov.au/icsm/gda/gdatm/national66.zip
     wget http://www.icsm.gov.au/gda/gdatm/national66.zip
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">if it moves again a version of it is included with this repo</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">from your local scp to your server</span>
+    # if it moves again a version of it is included with this repo
+    # from your local scp to your server
      
     yum install unzip
     unzip national66.zip
-    mv <span style="color: #2aa198;">"A66 National (13.09.01).gsb"</span> aust_national_agd66_13.09.01.gsb
+    mv "A66 National (13.09.01).gsb" aust_national_agd66_13.09.01.gsb
 
     su - postgres 
     psql -d mydb
 
     UPDATE spatial_ref_sys SET
-    <span style="color: #268bd2;">proj4text</span>=<span style="color: #2aa198;">'+proj=longlat +ellps=aust_SA +nadgrids=aust_national_agd66_13.09.01.gsb +wktext'</span>
-    where <span style="color: #268bd2;">srid</span>=4202;
+    proj4text='+proj=longlat +ellps=aust_SA +nadgrids=aust_national_agd66_13.09.01.gsb +wktext'
+    where srid=4202;
     \q
-    <span style="color: #859900; font-weight: bold;">exit</span>
+    exit
 </pre>
 
 
@@ -1397,31 +1399,31 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: test transformation from AGD66 to GDA94</span>
-    <span style="color: #859900; font-weight: bold;">select</span> geocode, geoname, st_transform(geom, 4283) as the_geom
+<pre class="example">#### Code: test transformation from AGD66 to GDA94
+    select geocode, geoname, st_transform(geom, 4283) as the_geom
     into schema.gda94_table
     from  schema.agd66_table;
 </pre>
 
 
 
-<pre class="src src-R"><span style="color: #586e75;">#### </span><span style="color: #586e75;">FROM YOUR R SERVER OR LOCAL ####</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">R</span>
-<span style="color: #268bd2; font-weight: bold;">require</span>(devtools)
-install_github(<span style="color: #2aa198;">"swishdbtools"</span>, <span style="color: #2aa198;">"swish-climate-impact-assessment"</span>)
-<span style="color: #268bd2; font-weight: bold;">require</span>(swishdbtools)
-pwd <span style="color: #268bd2; font-weight: bold;">&lt;-</span> getPassword(remote=F)
-ch <span style="color: #268bd2; font-weight: bold;">&lt;-</span> connect2postgres2(<span style="color: #2aa198;">"django"</span>)
-<span style="color: #586e75;">#</span><span style="color: #586e75;">("ip.address", "dbname", "postgres", p = pwd)</span>
-<span style="color: #586e75;">## </span><span style="color: #586e75;">dbSendQuery(su,</span>
-<span style="color: #586e75;">## </span><span style="color: #586e75;">"UPDATE spatial_ref_sys SET</span>
-<span style="color: #586e75;">## </span><span style="color: #586e75;">proj4text='+proj=longlat +ellps=aust_SA +nadgrids=aust_national_agd66_13.09.01.gsb +wktext'</span>
-<span style="color: #586e75;">## </span><span style="color: #586e75;">where srid=4202;</span>
-<span style="color: #586e75;">## </span><span style="color: #586e75;">")</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">now you can go ahead and convert AGD66 (4202) to GDA94 (4283)</span>
-sql <span style="color: #268bd2; font-weight: bold;">&lt;-</span> sql_subset_into(ch, <span style="color: #2aa198;">"schema.agd66_table"</span>, select =
-           <span style="color: #2aa198;">'geocode, geoname, st_transform(geom, 4283) as the_geom'</span>,
-           into_schema = <span style="color: #2aa198;">"schema"</span>, into_table = <span style="color: #2aa198;">"gda94_table"</span>, eval = F, check = F)
+<pre class="example">#### FROM YOUR R SERVER OR LOCAL ####
+#R
+require(devtools)
+install_github("swishdbtools", "swish-climate-impact-assessment")
+require(swishdbtools)
+pwd &lt;- getPassword(remote=F)
+ch &lt;- connect2postgres2("django")
+#("ip.address", "dbname", "postgres", p = pwd)
+## dbSendQuery(su,
+## "UPDATE spatial_ref_sys SET
+## proj4text='+proj=longlat +ellps=aust_SA +nadgrids=aust_national_agd66_13.09.01.gsb +wktext'
+## where srid=4202;
+## ")
+# now you can go ahead and convert AGD66 (4202) to GDA94 (4283)
+sql &lt;- sql_subset_into(ch, "schema.agd66_table", select =
+           'geocode, geoname, st_transform(geom, 4283) as the_geom',
+           into_schema = "schema", into_table = "gda94_table", eval = F, check = F)
 cat(sql)
 
 </pre>
@@ -1444,11 +1446,11 @@ cat(sql)
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">---</span>
-<span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">postgres-migrate</span>
-<span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-weight: bold;">title: PostgreSQL migration from default location</span>
-<span style="color: #268bd2; font-weight: bold;">---</span>
+<pre class="example">---
+name: postgres-migrate
+layout: default
+title: PostgreSQL migration from default location
+---
 
 &lt;li&gt;&lt;a href="/postgis.html"&gt;Previous: PostGIS&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="/sharedmemory.html"&gt;Next: Important shared memory settings&lt;/a&gt;&lt;/li&gt;
@@ -1458,21 +1460,21 @@ To take advantage of the extra storage on the secondary disk we mounted in the i
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: Migrate PostgreSQL Data</span>
+<pre class="example">#### Code: Migrate PostgreSQL Data
     service postgresql-9.2 stop
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">Copy the pgsql directory from /var/lib (or customer install directory) location to another location</span>
+    #     Copy the pgsql directory from /var/lib (or customer install directory) location to another location
     cp -r /var/lib/pgsql /home/pgsql
     chown -R postgres:postgres /home/pgsql
 
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">Edit the start script 'postgresql'</span>
+    #     Edit the start script 'postgresql'
     vi /etc/init.d/postgresql-9.2
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">Search for parameter PGDATA which would be entered as "PGDATA=/var/lib/pgsql"</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">Edit the line such that PGDATA points to the new location. For e.g. "PGDATA=/newloc/pgsql"</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">ALSO DO PGLOG, and PGUPLOG</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">Save and exit the file</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">Start PostgreSQL Service </span>
+    #     Search for parameter PGDATA which would be entered as "PGDATA=/var/lib/pgsql"
+    #     Edit the line such that PGDATA points to the new location. For e.g. "PGDATA=/newloc/pgsql"
+    #     ALSO DO PGLOG, and PGUPLOG
+    #     Save and exit the file
+    #     Start PostgreSQL Service 
     service postgresql-9.2 start
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">tidy up but not too much, just data?</span>
+    # tidy up but not too much, just data?
     rm -r -f /var/lib/pgsql/9.2/data?
 
 </pre>
@@ -1507,65 +1509,65 @@ From here to a secure location at my work.
 
 
 
-<pre class="src src-markdown"><span style="color: #268bd2; font-weight: bold;">--- </span>
-<span style="color: #268bd2;">name</span>: <span style="color: #2aa198;">sharedmemory</span>
-<span style="color: #268bd2;">layout</span>: <span style="color: #2aa198;">default</span>
-<span style="color: #268bd2; font-weight: bold;">title: Important Shared Memory Settings</span>
-<span style="color: #268bd2; font-weight: bold;">---</span>
+<pre class="example">--- 
+name: sharedmemory
+layout: default
+title: Important Shared Memory Settings
+---
 
-<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">Managing memory settings</span>
+## Managing memory settings
 The default settings in PostgreSQL are usually pretty good but these memory settings are conservative to start with and often need modifications.
 
-<span style="color: #268bd2; font-weight: bold;">##</span> <span style="color: #268bd2; font-weight: bold;">References</span>
+## References
 
-<span style="color: #859900; font-weight: bold;">[Kernal memory limitations]</span><span style="color: #2aa198;">(http://michael.otacoo.com/postgresql-2/take-care-of-kernel-memory-limitation-for-postgresql-shared-buffers/)</span>
+[Kernal memory limitations](http://michael.otacoo.com/postgresql-2/take-care-of-kernel-memory-limitation-for-postgresql-shared-buffers/)
 
 </pre>
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#### </span><span style="color: #586e75;">Code: sharedmemory</span>
+<pre class="example">#### Code: sharedmemory
     vi /home/pgsql/9.2/data/postgresql.conf 
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">shared_buffers</span>
+    # shared_buffers
     
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">PostgreSQL has a default shared_buffers value at 32MB, what is</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">enough for small configurations but it is said that this</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">parameter should be set at 25% of the system&#8217;s RAM. This allows</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">your system to keep a good performance in parallel with the</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">database server.  So in the case of a machine with 4GB of RAM,</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">you should set shared_buffers at 1GB.</span>
+    # PostgreSQL has a default shared_buffers value at 32MB, what is
+    # enough for small configurations but it is said that this
+    # parameter should be set at 25% of the system’s RAM. This allows
+    # your system to keep a good performance in parallel with the
+    # database server.  So in the case of a machine with 4GB of RAM,
+    # you should set shared_buffers at 1GB.
     2GB = 2048MB
      
-    <span style="color: #586e75;">#</span><span style="color: #586e75;">also look at max_locks_per_transaction.  tried setting to 1000???</span>
+    #also look at max_locks_per_transaction.  tried setting to 1000???
      
-    <span style="color: #586e75;">################################################################</span>
+    ################################################################
      
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">http://www.postgresql.org/docs/9.2/static/kernel-resources.html</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">Linux</span>
+    # http://www.postgresql.org/docs/9.2/static/kernel-resources.html
+    # Linux
      
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">The default maximum segment size is 32 MB, which is only</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">adequate for very small PostgreSQL installations. The</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">default maximum total size is 2097152 pages. A page is</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">almost always 4096 bytes except in unusual kernel</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">configurations with "huge pages" (use getconf PAGE_SIZE to</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">verify). That makes a default limit of 8 GB, which is often</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">enough, but not always.</span>
+    #     The default maximum segment size is 32 MB, which is only
+    #     adequate for very small PostgreSQL installations. The
+    #     default maximum total size is 2097152 pages. A page is
+    #     almost always 4096 bytes except in unusual kernel
+    #     configurations with "huge pages" (use getconf PAGE_SIZE to
+    #     verify). That makes a default limit of 8 GB, which is often
+    #     enough, but not always.
      
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">The shared memory size settings can be changed via the</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">sysctl interface. For example, to allow 16 GB:</span>
+    #     The shared memory size settings can be changed via the
+    #     sysctl interface. For example, to allow 16 GB:
      
     sysctl -w kernel.shmmax=17179869184
     sysctl -w kernel.shmall=4194304
      
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">In addition these settings can be preserved between reboots</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">in the file /etc/sysctl.conf. Doing that is highly</span>
-    <span style="color: #586e75;">#     </span><span style="color: #586e75;">recommended.</span>
+    #     In addition these settings can be preserved between reboots
+    #     in the file /etc/sysctl.conf. Doing that is highly
+    #     recommended.
      
      
-    <span style="color: #586e75;">#    </span><span style="color: #586e75;">The remaining defaults are quite generously sized, and</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">usually do not require changes.  also</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">http://www.linux.com/learn/tutorials/394523-configuring-postgresql-for-pretty-good-performance</span>
-    <span style="color: #586e75;"># </span><span style="color: #586e75;">work mem 4MB</span>
+    #    The remaining defaults are quite generously sized, and
+    # usually do not require changes.  also
+    # http://www.linux.com/learn/tutorials/394523-configuring-postgresql-for-pretty-good-performance
+    # work mem 4MB
 </pre>
 
 
@@ -1590,7 +1592,7 @@ The default settings in PostgreSQL are usually pretty good but these memory sett
 </p>
 
 
-<pre class="src src-R"><span style="color: #586e75;">################################################################</span>
+<pre class="example">################################################################
 sudo apt-get install postgis
 </pre>
 
@@ -1601,49 +1603,49 @@ then let's demo the Tasmanian SLAs:
 
 
 
-<pre class="src src-R">  <span style="color: #586e75;">################################################################</span>
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">name:tassla06</span>
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">ABS spatial units are available at http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/1259.0.30.0022006?OpenDocument</span>
-setwd(<span style="color: #2aa198;">'..'</span>)
-dir.create(<span style="color: #2aa198;">'data'</span>)
-setwd(<span style="color: #2aa198;">'data'</span>)
-dir.create(<span style="color: #2aa198;">'abs_sla'</span>)
-setwd(<span style="color: #2aa198;">'abs_sla'</span>)
+<pre class="example">  ################################################################
+  # name:tassla06
+  # ABS spatial units are available at http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/1259.0.30.0022006?OpenDocument
+setwd('..')
+dir.create('data')
+setwd('data')
+dir.create('abs_sla')
+setwd('abs_sla')
 
-download.file(<span style="color: #2aa198;">'http://www.abs.gov.au/AUSSTATS/subscriber.nsf/log?openagent&amp;1259030002_sla06aaust_shape.zip&amp;1259.0.30.002&amp;Data%20Cubes&amp;18E90A962EFD4D7ECA25795D00244F5A&amp;0&amp;2006&amp;06.12.2011&amp;Previous'</span>,
-                <span style="color: #2aa198;">'SLA06.zip'</span>, mode = <span style="color: #2aa198;">'wb'</span>)
-  unzip(<span style="color: #2aa198;">'SLA06.zip'</span>,junkpaths=T)
+download.file('http://www.abs.gov.au/AUSSTATS/subscriber.nsf/log?openagent&amp;1259030002_sla06aaust_shape.zip&amp;1259.0.30.002&amp;Data%20Cubes&amp;18E90A962EFD4D7ECA25795D00244F5A&amp;0&amp;2006&amp;06.12.2011&amp;Previous',
+                'SLA06.zip', mode = 'wb')
+  unzip('SLA06.zip',junkpaths=T)
   
-  sink(<span style="color: #2aa198;">'readme.txt'</span>)
-    cat(paste(<span style="color: #2aa198;">'Australian Bureau of Statistics Statistical Local Areas 2006</span>
-<span style="color: #2aa198;">    downloaded on'</span>, Sys.Date(),
-    <span style="color: #2aa198;">'</span>
-<span style="color: #2aa198;">    from http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/1259.0.30.0022006?OpenDocument'</span>)
+  sink('readme.txt')
+    cat(paste('Australian Bureau of Statistics Statistical Local Areas 2006
+    downloaded on', Sys.Date(),
+    '
+    from http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/1259.0.30.0022006?OpenDocument')
     )
   sink()
   
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">and load spatial data (sd)</span>
-  install.packages(<span style="color: #2aa198;">'rgdal'</span>)
-  <span style="color: #268bd2; font-weight: bold;">require</span>(rgdal)
-  sd <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readOGR(<span style="color: #2aa198;">'SLA06aAUST.shp'</span>, layer = <span style="color: #2aa198;">'SLA06aAUST'</span>)
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">might take a while</span>
+  # and load spatial data (sd)
+  install.packages('rgdal')
+  require(rgdal)
+  sd &lt;- readOGR('SLA06aAUST.shp', layer = 'SLA06aAUST')
+  # might take a while
   head(sd@data)
   plot(sd)
   dev.off()
-  save.image(<span style="color: #2aa198;">'aussd.Rdata'</span>)
+  save.image('aussd.Rdata')
   
-  <span style="color: #586e75;">######################</span>
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">tas</span>
-  sd2 <span style="color: #268bd2; font-weight: bold;">&lt;-</span>  sd[ sd@data$STATE_CODE == 6,]
+  ######################
+  # tas
+  sd2 &lt;-  sd[ sd@data$STATE_CODE == 6,]
    plot(sd2)
    axis(1);axis(2); box()
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">plot(sd, add = T)</span>
+  # plot(sd, add = T)
    names(sd2@data)
-   writeOGR(sd2,<span style="color: #2aa198;">'tassla06.shp'</span>,<span style="color: #2aa198;">'tassla06'</span>,<span style="color: #2aa198;">'ESRI Shapefile'</span>)
-   test <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readOGR(dsn = <span style="color: #2aa198;">'tassla06.shp'</span>, layer = <span style="color: #2aa198;">'tassla06'</span>)
-   plot(test, col = <span style="color: #2aa198;">'grey'</span>)
+   writeOGR(sd2,'tassla06.shp','tassla06','ESRI Shapefile')
+   test &lt;- readOGR(dsn = 'tassla06.shp', layer = 'tassla06')
+   plot(test, col = 'grey')
    rm(sd)
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">save.image('tassd.Rdata')</span>
+  # save.image('tassd.Rdata')
   
 </pre>
 
@@ -1655,16 +1657,16 @@ download.file(<span style="color: #2aa198;">'http://www.abs.gov.au/AUSSTATS/subs
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;"># </span><span style="color: #586e75;">psql -d ewedb -U postgres -h 115.146.94.209</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">CREATE SCHEMA abs_sla;</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">grant ALL on schema abs_sla to gislibrary;</span>
-<span style="color: #268bd2; font-style: italic;">cd</span> data
+<pre class="example"># psql -d ewedb -U postgres -h 115.146.94.209
+# CREATE SCHEMA abs_sla;
+# grant ALL on schema abs_sla to gislibrary;
+cd data
 shp2pgsql -s 4283 -D tassla06.shp public.tassla06 &gt; tassla06.sql
-<span style="color: #586e75;"># </span><span style="color: #586e75;">psql -d ewedb -U gislibrary -W -h 115.146.94.209 -f tassla06.sql</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">warning terminal not fully functional?  ran from normal terminal</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">now on the remote server run</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">psql ewedb postgres</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">GRANT select ON ALL TABLES IN SCHEMA public TO gislibrary;</span>
+# psql -d ewedb -U gislibrary -W -h 115.146.94.209 -f tassla06.sql
+# warning terminal not fully functional?  ran from normal terminal
+# now on the remote server run
+# psql ewedb postgres
+# GRANT select ON ALL TABLES IN SCHEMA public TO gislibrary;
 </pre>
 
 
@@ -1700,7 +1702,7 @@ shp2pgsql -s 4283 -D tassla06.shp public.tassla06 &gt; tassla06.sql
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#</span><span style="color: #586e75;">rpm -Uvh http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-7.noarch.rpm</span>
+<pre class="example">#rpm -Uvh http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-7.noarch.rpm
 rpm -Uvh http://mirror.overthewire.com.au/pub/epel/6/i386/epel-release-6-7.noarch.rpm
 yum install R R-devel
 </pre>
@@ -1711,7 +1713,7 @@ To update R as ‘root’ on your system simply type
 </p>
 
 
-<pre class="src src-R">yum update R
+<pre class="example">yum update R
 </pre>
 
 
@@ -1733,28 +1735,28 @@ The solution below will work for unix-like operating systems including Mac OS X.
 </p>
 
 
-<pre class="src src-R"><span style="color: #586e75;">###########################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">newnode: packageManagement</span>
+<pre class="example">###########################################################################
+# newnode: packageManagement
 
-<span style="color: #586e75;">#</span><span style="color: #586e75;">First, we need a location to install all our packages from now</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">on. This can be any directory, and location of this directory should</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">be indicated in ~/.Renviron file. Let's create that directory now:</span>
+#First, we need a location to install all our packages from now
+#on. This can be any directory, and location of this directory should
+#be indicated in ~/.Renviron file. Let's create that directory now:
 
 mkdir ~/Rlibs
 
-<span style="color: #586e75;">#</span><span style="color: #586e75;">We created Rlibs directory in our home directory. Now, create the</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">.Renviron file in your home directory and enter the following line</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">and save the .Renviron file:</span>
+#We created Rlibs directory in our home directory. Now, create the
+#.Renviron file in your home directory and enter the following line
+#and save the .Renviron file:
 
 R_LIBS=~/Rlibs
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">We can now start R and install any library. The libraries will be</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">installed to ~/Rlibs, and when we update R, R will still look for</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">libraries in ~/Rlibs directory so we don't need to re-install the</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">libraries. However, we will need to update the libraries in ~/Rlibs</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">directory to their most recent versions. All we need to do is to run</span>
+# We can now start R and install any library. The libraries will be
+# installed to ~/Rlibs, and when we update R, R will still look for
+# libraries in ~/Rlibs directory so we don't need to re-install the
+# libraries. However, we will need to update the libraries in ~/Rlibs
+# directory to their most recent versions. All we need to do is to run
 update.packages() 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">in R console, and the libraries will be updated.</span>
+# in R console, and the libraries will be updated.
 </pre>
 
 </div>
@@ -1769,14 +1771,14 @@ update.packages()
 </p>
 
 
-<pre class="src src-sh"><span style="color: #586e75;"># </span><span style="color: #586e75;">on RHEL6 ran into dependencies: libcrypto.so.6()(64bit) is needed by rstudio-server-0.96.331-1.x86_64</span>
-<span style="color: #586e75;">#       </span><span style="color: #586e75;">libgfortran.so.1()(64bit) is needed by rstudio-server-0.96.331-1.x86_64</span>
-<span style="color: #586e75;">#       </span><span style="color: #586e75;">libssl.so.6()(64bit) is needed by rstudio-server-0.96.331-1.x86_64</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">http://www.linuxquestions.org/questions/linux-software-2/need-libcrypto-so-6-64bit-and-libssl-so-6-64bit-for-redhat-6-a-873068/</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">yum list openssl098e*</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">yum install openssl098e.x86_64</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">yum list compat-libgfortran*</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">yum install compat-libgfortran-41.x86_64 </span>
+<pre class="example"># on RHEL6 ran into dependencies: libcrypto.so.6()(64bit) is needed by rstudio-server-0.96.331-1.x86_64
+#       libgfortran.so.1()(64bit) is needed by rstudio-server-0.96.331-1.x86_64
+#       libssl.so.6()(64bit) is needed by rstudio-server-0.96.331-1.x86_64
+# http://www.linuxquestions.org/questions/linux-software-2/need-libcrypto-so-6-64bit-and-libssl-so-6-64bit-for-redhat-6-a-873068/
+# yum list openssl098e*
+# yum install openssl098e.x86_64
+# yum list compat-libgfortran*
+# yum install compat-libgfortran-41.x86_64 
 wget http://download2.rstudio.org/rstudio-server-0.97.551-x86_64.rpm
 sudo yum install --nogpgcheck rstudio-server-0.97.551-x86_64.rpm
 rstudio-server verify-installation
@@ -1793,14 +1795,14 @@ rstudio-server verify-installation
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;"># </span><span style="color: #586e75;">kudos2 http://slinsmeier.wordpress.com/2012/05/19/creating-a-lab-environment-with-rstudio/</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">It is necessary to open the firewall port to allow the browser</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">access to RStudio: edit the </span>
+<pre class="example"># kudos2 http://slinsmeier.wordpress.com/2012/05/19/creating-a-lab-environment-with-rstudio/
+# It is necessary to open the firewall port to allow the browser
+# access to RStudio: edit the 
 vi /etc/sysconfig/iptables 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">file and add the line</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">-A INPUT -m state --state NEW -m tcp -p tcp --dport 8787 -j ACCEPT</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">directly after the opening of the ssh port 22 (or copy that line and change the port 22 to 8787).</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">reminder that you need to have the security group set up on the research cloud to allow tcp from 8787 to 8787 cidr 0.0.0.0/0</span>
+# file and add the line
+# -A INPUT -m state --state NEW -m tcp -p tcp --dport 8787 -j ACCEPT
+# directly after the opening of the ssh port 22 (or copy that line and change the port 22 to 8787).
+# reminder that you need to have the security group set up on the research cloud to allow tcp from 8787 to 8787 cidr 0.0.0.0/0
 service iptables restart
 </pre>
 
@@ -1818,11 +1820,11 @@ Check that you can log on via port 8787.  Note that this is an unsecure R server
 
 
 
-<pre class="src src-sh">sudo yum install httpd.x86_64
+<pre class="example">sudo yum install httpd.x86_64
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">run the following interactively</span>
+# run the following interactively
 sudo openssl genrsa -out /etc/pki/tls/private/rstudio.ivan.com.key 1024
-<span style="color: #586e75;"># </span><span style="color: #586e75;">the next is one line</span>
+# the next is one line
 sudo openssl req -new -key /etc/pki/tls/private/rstudio.ivan.com.key -x509 -out /etc/pki/tls/certs/rstudio.ivan.com.crt -days 365
 
 sudo yum install mod_ssl.x86_64 
@@ -1830,31 +1832,32 @@ sudo yum install mod_ssl.x86_64
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">#</span><span style="color: #586e75;">vi /etc/httpd/conf.d/ssl.conf </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Change the paths to match where the Key file is stored. </span>
+<pre class="example">
+#vi /etc/httpd/conf.d/ssl.conf 
+# Change the paths to match where the Key file is stored. 
 SSLCertificateFile /etc/pki/tls/certs/rstudio.ivan.com.crt
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Then set the correct path for the Certificate Key File a few lines below. </span>
+# Then set the correct path for the Certificate Key File a few lines below. 
 SSLCertificateKeyFile /etc/pki/tls/private/rstudio.ivan.com.key
 
 mkdir /etc/httpd/sites
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">vi /etc/httpd/conf/httpd.conf </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">and add </span>
+# vi /etc/httpd/conf/httpd.conf 
+# and add 
 Include /etc/httpd/sites/
-<span style="color: #586e75;"># </span><span style="color: #586e75;">as the last line.</span>
+# as the last line.
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">vi /etc/httpd/sites/rstudio-ivan.com</span>
+# vi /etc/httpd/sites/rstudio-ivan.com
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">insert</span>
+# insert
 &lt;VirtualHost *:80&gt;
 
   ServerName rstudio.ivan.com
-  RedirectMatch ^(<span style="color: #268bd2; font-style: italic;">.</span>*)$ https://rstudio.ivan.com$<span style="color: #268bd2;">1</span>
+  RedirectMatch ^(.*)$ https://rstudio.ivan.com$1
 
 &lt;/VirtualHost&gt;
-<span style="color: #586e75;"># </span><span style="color: #586e75;">goodo</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">vi /etc/httpd/conf.d/ssl.conf</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">add</span>
+# goodo
+# vi /etc/httpd/conf.d/ssl.conf
+# add
 
   &lt;Proxy *&gt;
     Allow from localhost
@@ -1864,34 +1867,34 @@ Include /etc/httpd/sites/
   ProxyPassReverse / http://localhost:8787/
 
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">before &lt;/VirtualHost&gt;</span>
+# before &lt;/VirtualHost&gt;
 
 
 /etc/init.d/httpd restart
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">weird error? ignore?</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Stopping httpd: [60G[FAILED]</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Starting httpd: httpd: apr_sockaddr_info_get() failed for i-00002979</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">[60G[  OK  ]</span>
+# weird error? ignore?
+# Stopping httpd: [60G[FAILED]
+# Starting httpd: httpd: apr_sockaddr_info_get() failed for i-00002979
+# httpd: Could not reliably determine the server's fully qualified domain name, using 127.0.0.1 for ServerName
+# [60G[  OK  ]
 
 sudo chkconfig httpd on
-<span style="color: #586e75;"># </span><span style="color: #586e75;">sudo vi /etc/sysconfig/iptables </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">to the previously added line for 8787 modify to </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">-A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">change the research cloud firewall rules to reflect this change</span>
+# sudo vi /etc/sysconfig/iptables 
+# to the previously added line for 8787 modify to 
+# -A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
+# change the research cloud firewall rules to reflect this change
 
 sudo service iptables restart
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">sudo vi /etc/rstudio/rserver.conf</span>
+# sudo vi /etc/rstudio/rserver.conf
  www-address=127.0.0.1
 
 
 sudo /etc/init.d/rstudio-server restart
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">now going to https://your.new.ip.address/</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">should ask you to add an exception</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">can also try sudo reboot?</span>
+# now going to https://your.new.ip.address/
+# should ask you to add an exception
+# can also try sudo reboot?
 </pre>
 
 
@@ -1910,8 +1913,8 @@ sudo /etc/init.d/rstudio-server restart
 
 
 
-<pre class="src src-sh">yum install git
-<span style="color: #586e75;"># </span><span style="color: #586e75;">restart R studio</span>
+<pre class="example">yum install git
+# restart R studio
 </pre>
 
 </div>
@@ -1944,8 +1947,8 @@ sudo /etc/init.d/rstudio-server restart
 
 
 
-<pre class="src src-sh">sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
-<span style="color: #586e75;"># </span><span style="color: #586e75;">yum list gdal*</span>
+<pre class="example">sudo rpm -Uvh http://elgis.argeo.org/repos/6/elgis/x86_64/elgis-release-6-6_0.noarch.rpm
+# yum list gdal*
 yum install gdal-devel.x86_64 proj-devel.x86_64
 </pre>
 
@@ -1962,7 +1965,7 @@ yum install gdal-devel.x86_64 proj-devel.x86_64
 
 
 
-<pre class="src src-sh">yum install geos-devel.x86_64
+<pre class="example">yum install geos-devel.x86_64
 </pre>
 
 </div>
@@ -1976,16 +1979,16 @@ yum install gdal-devel.x86_64 proj-devel.x86_64
 
 
 
-<pre class="src src-sh">sudo apt-get update
+<pre class="example">sudo apt-get update
 sudo apt-get install libgdal1-dev
 sudo apt-get install libproj-dev
-<span style="color: #586e75;"># </span><span style="color: #586e75;">OR</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">You need the development packages of GDAL and proj4. Probably easier to</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">install from repository than from source. Try:</span>
+# OR
+# You need the development packages of GDAL and proj4. Probably easier to
+#install from repository than from source. Try:
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">sudo apt-get install libgdal1-dev libproj-dev</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">sudo R</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">install.packages("rgdal")</span>
+# sudo apt-get install libgdal1-dev libproj-dev
+# sudo R
+# install.packages("rgdal")
 
 </pre>
 
@@ -2004,58 +2007,58 @@ sudo apt-get install libproj-dev
 </p>
 
 
-<pre class="src src-R"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:readOGR2</span>
+<pre class="example">################################################################
+# name:readOGR2
 
-<span style="color: #268bd2;">readOGR2</span> <span style="color: #268bd2; font-weight: bold;">&lt;-</span> <span style="color: #859900; font-weight: bold;">function</span>(hostip=<span style="color: #b58900;">NA</span>,user=<span style="color: #b58900;">NA</span>,db=<span style="color: #b58900;">NA</span>, layer=<span style="color: #b58900;">NA</span>, p = <span style="color: #b58900;">NA</span>) {
- <span style="color: #586e75;"># </span><span style="color: #586e75;">NOTES</span>
- <span style="color: #586e75;"># </span><span style="color: #586e75;">only works on Linux OS</span>
- <span style="color: #586e75;"># </span><span style="color: #586e75;">returns uninformative error due to either bad connection or lack of record in geometry column table.  can check if connection problem using a test connect?</span>
- <span style="color: #586e75;"># </span><span style="color: #586e75;">TODO add a prompt for each connection arg if isna</span>
- <span style="color: #859900; font-weight: bold;">if</span> (!<span style="color: #268bd2; font-weight: bold;">require</span>(rgdal)) install.packages(<span style="color: #2aa198;">'rgdal'</span>, repos=<span style="color: #2aa198;">'http://cran.csiro.au'</span>); <span style="color: #268bd2; font-weight: bold;">require</span>(rgdal)
- <span style="color: #859900; font-weight: bold;">if</span>(is.na(p)){
- pwd=readline(<span style="color: #2aa198;">'enter password (ctrl-L will clear the console after): '</span>)
- } <span style="color: #859900; font-weight: bold;">else</span> {
- pwd <span style="color: #268bd2; font-weight: bold;">&lt;-</span> p
+readOGR2 &lt;- function(hostip=NA,user=NA,db=NA, layer=NA, p = NA) {
+ # NOTES
+ # only works on Linux OS
+ # returns uninformative error due to either bad connection or lack of record in geometry column table.  can check if connection problem using a test connect?
+ # TODO add a prompt for each connection arg if isna
+ if (!require(rgdal)) install.packages('rgdal', repos='http://cran.csiro.au'); require(rgdal)
+ if(is.na(p)){
+ pwd=readline('enter password (ctrl-L will clear the console after): ')
+ } else {
+ pwd &lt;- p
  }
- shp <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readOGR(sprintf(<span style="color: #2aa198;">'PG:host=%s</span>
-<span style="color: #2aa198;">                         user=%s</span>
-<span style="color: #2aa198;">                         dbname=%s</span>
-<span style="color: #2aa198;">                         password=%s</span>
-<span style="color: #2aa198;">                         port=5432'</span>,hostip,user,db,pwd),
+ shp &lt;- readOGR(sprintf('PG:host=%s
+                         user=%s
+                         dbname=%s
+                         password=%s
+                         port=5432',hostip,user,db,pwd),
                          layer=layer)
 
- <span style="color: #586e75;"># </span><span style="color: #586e75;">clean up</span>
+ # clean up
  rm(pwd)
- <span style="color: #859900; font-weight: bold;">return</span>(shp)
+ return(shp)
  }
 
-tassla06 <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readOGR2(hostip=<span style="color: #2aa198;">'115.146.95.82'</span>,user=<span style="color: #2aa198;">'gislibrary'</span>,db=<span style="color: #2aa198;">'ewedb'</span>, layer=<span style="color: #2aa198;">'tassla06'</span>)
+tassla06 &lt;- readOGR2(hostip='115.146.95.82',user='gislibrary',db='ewedb', layer='tassla06')
 
-                                        <span style="color: #586e75;"># </span><span style="color: #586e75;">func</span>
-<span style="color: #859900; font-weight: bold;">if</span> (!<span style="color: #268bd2; font-weight: bold;">require</span>(rgdal)) install.packages(<span style="color: #2aa198;">'rgdal'</span>); <span style="color: #268bd2; font-weight: bold;">require</span>(rgdal)
-<span style="color: #859900; font-weight: bold;">if</span>(!<span style="color: #268bd2; font-weight: bold;">require</span>(ggmap)) install.packages(<span style="color: #2aa198;">'ggmap'</span>); <span style="color: #268bd2; font-weight: bold;">require</span>(ggmap)
-epsg <span style="color: #268bd2; font-weight: bold;">&lt;-</span> make_EPSG()
-<span style="color: #586e75;"># </span><span style="color: #586e75;">load</span>
-latlong <span style="color: #268bd2; font-weight: bold;">&lt;-</span> read.table(tc <span style="color: #268bd2; font-weight: bold;">&lt;-</span> textConnection(
-  <span style="color: #2aa198;">"ID  POINT_Y   POINT_X</span>
-<span style="color: #2aa198;">  1  150.5556 -35.09305</span>
-<span style="color: #2aa198;">  2  150.6851 -35.01535</span>
-<span style="color: #2aa198;">  3  150.6710 -35.06412</span>
-<span style="color: #2aa198;">  4  150.6534 -35.08666</span>
-<span style="color: #2aa198;">  "</span>), header = <span style="color: #b58900;">TRUE</span>); close(tc)
-<span style="color: #586e75;"># </span><span style="color: #586e75;">do</span>
-<span style="color: #859900; font-weight: bold;">for</span>(i <span style="color: #859900; font-weight: bold;">in</span> 1:nrow(latlong)){
-  coords <span style="color: #268bd2; font-weight: bold;">&lt;-</span> as.numeric(latlong[i,c(<span style="color: #2aa198;">'POINT_Y'</span>, <span style="color: #2aa198;">'POINT_X'</span>)])
-  e <span style="color: #268bd2; font-weight: bold;">&lt;-</span> as.data.frame(cbind(i, t(coords), revgeocode(coords)))
-  write.table(e, <span style="color: #2aa198;">"test.csv"</span>, sep = <span style="color: #2aa198;">','</span>, append = i &gt; 1, col.names = i == 1, row.names = F)
+                                        # func
+if (!require(rgdal)) install.packages('rgdal'); require(rgdal)
+if(!require(ggmap)) install.packages('ggmap'); require(ggmap)
+epsg &lt;- make_EPSG()
+# load
+latlong &lt;- read.table(tc &lt;- textConnection(
+  "ID  POINT_Y   POINT_X
+  1  150.5556 -35.09305
+  2  150.6851 -35.01535
+  3  150.6710 -35.06412
+  4  150.6534 -35.08666
+  "), header = TRUE); close(tc)
+# do
+for(i in 1:nrow(latlong)){
+  coords &lt;- as.numeric(latlong[i,c('POINT_Y', 'POINT_X')])
+  e &lt;- as.data.frame(cbind(i, t(coords), revgeocode(coords)))
+  write.table(e, "test.csv", sep = ',', append = i &gt; 1, col.names = i == 1, row.names = F)
 }
-d <span style="color: #268bd2; font-weight: bold;">&lt;-</span> read.csv(<span style="color: #2aa198;">'test.csv'</span>)
+d &lt;- read.csv('test.csv')
 head(d)
-<span style="color: #586e75;">## </span><span style="color: #586e75;">Treat data frame as spatial points</span>
-pts <span style="color: #268bd2; font-weight: bold;">&lt;-</span> SpatialPointsDataFrame(cbind(d$V2,d$V3),d,
-                              proj4string=CRS(epsg$prj4[epsg$code %<span style="color: #859900; font-weight: bold;">in</span>% <span style="color: #2aa198;">'4283'</span>]))
-writeOGR(pts, <span style="color: #2aa198;">'test.shp'</span>, <span style="color: #2aa198;">'test'</span>, driver=<span style="color: #2aa198;">'ESRI Shapefile'</span>)
+## Treat data frame as spatial points
+pts &lt;- SpatialPointsDataFrame(cbind(d$V2,d$V3),d,
+                              proj4string=CRS(epsg$prj4[epsg$code %in% '4283']))
+writeOGR(pts, 'test.shp', 'test', driver='ESRI Shapefile')
 
 </pre>
 
@@ -2072,16 +2075,16 @@ writeOGR(pts, <span style="color: #2aa198;">'test.shp'</span>, <span style="colo
 
 
 
-<pre class="src src-sh">wget http://www.graphviz.org/graphviz-rhel.repo
+<pre class="example">wget http://www.graphviz.org/graphviz-rhel.repo
 mv graphviz-rhel.repo /etc/yum.repos.d/ 
-yum list available <span style="color: #2aa198;">'graphviz*'</span>
-yum install <span style="color: #2aa198;">'graphviz*'</span>
+yum list available 'graphviz*'
+yum install 'graphviz*'
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">as root</span>
+# as root
 R
-<span style="color: #268bd2; font-style: italic;">source</span>(<span style="color: #2aa198;">'http://bioconductor.org/biocLite.R'</span>)
-<span style="color: #268bd2;">biocLite</span>(<span style="color: #2aa198;">"Rgraphviz"</span>)
-<span style="color: #268bd2;">q</span>()
+source('http://bioconductor.org/biocLite.R')
+biocLite("Rgraphviz")
+q()
 </pre>
 
 
@@ -2098,8 +2101,8 @@ R
 
 
 
-<pre class="src src-R"><span style="color: #586e75;">###########################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">newnode: test-rgraphviz</span>
+<pre class="example">###########################################################################
+# newnode: test-rgraphviz
 try newnode_test from
 git@github.com:ivanhanigan/disentangle.git
 </pre>
@@ -2116,26 +2119,26 @@ git@github.com:ivanhanigan/disentangle.git
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">###########################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">newnode: rpostgresql</span>
+<pre class="example">###########################################################################
+# newnode: rpostgresql
 vi /etc/yum.repos.d/CentOS-Base.repo
-<span style="color: #586e75;"># </span><span style="color: #586e75;">append: exclude=postgresql* to [base] and [updates] sections</span>
+# append: exclude=postgresql* to [base] and [updates] sections
 curl -O http://yum.postgresql.org/9.1/redhat/rhel-6-x86_64/pgdg-centos91-9.1-4.noarch.rpm
 rpm -ivh pgdg-centos91-9.1-4.noarch.rpm
-<span style="color: #586e75;"># </span><span style="color: #586e75;">kudos2 http://www.davidghedini.com/pg/entry/install_postgresql_9_on_centos</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Many, if not most, third party software and modules are still be set to look for PoistgreSQL's conf file and data directory under their old (pre-version 9) locations.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">You can address this, and make life easier for yourself, by creating a few symlinks from the new locations to the old.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Symlink 1: Symlink for the binary directory. This is particularly useful as this is the location of the pg_config file</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">view plaincopy to clipboardprint?</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">so install the basic packages for a database</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">install a basic PostgreSQL 9.1 server:</span>
+# kudos2 http://www.davidghedini.com/pg/entry/install_postgresql_9_on_centos
+# Many, if not most, third party software and modules are still be set to look for PoistgreSQL's conf file and data directory under their old (pre-version 9) locations.
+# You can address this, and make life easier for yourself, by creating a few symlinks from the new locations to the old.
+# Symlink 1: Symlink for the binary directory. This is particularly useful as this is the location of the pg_config file
+# view plaincopy to clipboardprint?
+# so install the basic packages for a database
+# install a basic PostgreSQL 9.1 server:
 yum install postgresql91-server postgresql91 postgresql91-devel postgresql91-libs postgresql91-contrib
-<span style="color: #586e75;"># </span><span style="color: #586e75;">THIS LINE HERE</span>
+# THIS LINE HERE
 ln -s /usr/pgsql-9.1/bin/pg_config /usr/bin  
-<span style="color: #586e75;"># </span><span style="color: #586e75;">now check</span>
+# now check
 R
-<span style="color: #268bd2;">install.packages</span>(<span style="color: #2aa198;">'RPostgreSQL'</span>)
-<span style="color: #586e75;"># </span><span style="color: #586e75;">works?</span>
+install.packages('RPostgreSQL')
+# works?
 
 </pre>
 
@@ -2150,24 +2153,24 @@ R
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:postgisutils</span>
+<pre class="example">################################################################
+# name:postgisutils
 yum list postgis2*
 yum install postgis2_91.x86_64 postgis2_91-devel.x86_64 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">try </span>
+# try 
 /usr/pgsql-9.1/bin/raster2pgsql
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">to use this and psql via CMD line need to add using R</span>
+# to use this and psql via CMD line need to add using R
 su - user
 R
-<span style="color: #268bd2;">sink</span>(<span style="color: #2aa198;">'~/.pgpass'</span>)
-<span style="color: #268bd2;">cat</span>(<span style="color: #2aa198;">'hostname:port:database:username:password'</span>)
-<span style="color: #268bd2;">sink</span>()
-<span style="color: #268bd2;">q</span>()
-<span style="color: #859900; font-weight: bold;">exit</span>
+sink('~/.pgpass')
+cat('hostname:port:database:username:password')
+sink()
+q()
+exit
 chmod 0600 /home/user/.pgpass
-<span style="color: #586e75;"># </span><span style="color: #586e75;">see http://www.postgresql.org/docs/current/static/libpq-pgpass.html</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">and other methods</span>
+# see http://www.postgresql.org/docs/current/static/libpq-pgpass.html
+# and other methods
 
 </pre>
 
@@ -2184,13 +2187,13 @@ chmod 0600 /home/user/.pgpass
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:unixODBC</span>
+<pre class="example">################################################################
+# name:unixODBC
 yum list unixODBC*
 yum install unixODBC.x86_64  unixODBC-devel.x86_64 unixODBC-kde.x86_64 
 R
-<span style="color: #268bd2;">install.packages</span>(<span style="color: #2aa198;">'RODBC'</span>)
-<span style="color: #268bd2;">require</span>(RODBC)
+install.packages('RODBC')
+require(RODBC)
 </pre>
 
 
@@ -2214,25 +2217,25 @@ R
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:2ndDisc</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">on your secure local machine</span>
+<pre class="example">################################################################
+# name:2ndDisc
+# on your secure local machine
 mkdir /projects/OpenSoftware-RestrictedData/Archives
-<span style="color: #586e75;"># </span><span style="color: #586e75;">on your remote server</span>
+# on your remote server
 
 ssh root@ip.address.of.server
-<span style="color: #268bd2; font-style: italic;">cd</span> /
+cd /
 mkdir backups
-<span style="color: #268bd2; font-style: italic;">cd</span> backups
+cd backups
 zip -r homebackup_yyyymmdd /home
-<span style="color: #586e75;">#</span><span style="color: #586e75;">scp homebackup_yyyymmdd.zip root@ip.address.of.server:/Archives</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">or use the R studio download file function</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">upload to the new R server</span>
-<span style="color: #859900; font-weight: bold;">exit</span>
+#scp homebackup_yyyymmdd.zip root@ip.address.of.server:/Archives
+#or use the R studio download file function
+# upload to the new R server
+exit
 scp /Archives/homebackup.zip root@ipaddress:/home
-<span style="color: #586e75;"># </span><span style="color: #586e75;">and unzip (TODO need to mv these up to the /home/ level after unzip)</span>
+# and unzip (TODO need to mv these up to the /home/ level after unzip)
 ssh root@ip.address.of.server
-<span style="color: #268bd2; font-style: italic;">cd</span> home
+cd home
 unzip homebackup.zip
 rm homebackup.zip
 </pre>
@@ -2320,19 +2323,19 @@ Now, it should work. I will be posting a detailed article soon for my readers so
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:init</span>
+<pre class="example">################################################################
+# name:init
 yum update
-<span style="color: #586e75;"># </span><span style="color: #586e75;">SElinux config</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">vi /etc/selinux/config</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">This file controls the state of SELinux on the system.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">SELINUX= can take one of these three values:</span>
-<span style="color: #586e75;">#     </span><span style="color: #586e75;">enforcing - SELinux security policy is enforced.</span>
-<span style="color: #586e75;">#     </span><span style="color: #586e75;">permissive - SELinux prints warnings instead of enforcing.</span>
-<span style="color: #586e75;">#     </span><span style="color: #586e75;">disabled - No SELinux policy is loaded.</span>
-<span style="color: #268bd2;">SELINUX</span>=enforcing
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Change SELINUX=enforcing to disabled and you must reboot the server after applying the change.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">vi /etc/hosts</span>
+# SElinux config
+# vi /etc/selinux/config
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# Change SELINUX=enforcing to disabled and you must reboot the server after applying the change.
+# vi /etc/hosts
 127.0.0.1  localhost.localdomain localhost ADD-VMNAME 
 </pre>
 
@@ -2351,19 +2354,19 @@ swapon /swapfile
 </p>
 
 
-<pre class="src src-sh"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:swap</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">Create an empty file called /swapfile from about 2GB</span>
-dd <span style="color: #268bd2;">if</span>=/dev/zero <span style="color: #268bd2;">of</span>=/swapfile <span style="color: #268bd2;">bs</span>=1024000 <span style="color: #268bd2;">count</span>=3000
-<span style="color: #586e75;">#</span><span style="color: #586e75;">Format the new file to make it a swap file</span>
+<pre class="example">################################################################
+# name:swap
+#Create an empty file called /swapfile from about 2GB
+dd if=/dev/zero of=/swapfile bs=1024000 count=3000
+#Format the new file to make it a swap file
 mkswap /swapfile
-<span style="color: #586e75;">#</span><span style="color: #586e75;">Enable the new swapfile. Only the swapon command is needed, but with</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">the free command you can clearly see the swap space is made available</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">to the system.</span>
+#Enable the new swapfile. Only the swapon command is needed, but with
+#the free command you can clearly see the swap space is made available
+#to the system.
 free -m | grep Swap
 swapon /swapfile
 free -m | grep Swap
-<span style="color: #586e75;"># </span><span style="color: #586e75;">TOO LAZY TO ADD TO BOOT SO JUST DO SWAPON EVERY TIME?</span>
+# TOO LAZY TO ADD TO BOOT SO JUST DO SWAPON EVERY TIME?
 </pre>
 
 
@@ -2379,7 +2382,7 @@ free -m | grep Swap
 </p>
 
 
-<pre class="src src-R">scp oracle-xe-11.2.0-1.0.x86_64.rpm.zip user@ip.address.of.server:/home/
+<pre class="example">scp oracle-xe-11.2.0-1.0.x86_64.rpm.zip user@ip.address.of.server:/home/
 </pre>
 
 </div>
@@ -2397,38 +2400,38 @@ free -m | grep Swap
 
 
 
-<pre class="src src-R">yum install libaio bc flex unzip 
+<pre class="example">yum install libaio bc flex unzip 
 cd /home
 mkdir OracleXE
 unzip oracle-xe-11.2.0-1.0.x86_64.rpm.zip -d OracleXE 
 cd OracleXE/Disk1
 rpm -ivh oracle-xe-11.2.0-1.0.x86_64.rpm  
 /etc/init.d/oracle-xe configure
-<span style="color: #586e75;"># </span><span style="color: #586e75;">accept defaults</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">set up the etc/group file so that oracle is in dba (and oinstall? not there?)</span>
+# accept defaults
+#set up the etc/group file so that oracle is in dba (and oinstall? not there?)
 id -a oracle
-<span style="color: #586e75;">#</span><span style="color: #586e75;">log on as oracle and then </span>
+#log on as oracle and then 
 su - oracle
-<span style="color: #586e75;"># </span><span style="color: #586e75;">set the environment</span>
+# set the environment
 cd /u01/app/oracle/product/11.2.0/xe/bin  
 . ./oracle_env.sh 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">NOT DONE, which users needs this?  which dot file?  both?  To set</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">the environment permanently for users, add the following to the</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">.bashrc or .bash_profile of the users you want to access the</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">environment:</span>
+# NOT DONE, which users needs this?  which dot file?  both?  To set
+# the environment permanently for users, add the following to the
+# .bashrc or .bash_profile of the users you want to access the
+# environment:
      . /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh 
 sqlplus /nolog
 connect sys/password as sysdba
-<span style="color: #586e75;">#</span><span style="color: #586e75;">To allow remote access to Oracle 11g XE GUI (as well as Application Express GUI) issue the following from SQL*Plus</span>
-EXEC DBMS_XDB.SETLISTENERLOCALACCESS(<span style="color: #b58900;">FALSE</span>);  
+#To allow remote access to Oracle 11g XE GUI (as well as Application Express GUI) issue the following from SQL*Plus
+EXEC DBMS_XDB.SETLISTENERLOCALACCESS(FALSE);  
 exit
 su - root
-<span style="color: #586e75;"># </span><span style="color: #586e75;">modify firewall</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">vi /etc/sysconfig/iptables</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">copy -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">twice and modify for 8080 and 1521</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">restrict 1521 to your administration IP address</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">will also need the port 8080 enabled on the research cloud firewall</span>
+# modify firewall
+# vi /etc/sysconfig/iptables
+# copy -A INPUT -m state --state NEW -m tcp -p tcp --dport 22 -j ACCEPT
+# twice and modify for 8080 and 1521
+# restrict 1521 to your administration IP address
+# will also need the port 8080 enabled on the research cloud firewall
 service iptables restart
 </pre>
 
@@ -2441,14 +2444,14 @@ Although Apex is already installed, we still need to set the Internal Admin pass
 </p>
 
 
-<pre class="src src-R"><span style="color: #586e75;"># </span><span style="color: #586e75;">To do so, run the apxchpwd.sql located under /u01/app/oracle/product/11.2.0/xe/apex:</span>
+<pre class="example"># To do so, run the apxchpwd.sql located under /u01/app/oracle/product/11.2.0/xe/apex:
 su - oracle
 . /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh
 sqlplus /nolog
 connect sys/password as sysdba
 @/u01/app/oracle/product/11.2.0/xe/apex/apxchpwd.sql 
-<span style="color: #586e75;">#</span><span style="color: #586e75;">Note: pick something simple like Password123! as you will be prompted to change it on first log in anyways.</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">access the Application Express GUI at:</span>
+#Note: pick something simple like Password123! as you will be prompted to change it on first log in anyways.
+# access the Application Express GUI at:
 http://ip.address.of.server:8080/apex/f?p=4550:1
 </pre>
 
@@ -2546,26 +2549,26 @@ to build the tables
 
 
 
-<pre class="src src-R">su root
-<span style="color: #586e75;">#</span><span style="color: #586e75;">make sure env is set</span>
+<pre class="example">su root
+#make sure env is set
 export LD_LIBRARY_PATH=/u01/app/oracle/product/11.2.0/xe/lib:$LD_LIBRARY_PATH
 
 R
-<span style="color: #268bd2;">connect2oracle</span> <span style="color: #268bd2; font-weight: bold;">&lt;-</span> <span style="color: #859900; font-weight: bold;">function</span>(){
-<span style="color: #859900; font-weight: bold;">if</span>(!<span style="color: #268bd2; font-weight: bold;">require</span>(RJDBC)) install.packages(<span style="color: #2aa198;">'RJDBC'</span>); <span style="color: #268bd2; font-weight: bold;">require</span>(RJDBC)
-drv <span style="color: #268bd2; font-weight: bold;">&lt;-</span> JDBC(<span style="color: #2aa198;">"oracle.jdbc.driver.OracleDriver"</span>,
-            <span style="color: #2aa198;">'/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar'</span>)
-p <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readline(<span style="color: #2aa198;">'enter password: '</span>)
-h <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readline(<span style="color: #2aa198;">'enter target ipaddres: '</span>)
-d <span style="color: #268bd2; font-weight: bold;">&lt;-</span> readline(<span style="color: #2aa198;">'enter database name: '</span>)
-ch <span style="color: #268bd2; font-weight: bold;">&lt;-</span> dbConnect(drv,paste(<span style="color: #2aa198;">"jdbc:oracle:thin:@"</span>,h,<span style="color: #2aa198;">":1521"</span>,sep=<span style="color: #2aa198;">''</span>),d,p)
-<span style="color: #859900; font-weight: bold;">return</span>(ch)
+connect2oracle &lt;- function(){
+if(!require(RJDBC)) install.packages('RJDBC'); require(RJDBC)
+drv &lt;- JDBC("oracle.jdbc.driver.OracleDriver",
+            '/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar')
+p &lt;- readline('enter password: ')
+h &lt;- readline('enter target ipaddres: ')
+d &lt;- readline('enter database name: ')
+ch &lt;- dbConnect(drv,paste("jdbc:oracle:thin:@",h,":1521",sep=''),d,p)
+return(ch)
 }  
-ch <span style="color: #268bd2; font-weight: bold;">&lt;-</span> connect2oracle()
+ch &lt;- connect2oracle()
 
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">OR</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">install.packages('ROracle')</span>
+# OR
+#install.packages('ROracle')
 </pre>
 
 
@@ -2596,6 +2599,51 @@ ch <span style="color: #268bd2; font-weight: bold;">&lt;-</span> connect2oracle(
 
 
 
+<pre class="example">---
+name: unlock
+layout: default
+title: unlock
+---
+
+http://riaschissl.blogspot.com.au/2010/07/oracle-unexpire-and-unlock-accounts.html
+
+Some of our customers' applications are built around Oracle, so we have to fight the beast from time to time. Unfortunately, some of the surprizes the beast has to offer are quite random and rare, and due to this we tend to simply forget how we fixed and/or circumvented the issues previously.
+
+As usual, google is your friend and one of the most valuable resources on the net we've found is www.orafaq.com and most notably its security FAQs [1]
+
+So this is just an attempt of a small cheat sheat to help our overloaded brains :-)
+expired and locked accounts - the basics
+Now, as of version 11g, Oracle has enabled account expiration per default for many vital accounts (such as SYSMAN, SYS, ...). Quite a weird idea in my view, but who knows what hyper security things some wise engineer had in mind when doing so.
+
+Beware that we run Oracle under various Linux flavours, so things might be different for you.
+
+become database admin
+First log into your host running oracle and become the oracle user.
+
+#### Code:unlock
+    sqlplus /nolog
+    connect / as SYSDBA
+
+
+
+find out which accounts are expired
+select username, account_status from dba_users where ACCOUNT_STATUS LIKE '%EXPIRED%';
+unexpire an account
+once an account has been expired, it can only be revived by assigning it a new password:
+
+#### code
+    ALTER USER scott IDENTIFIED BY password;
+
+
+unlock an account
+ALTER USER scott ACCOUNT UNLOCK;
+disable default password expiry [2]
+this all depends on the profile a user belongs to, to disable password expiry for all users assigned the default user profile do this:
+ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;    
+</pre>
+
+
+
 </div>
 </div>
 
@@ -2617,19 +2665,19 @@ ch <span style="color: #268bd2; font-weight: bold;">&lt;-</span> connect2oracle(
 </p>
 
 
-<pre class="src src-R"><span style="color: #586e75;">###########################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">newnode: install-tomcat</span>
+<pre class="example">###########################################################################
+# newnode: install-tomcat
 yum -y install tomcat6 tomcat6-webapps
-<span style="color: #586e75;"># </span><span style="color: #586e75;">not tomcat6-admin-webapps </span>
+# not tomcat6-admin-webapps 
 vi /etc/tomcat6/tomcat-users.xml
-<span style="color: #586e75;">#</span><span style="color: #586e75;">add a user with roles of admin,manager like this</span>
-&lt;user name=<span style="color: #2aa198;">"tomcat"</span> password=<span style="color: #2aa198;">"password"</span> roles=<span style="color: #2aa198;">"admin,manager"</span> /&gt;
+#add a user with roles of admin,manager like this
+&lt;user name="tomcat" password="password" roles="admin,manager" /&gt;
 </pre>
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;">###########################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">newnode: for-restarts</span>
+<pre class="example">###########################################################################
+# newnode: for-restarts
 chkconfig tomcat6 on
 </pre>
 
@@ -2650,7 +2698,7 @@ changing the Tomcat Port
 
 
 
-<pre class="src src-R">service tomcat6 restart
+<pre class="example">service tomcat6 restart
 </pre>
 
 
@@ -2677,12 +2725,12 @@ changing the Tomcat Port
 </p>
 
 
-<pre class="src src-R">rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
+<pre class="example">rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm
 yum --enablerepo=remi,remi-test list mysql mysql-server
 yum --enablerepo=remi,remi-test install mysql mysql-server
-/etc/init.d/mysqld start <span style="color: #586e75;">## </span><span style="color: #586e75;">use restart after update</span>
-<span style="color: #586e75;">## </span><span style="color: #586e75;">OR ##</span>
-service mysqld start <span style="color: #586e75;">## </span><span style="color: #586e75;">use restart after update</span>
+/etc/init.d/mysqld start ## use restart after update
+## OR ##
+service mysqld start ## use restart after update
 
 chkconfig --levels 235 mysqld on
 
@@ -2691,23 +2739,23 @@ mysql -h localhost -u root -p
 then create database, 
 database user and
 database password 
-<span style="color: #586e75;">## </span><span style="color: #586e75;">CREATE DATABASE ##</span>
+## CREATE DATABASE ##
 mysql&gt; CREATE DATABASE security;
 
-<span style="color: #586e75;">## </span><span style="color: #586e75;">CREATE USER ##</span>
-mysql&gt; CREATE USER <span style="color: #2aa198;">'ddiindex'</span>@<span style="color: #2aa198;">'localhost'</span> IDENTIFIED BY <span style="color: #2aa198;">'BlahBlahBlah'</span>;
+## CREATE USER ##
+mysql&gt; CREATE USER 'ddiindex'@'localhost' IDENTIFIED BY 'BlahBlahBlah';
 
-<span style="color: #586e75;">## </span><span style="color: #586e75;">GRANT PERMISSIONS ##</span>
-mysql&gt; GRANT ALL ON security.* TO <span style="color: #2aa198;">'ddiindex'</span>@<span style="color: #2aa198;">'localhost'</span>;
+## GRANT PERMISSIONS ##
+mysql&gt; GRANT ALL ON security.* TO 'ddiindex'@'localhost';
 
-<span style="color: #586e75;">##  </span><span style="color: #586e75;">FLUSH PRIVILEGES, Tell the server TO reload the GRANT TABLES  ##</span>
+##  FLUSH PRIVILEGES, Tell the server TO reload the GRANT TABLES  ##
 mysql&gt; FLUSH PRIVILEGES;
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">nd then use next at command line:</span>
+# nd then use next at command line:
 
 mysql -h localhost -u root -p security &lt; security_2010-04-27-1259.sql; 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">Enter password: </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">deprecated let thru iptables port 3306?</span>
+# Enter password: 
+# deprecated let thru iptables port 3306?
 </pre>
 
 </div>
@@ -2721,12 +2769,12 @@ mysql -h localhost -u root -p security &lt; security_2010-04-27-1259.sql;
 
 
 
-<pre class="src src-sh"><span style="color: #586e75;"># </span><span style="color: #586e75;">now go to /usr/share/tomcat/webapps/ddiindex/WEB-INF/classes/index-conf.xml</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">dburl change to </span>
+<pre class="example"># now go to /usr/share/tomcat/webapps/ddiindex/WEB-INF/classes/index-conf.xml
+# dburl change to 
     &lt;dbUrl&gt;jdbc:mysql://localhost:3306/security&lt;/dbUrl&gt;
     &lt;dbUserName&gt;ddiindex&lt;/dbUserName&gt;
     &lt;dbPassword&gt;BlahBlahBlah&lt;/dbPassword&gt;
-<span style="color: #586e75;"># </span><span style="color: #586e75;">other personalisations here such as &lt;dataServer&gt;</span>
+# other personalisations here such as &lt;dataServer&gt;
 mkdir /opt/ddiindex/ewedb
 mkdir /opt/ddiindex/ewedb_s
 
@@ -2752,12 +2800,12 @@ and search.jsp
 </p>
 
 
-<pre class="src src-sh">adduser ddiindex
+<pre class="example">adduser ddiindex
 chown -R ddiindex /xmldata
 chmod 0777 /xmldata
-<span style="color: #586e75;"># </span><span style="color: #586e75;">bad for security, try 0750 instead</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">chmod 0777 /opt/ddiindex/nceph</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">or this works</span>
+# bad for security, try 0750 instead
+# chmod 0777 /opt/ddiindex/nceph
+# or this works
 chmod -R 777 /opt/ddiindex/nceph
 chmod 0777 /opt/ddiindex/nceph_s
 chmod -R 777 /opt/ddiindex/ewedb
@@ -2826,26 +2874,26 @@ Before doing this the first time I did the following:
 </p>
 
 
-<pre class="src src-R"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;">#</span><span style="color: #586e75;">http://www.liberiangeek.net/2012/07/install-truecrypt-via-ppa-in-ubuntu-12-04-precise-pangolin/</span>
+<pre class="example">################################################################
+#http://www.liberiangeek.net/2012/07/install-truecrypt-via-ppa-in-ubuntu-12-04-precise-pangolin/
 sudo add-apt-repository ppa:michael-astrapi/ppa
 sudo apt-get update &amp;&amp; sudo apt-get install truecrypt
 
-<span style="color: #586e75;">#### </span><span style="color: #586e75;">FAILED TO INSTALL ON REDHAT ####</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">or http://ubuntupop.blogspot.com.au/2012/10/how-to-install-truecrypt-on-centos-63.html</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">1. Download Truecrypt package. Or use wget instead</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">wget http://www.truecrypt.org/download/truecrypt-7.1a-linux-x64.tar.gz</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">2.  Now extract the package</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">tar xzvf truecrypt-7.1a-linux-x64.tar.gz</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">3. It will produce a file called truecrypt-7.1a-setup-x64</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">chmod +x truecrypt-7.1a-setup-x64 </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">./truecrypt-7.1a-setup-x64</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">installer ran but then </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">truecrypt -h </span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">truecrypt: error while loading shared libraries: libfuse.so.2: cannot open shared object file: No such file or directory</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">yum install libfuse.so.2 didn't help</span>
+#### FAILED TO INSTALL ON REDHAT ####
+# or http://ubuntupop.blogspot.com.au/2012/10/how-to-install-truecrypt-on-centos-63.html
+# 1. Download Truecrypt package. Or use wget instead
+# wget http://www.truecrypt.org/download/truecrypt-7.1a-linux-x64.tar.gz
+# 2.  Now extract the package
+# tar xzvf truecrypt-7.1a-linux-x64.tar.gz
+# 3. It will produce a file called truecrypt-7.1a-setup-x64
+# chmod +x truecrypt-7.1a-setup-x64 
+# ./truecrypt-7.1a-setup-x64
+# installer ran but then 
+# truecrypt -h 
+# truecrypt: error while loading shared libraries: libfuse.so.2: cannot open shared object file: No such file or directory
+# yum install libfuse.so.2 didn't help
 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">DIDN'T TRY  http://vinnn.blogspot.com.au/2009/01/tryecrypt-6-on-centos-5.html</span>
+# DIDN'T TRY  http://vinnn.blogspot.com.au/2009/01/tryecrypt-6-on-centos-5.html
 </pre>
 
 
@@ -2860,20 +2908,30 @@ sudo apt-get update &amp;&amp; sudo apt-get install truecrypt
 
 
 
-<pre class="src src-R"><span style="color: #586e75;">################################################################</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">name:ResearchData</span>
+<pre class="example">################################################################
+# name:ResearchData
 cd /home
 mkdir ResearchData
-<span style="color: #586e75;"># </span><span style="color: #586e75;">and them to a particular group</span>
+# and them to a particular group
 groupadd researchdata
 usermod -a -G researchdata username
 chown -R root:researchdata /home/ResearchData
-<span style="color: #586e75;"># </span><span style="color: #586e75;">TODO check what the security numeric codes do</span>
+# TODO check what the security numeric codes do
 chmod -R 0777 /home/ResearchData
 chmod -R 0750 /home/ResearchData
 service rstudio-server restart
-<span style="color: #586e75;"># </span><span style="color: #586e75;">user may need to q() from R session and sign out of rstudio?</span>
+# user may need to q() from R session and sign out of rstudio?
 </pre>
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-5-9" class="outline-3">
+<h3 id="sec-5-9"><span class="section-number-3">5.9</span> <span class="todo TODO">TODO</span> Share with windows network</h3>
+<div class="outline-text-3" id="text-5-9">
 
 
 
@@ -2995,10 +3053,10 @@ testbed done by me
 
 
 
-<pre class="src src-R">adduser userxxx
+<pre class="example">adduser userxxx
 passwd userxxx 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">(I use R to randomly generate passwords by mixing words, letters,</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">numbers and symbols) </span>
+# (I use R to randomly generate passwords by mixing words, letters,
+# numbers and symbols) 
 </pre>
 
 </div>
@@ -3012,9 +3070,9 @@ passwd userxxx
 
 
 
-<pre class="src src-R">mysql -u root -p security
+<pre class="example">mysql -u root -p security
 select * from UserEJB;
-insert into UserEJB (id, password, admin) values (<span style="color: #2aa198;">'userxxx'</span>, <span style="color: #2aa198;">'passwd'</span>, 0);
+insert into UserEJB (id, password, admin) values ('userxxx', 'passwd', 0);
 </pre>
 
 <ul>
@@ -3061,24 +3119,24 @@ insert into UserEJB (id, password, admin) values (<span style="color: #2aa198;">
 </p>
 
 
-<pre class="src src-R"><span style="color: #586e75;"># </span><span style="color: #586e75;">first edit your pg_hba.conf file</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">under /home/pgsql/9.2/data/pg_hba.conf I added a super user from my ip</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">address and allowed all the www ip addresses access</span>
+<pre class="example"># first edit your pg_hba.conf file
+# under /home/pgsql/9.2/data/pg_hba.conf I added a super user from my ip
+# address and allowed all the www ip addresses access
 host    all             postgres        my.desk.ip.address/32       md5
 host    all             gislibrary      0.0.0.0/0                   md5
-<span style="color: #586e75;"># </span><span style="color: #586e75;">and save.  now</span>
+# and save.  now
 su - postgres
 psql postgres postgres
-CREATE ROLE userxxx LOGIN PASSWORD <span style="color: #2aa198;">'xxxxx'</span>;
+CREATE ROLE userxxx LOGIN PASSWORD 'xxxxx';
 GRANT gislibrary TO userxxx;
 CREATE SCHEMA userxxx;
 grant ALL on schema userxxx to userxxx;
 GRANT ALL ON ALL TABLES IN SCHEMA userxxx TO userxxx;
-grant ALL on all functions <span style="color: #859900; font-weight: bold;">in</span> schema userxxx to userxxx;
-grant ALL on all sequences <span style="color: #859900; font-weight: bold;">in</span> schema userxxx to userxxx; 
-<span style="color: #586e75;"># </span><span style="color: #586e75;">might want to set a date for expiry?  now </span>
+grant ALL on all functions in schema userxxx to userxxx;
+grant ALL on all sequences in schema userxxx to userxxx; 
+# might want to set a date for expiry?  now 
 select pg_reload_conf();
-<span style="color: #586e75;"># </span><span style="color: #586e75;">or if not connected just service postgresql-9.2 restart</span>
+# or if not connected just service postgresql-9.2 restart
 </pre>
 
 </div>
@@ -3167,9 +3225,9 @@ CRICOS provider #00120C.
 
 
 
-<pre class="src src-sh">update accessors 
-<span style="color: #268bd2; font-style: italic;">set</span> othermat = <span style="color: #2aa198;">'phone number'</span>
-where accessornames = <span style="color: #2aa198;">'username'</span>;
+<pre class="example">update accessors 
+set othermat = 'phone number'
+where accessornames = 'username';
 </pre>
 
 
@@ -3183,7 +3241,7 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 
 
 
-<pre class="src src-R">userdel -r ivan_hanigan
+<pre class="example">userdel -r ivan_hanigan
 </pre>
 
 
@@ -3257,24 +3315,24 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 </p>
 
 
-<pre class="src src-R">  <span style="color: #586e75;">###########################################################################</span>
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">newnode: backupOraphi</span>
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">using an emacs ssh buffer log on to target server, start R, start ESS-remote</span>
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">do this as root and put into /backups</span>
-  <span style="color: #859900; font-weight: bold;">if</span>(!<span style="color: #268bd2; font-weight: bold;">require</span>(RJDBC)) install.packages(<span style="color: #2aa198;">'RJDBC'</span>); <span style="color: #268bd2; font-weight: bold;">require</span>(RJDBC)
-  drv <span style="color: #268bd2; font-weight: bold;">&lt;-</span> JDBC(<span style="color: #2aa198;">"oracle.jdbc.driver.OracleDriver"</span>,
-              <span style="color: #2aa198;">'/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar'</span>)
-  ch <span style="color: #268bd2; font-weight: bold;">&lt;-</span> dbConnect(drv,<span style="color: #2aa198;">"jdbc:oracle:thin:@xx.yy.zz.ww:1521"</span>,<span style="color: #2aa198;">"DDIINDEXDB"</span>,<span style="color: #2aa198;">"password"</span>)
+<pre class="example">  ###########################################################################
+  # newnode: backupOraphi
+  # using an emacs ssh buffer log on to target server, start R, start ESS-remote
+  # do this as root and put into /backups
+  if(!require(RJDBC)) install.packages('RJDBC'); require(RJDBC)
+  drv &lt;- JDBC("oracle.jdbc.driver.OracleDriver",
+              '/u01/app/oracle/product/11.2.0/xe/jdbc/lib/ojdbc6.jar')
+  ch &lt;- dbConnect(drv,"jdbc:oracle:thin:@xx.yy.zz.ww:1521","DDIINDEXDB","password")
   dir()
-  dir.create(paste(<span style="color: #2aa198;">'ddiindexdb-backups/csvs/'</span>,Sys.Date(),sep=<span style="color: #2aa198;">''</span>),recursive=T)
+  dir.create(paste('ddiindexdb-backups/csvs/',Sys.Date(),sep=''),recursive=T)
 
-  <span style="color: #859900; font-weight: bold;">for</span>( tbl <span style="color: #859900; font-weight: bold;">in</span> c(<span style="color: #2aa198;">'STDYDSCR'</span>,<span style="color: #2aa198;">'DATADSCR'</span>,<span style="color: #2aa198;">'FILEDSCR'</span>,<span style="color: #2aa198;">'KEYWORDS'</span>,<span style="color: #2aa198;">'ACCESSORS'</span>,<span style="color: #2aa198;">'ACCESSSTDY'</span>,<span style="color: #2aa198;">'OTHRSTDYMAT'</span>)){
-  <span style="color: #586e75;">#</span><span style="color: #586e75;">tbl='STDYDSCR'</span>
-  dataout <span style="color: #268bd2; font-weight: bold;">&lt;-</span> dbReadTable(ch, tbl)
-  <span style="color: #586e75;"># </span><span style="color: #586e75;">sqlFetch(ch,tbl,as.is=T)</span>
-  write.table(dataout,paste(<span style="color: #2aa198;">'ddiindexdb-backups/csvs/'</span>,Sys.Date(),<span style="color: #2aa198;">'/'</span>,tbl,<span style="color: #2aa198;">'.csv'</span>,sep=<span style="color: #2aa198;">''</span>),na = <span style="color: #2aa198;">""</span>,row.names=F,sep=<span style="color: #2aa198;">','</span>,quote=T)
+  for( tbl in c('STDYDSCR','DATADSCR','FILEDSCR','KEYWORDS','ACCESSORS','ACCESSSTDY','OTHRSTDYMAT')){
+  #tbl='STDYDSCR'
+  dataout &lt;- dbReadTable(ch, tbl)
+  # sqlFetch(ch,tbl,as.is=T)
+  write.table(dataout,paste('ddiindexdb-backups/csvs/',Sys.Date(),'/',tbl,'.csv',sep=''),na = "",row.names=F,sep=',',quote=T)
   }
-<span style="color: #586e75;"># </span><span style="color: #586e75;">download these to a backup location for storage.</span>
+# download these to a backup location for storage.
 
 </pre>
 
@@ -3328,13 +3386,13 @@ First do this to setup the backup directory
 </p>
 
 
-<pre class="src src-R">mkdir /home/backup
+<pre class="example">mkdir /home/backup
 cd /home/backup
-/usr/pgsql-9.2/bin/pg_dump -U postgres ewedb | gzip &gt; ewedb_$(date +<span style="color: #2aa198;">"%F-%H%M"</span>).gz
-<span style="color: #586e75;"># </span><span style="color: #586e75;">see http://www.postgresql.org/docs/9.2/static/app-pgdump.html</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">NB tried -Fc compressed version but took too long to restore</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">see http://www.postgresql.org/docs/9.2/static/backup-dump.html</span>
-<span style="color: #586e75;"># </span><span style="color: #586e75;">24.1.3. Handling Large Databases</span>
+/usr/pgsql-9.2/bin/pg_dump -U postgres ewedb | gzip &gt; ewedb_$(date +"%F-%H%M").gz
+# see http://www.postgresql.org/docs/9.2/static/app-pgdump.html
+# NB tried -Fc compressed version but took too long to restore
+# see http://www.postgresql.org/docs/9.2/static/backup-dump.html
+# 24.1.3. Handling Large Databases
 </pre>
 
 
@@ -3343,8 +3401,8 @@ Optionally you could set up a scheduled cron job
 </p>
 
 
-<pre class="src src-R">cron -e
-<span style="color: #586e75;"># </span><span style="color: #586e75;">15 past midnight everyday</span>
+<pre class="example">cron -e
+# 15 past midnight everyday
 15 0 * * * /home/ewedbbackup/backup_script.sh
 </pre>
 
@@ -3352,7 +3410,6 @@ Optionally you could set up a scheduled cron job
 <p>
 Then add this script.
 </p>
-
 </li>
 </ul>
 </div>
@@ -3360,29 +3417,45 @@ Then add this script.
 </div>
 
 <div id="outline-container-7-4-3" class="outline-4">
-<h4 id="sec-7-4-3"><span class="section-number-4">7.4.3</span> Restore databse dump into a new database on another machine.</h4>
+<h4 id="sec-7-4-3"><span class="section-number-4">7.4.3</span> or simple home backup</h4>
 <div class="outline-text-4" id="text-7-4-3">
 
-
-
-
-
-
+<p>#(set up passwordless ssh)
+#<a href="http://www.linuxproblem.org/art_9.html">http://www.linuxproblem.org/art_9.html</a>
+</p>
+<p>
+chrontab -e
+15 0 * * * rsync -arvR <i>home</i> root@my.server.ip:/ 
+:wq
+</p>
 </div>
 
 </div>
 
 <div id="outline-container-7-4-4" class="outline-4">
-<h4 id="sec-7-4-4"><span class="section-number-4">7.4.4</span> <span class="todo TODO">TODO</span> launch a new Nectar VM from the snapshot image</h4>
+<h4 id="sec-7-4-4"><span class="section-number-4">7.4.4</span> Restore databse dump into a new database on another machine.</h4>
 <div class="outline-text-4" id="text-7-4-4">
+
+
+
+
+
 
 </div>
 
 </div>
 
 <div id="outline-container-7-4-5" class="outline-4">
-<h4 id="sec-7-4-5"><span class="section-number-4">7.4.5</span> <span class="todo TODO">TODO</span> mount the 2nd disc and load/restore the postgres db and data into it</h4>
+<h4 id="sec-7-4-5"><span class="section-number-4">7.4.5</span> <span class="todo TODO">TODO</span> launch a new Nectar VM from the snapshot image</h4>
 <div class="outline-text-4" id="text-7-4-5">
+
+</div>
+
+</div>
+
+<div id="outline-container-7-4-6" class="outline-4">
+<h4 id="sec-7-4-6"><span class="section-number-4">7.4.6</span> <span class="todo TODO">TODO</span> mount the 2nd disc and load/restore the postgres db and data into it</h4>
+<div class="outline-text-4" id="text-7-4-6">
 
 
 
@@ -3448,7 +3521,7 @@ In the event of an upgrade to a tested replacement you may find that the content
 <h3 id="sec-8-1"><span class="section-number-3">8.1</span> Pumilio for Bioacoustics</h3>
 <div class="outline-text-3" id="text-8-1">
 
-<p><a href="file:///home/ivan/projects/pumilio-bushfm/index.html">~/projects/pumilio-bushfm/index.org</a>
+<p><a href="file:///home/ivan_hanigan/projects/pumilio-bushfm/index.html">~/projects/pumilio-bushfm/index.org</a>
 </p>
 
 
