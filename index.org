@@ -3602,7 +3602,85 @@ Using RJDBC is what I recommend.  I found ROracle suboptimal.
   ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED;    
 #+end_src
 
+*** extending/revising the database to track servers and files
+Aim:
+- the db is good for files, and even books etc.
+- I think it might also be good for tracking server maintenance tasks
+- I will experiment by modifying the names of the data entry fields ie from file to server
+- and the tables stay the same.  then I can also modify the app.
+*** COMMENT clone-app-code
+- do this on a dev server first!
+- go to the web apex dashboard
+- application builder, export the app
+- import this, next, with new number auto assigned
+- run app
+*** COMMENT blow away data
+#+name:clone-app
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+  #### name:clone-app####
+  require(ddiindexdb)
+  require(swishdbtools)
+  pwd  <- getPassword(remote=T)
+  ch <- connect2oracle(hostip ="115.146.93.108",db = "ddiindexdb", p = pwd)
+  
+  dbSendUpdate(ch,'delete from OTHRSTDYMAT')
+  dbSendUpdate(ch, 'ALTER TRIGGER  "bi_OTHRSTDYMAT" DISABLE')
+  dbSendUpdate(ch,'delete from KEYWORDS')
+  dbSendUpdate(ch, 'ALTER TRIGGER  "bi_KEYWORDS" DISABLE')
+  dbSendUpdate(ch,'delete from ACCESSORS')
+  dbSendUpdate(ch, 'ALTER TRIGGER  "bi_ACCESSORS" DISABLE')
+  dbSendUpdate(ch,'delete from ACCESSSTDY')
+  dbSendUpdate(ch, 'ALTER TRIGGER  "bi_ACCESSSTDY" DISABLE')
+  dbSendUpdate(ch,'delete from DATADSCR')
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_DATADSCR" DISABLE')
+  dbSendUpdate(ch,'delete from filedscr')
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_FILEDSCR" DISABLE')
+  dbSendUpdate(ch,'delete from stdydscr')
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_STDYDSCR" DISABLE')
+  
+  
+  
+  dbSendUpdate(ch,'drop SEQUENCE   "STDYDSCR_SEQ"')
+  newpk  <- 0
+    # dbGetQuery(ch,'select max(pkey) from stdydscr')
+  dbSendUpdate(ch,paste('create SEQUENCE   "STDYDSCR_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' CACHE 20 NOORDER  NOCYCLE', sep = ""))
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_STDYDSCR" ENABLE')
+  
+  newpk <- 0
+  dbSendUpdate(ch,'DROP SEQUENCE   "FILEDSCR_SEQ"')
+  dbSendUpdate(ch,paste('CREATE SEQUENCE   "FILEDSCR_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' NOCACHE  NOORDER  NOCYCLE', sep = ""))
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_FILEDSCR" ENABLE')
+  
+  newpk  <- 0
+  dbSendUpdate(ch,'DROP SEQUENCE   "DATADSCR_SEQ"')
+  dbSendUpdate(ch,paste('CREATE SEQUENCE   "DATADSCR_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' NOCACHE  NOORDER  NOCYCLE', sep = ''))
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_DATADSCR" ENABLE')
+  
+  dbSendUpdate(ch,'DROP SEQUENCE   "KEYWORD_SEQ"')
+  dbSendUpdate(ch,paste('CREATE SEQUENCE   "KEYWORD_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' NOCACHE  NOORDER  NOCYCLE',sep=''))
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_KEYWORDS" ENABLE')
+  
+  dbSendUpdate(ch,'DROP SEQUENCE   "ACCESSSTDY_SEQ"')
+  dbSendUpdate(ch,paste('CREATE SEQUENCE   "ACCESSSTDY_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' NOCACHE  NOORDER  NOCYCLE', sep = ''))
+  dbSendUpdate(ch, 'ALTER TRIGGER  "bi_ACCESSSTDY" ENABLE')
+  
+  dbSendUpdate(ch,'DROP SEQUENCE   "ACCESSORS_SEQ"')
+  dbSendUpdate(ch,paste('CREATE SEQUENCE   "ACCESSORS_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' NOCACHE  NOORDER  NOCYCLE', sep=''))
+  dbSendUpdate(ch, 'ALTER TRIGGER  "bi_ACCESSORS" ENABLE')
+  
+  dbSendUpdate(ch,'DROP SEQUENCE   "OTHRSTDYMAT_SEQ"')
+  dbSendUpdate(ch,paste('CREATE SEQUENCE   "OTHRSTDYMAT_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' NOCACHE  NOORDER  NOCYCLE',sep=''))
+  dbSendUpdate(ch, 'ALTER TRIGGER  "bi_OTHRSTDYMAT" ENABLE')
+  
+  
+  
+#+end_src
 
+
+
+*** change the names and fields
+- go to page, edit page, remove fields on at a time
+- 
 ** DDIindex
 The DDIindex is a java based catalogue that was written by the Australian Data Archives at the ANU (Formerly the ASSDA http://assda.anu.edu.au/ddiindex.html). The original application source is still available from the ASSDA site but I am using the one I have archived because it has some configurations that I don't remember who to make again at the moment.
 *** TOMCAT
