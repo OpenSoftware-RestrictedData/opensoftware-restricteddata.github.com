@@ -3608,13 +3608,13 @@ Aim:
 - I think it might also be good for tracking server maintenance tasks
 - I will experiment by modifying the names of the data entry fields ie from file to server
 - and the tables stay the same.  then I can also modify the app.
-*** COMMENT clone-app-code
+**** COMMENT clone-app-code
 - do this on a dev server first!
 - go to the web apex dashboard
 - application builder, export the app
 - import this, next, with new number auto assigned
 - run app
-*** COMMENT blow away data
+**** COMMENT blow away data
 #+name:clone-app
 #+begin_src R :session *shell* :tangle no :exports none :eval no
   #### name:clone-app####
@@ -3678,9 +3678,40 @@ Aim:
 
 
 
-*** change the names and fields
-- go to page, edit page, remove fields on at a time
-- 
+**** change the names and fields
+- go to page, edit page, remove fields one at a time
+- keep the pages to the bare minimum
+- go to edit page and change their names
+
+##### stdydscr becomes Projects
+- idno becomes project_id
+- titl = project_title
+- authenty = primary_investigator
+- distrbtr = contact_address
+
+##### filedscr becomes servers
+- filename = server_name
+- Filelocation = ip_address
+- Filedscr = Description
+- reqid = authorised_accessors
+
+##### datadscrs becomes tasks
+- LABL = task
+
+**** COMMENT create-new-fields-for-tasks-code
+#+name:create-new-fields-for-tasks
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+  #### name:create-new-fields-for-tasks####
+  require(ddiindexdb)
+  require(swishdbtools)
+  pwd  <- getPassword(remote=T)
+  ch <- connect2oracle(hostip ="115.146.93.108",db = "ddiindexdb", p = pwd)
+  
+  dbSendUpdate(ch,'ALTER TABLE datadscr ADD date_done DATE')
+  
+#+end_src
+**** SAVE VERSIONS
+export application to dropbox/Catalogue
 ** DDIindex
 The DDIindex is a java based catalogue that was written by the Australian Data Archives at the ANU (Formerly the ASSDA http://assda.anu.edu.au/ddiindex.html). The original application source is still available from the ASSDA site but I am using the one I have archived because it has some configurations that I don't remember who to make again at the moment.
 *** TOMCAT
