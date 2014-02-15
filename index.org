@@ -3693,7 +3693,7 @@ Aim:
 - filename = server_name
 - Filelocation = ip_address
 - Filedscr = Description
-- reqid = authorised_accessors
+- reqid = authorised_access_group_id
 
 ##### datadscrs becomes tasks
 - LABL = task
@@ -3708,6 +3708,13 @@ Aim:
   ch <- connect2oracle(hostip ="115.146.93.108",db = "ddiindexdb", p = pwd)
   
   dbSendUpdate(ch,'ALTER TABLE datadscr ADD date_done DATE')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD restrict_root_login NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD use_ssh_keys NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD firewall_enabled NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD hosts_allow_and_deny NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD selinux_enabled NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD tripwire_installed NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD monitoring_installed NUMBER')
   
 #+end_src
 **** SAVE VERSIONS
