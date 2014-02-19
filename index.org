@@ -3715,6 +3715,7 @@ Aim:
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD selinux_enabled NUMBER')
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD tripwire_installed NUMBER')
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD monitoring_installed NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD security_checked NUMBER')
   
 #+end_src
 **** SAVE VERSIONS
