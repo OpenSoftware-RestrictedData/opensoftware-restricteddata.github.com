@@ -3717,6 +3717,42 @@ Aim:
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD monitoring_installed NUMBER')
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD security_checked NUMBER')
   
+  dbSendUpdate(ch,'
+  CREATE TABLE  "SERVERTASKS" 
+     (    "TASKNAME" VARCHAR2(255), 
+          "FREQUENCY" NUMBER(*,0)
+     ) 
+  ')
+  
+  tbl  <- read.csv(textConnection(
+  "TASKNAME, FREQUENCY
+  SECURITY CHECKS, 90
+  UPDATES, 30
+  UPGRADES, 365
+  BACKUP CHECK, 90
+  DR TEST, 365
+  SERVER REPLACEMENT, 365
+  "))
+  tbl
+  dbWriteTable(ch, "SERVERTASKS", tbl, append = T, row.names = F)
+  
+  dbGetQuery(ch, '
+  SELECT TASKNAME, DATE_DONE, DATE_DONE + FREQUENCY AS DATE_DUE
+  FROM SERVERTASKS
+  JOIN DATADSCR
+  ON SERVERTASKS.TASKNAME = DATADSCR.LABL
+  ')
+  
+  dbGetQuery(ch,
+  "select *
+  from stdydscr t1
+  join
+  filedscr t2
+  on t1.IDNO = t2.IDNO
+  ")
+  
+  
+  
 #+end_src
 **** SAVE VERSIONS
 export application to dropbox/Catalogue
