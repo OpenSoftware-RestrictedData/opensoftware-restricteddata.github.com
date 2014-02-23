@@ -3717,11 +3717,39 @@ Aim:
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD monitoring_installed NUMBER')
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD security_checked NUMBER')
   
+  dbSendUpdate(ch,'drop SEQUENCE   "SERVERTASKS_SEQ"')
+  dbSendUpdate(ch,'CREATE SEQUENCE   "SERVERTASKS_SEQ"  MINVALUE 1  MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 7 CACHE 20 NOORDER  NOCYCLE')
+  dbSendUpdate(ch,'drop TABLE SERVERTASKS')
+  
   dbSendUpdate(ch,'
   CREATE TABLE  "SERVERTASKS" 
-     (    "TASKNAME" VARCHAR2(255), 
-          "FREQUENCY" NUMBER(*,0)
+     (    "PKEY" NUMBER NOT NULL ENABLE, 
+          "TASKNAME" VARCHAR2(255), 
+          "FREQUENCY" NUMBER(*,0),
+          CONSTRAINT "SERVPKEY_CON" PRIMARY KEY ("PKEY") ENABLE
      ) 
+  ')
+  
+  dbSendUpdate(ch,'
+  CREATE OR REPLACE TRIGGER  "bi_SERVERTASKS"
+    before insert on "SERVERTASKS"
+    for each row
+  begin
+    for c1 in (
+      select "SERVERTASKS_SEQ".nextval next_val
+      from dual
+    ) loop
+      :new."PKEY" :=  c1.next_val;
+    end loop;
+  end;
+  ')
+  
+  dbSendUpdate(ch,'
+  ALTER TRIGGER  "bi_SERVERTASKS" ENABLE
+  ')
+  dbSendUpdate(ch, '
+  alter table "SERVERTASKS" add constraint
+  "SERVERTASKS_CON" primary key ("PKEY")
   ')
   
   tbl  <- read.csv(textConnection(
@@ -3733,6 +3761,8 @@ Aim:
   DR TEST, 365
   SERVER REPLACEMENT, 365
   "))
+  tbl$PKEY  <- 1:6
+  tbl <- tbl[,c(3,1,2)]
   tbl
   dbWriteTable(ch, "SERVERTASKS", tbl, append = T, row.names = F)
   
@@ -3755,7 +3785,7 @@ Aim:
   
 #+end_src
 **** SAVE VERSIONS
-export application to dropbox/Catalogue
+export application to dropbox/Catalogue/BACKups
 ** DDIindex
 The DDIindex is a java based catalogue that was written by the Australian Data Archives at the ANU (Formerly the ASSDA http://assda.anu.edu.au/ddiindex.html). The original application source is still available from the ASSDA site but I am using the one I have archived because it has some configurations that I don't remember who to make again at the moment.
 *** TOMCAT
