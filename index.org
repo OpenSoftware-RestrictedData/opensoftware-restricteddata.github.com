@@ -3688,12 +3688,15 @@ Aim:
 - titl = project_title
 - authenty = primary_investigator
 - distrbtr = contact_address
+- abstract = business_requirements
 
 ##### filedscr becomes servers
-- filename = server_name
+- filename = vm_name
 - Filelocation = ip_address
 - Filedscr = Description
 - reqid = authorised_access_group_id
+- notes = Server function
+
 
 ##### datadscrs becomes tasks
 - LABL = task
@@ -3716,6 +3719,20 @@ Aim:
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD tripwire_installed NUMBER')
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD monitoring_installed NUMBER')
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD security_checked NUMBER')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD host VARCHAR2(255)')
+  
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD host_name_allocation VARCHAR2(255)')
+  dbSendUpdate(ch,'ALTER TABLE stdydscr ADD funding_project VARCHAR2(255)')
+  
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD attached_storage VARCHAR2(255)')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD external_storage_location VARCHAR2(255)')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD external_storage_purpose  VARCHAR2(255)')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD databases  VARCHAR2(255)')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD applications  VARCHAR2(255)')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD user_access  VARCHAR2(255)')
+  dbSendUpdate(ch,'ALTER TABLE filedscr ADD number_of_users  VARCHAR2(255)')
+  
+  
   
   dbSendUpdate(ch,'drop SEQUENCE   "SERVERTASKS_SEQ"')
   dbSendUpdate(ch,'CREATE SEQUENCE   "SERVERTASKS_SEQ"  MINVALUE 1  MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 7 CACHE 20 NOORDER  NOCYCLE')
