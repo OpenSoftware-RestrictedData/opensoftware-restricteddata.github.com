@@ -3609,11 +3609,11 @@ Aim:
 - I will experiment by modifying the names of the data entry fields ie from file to server
 - and the tables stay the same.  then I can also modify the app.
 **** COMMENT clone-app-code
-- do this on a dev server first!
+- do this on a dev server first! 115.146.93.108 is dev
 - go to the web apex dashboard
-- application builder, export the app
+- application builder, export the app, was number 102
 - import this, next, with new number auto assigned
-- run app
+- run app, I'm going with 101
 **** COMMENT blow away data
 #+name:clone-app
 #+begin_src R :session *shell* :tangle no :exports none :eval no
@@ -3621,7 +3621,7 @@ Aim:
   require(ddiindexdb)
   require(swishdbtools)
   pwd  <- getPassword(remote=T)
-  ch <- connect2oracle(hostip ="115.146.93.108",db = "ddiindexdb", p = pwd)
+  ch <- connect2oracle(hostip ="115.146.93.225",db = "ddiindexdb", p = pwd)
   
   dbSendUpdate(ch,'delete from OTHRSTDYMAT')
   dbSendUpdate(ch, 'ALTER TRIGGER  "bi_OTHRSTDYMAT" DISABLE')
@@ -3708,7 +3708,7 @@ Aim:
   require(ddiindexdb)
   require(swishdbtools)
   pwd  <- getPassword(remote=T)
-  ch <- connect2oracle(hostip ="115.146.93.108",db = "ddiindexdb", p = pwd)
+  ch <- connect2oracle(hostip ="115.146.93.225",db = "ddiindexdb", p = pwd)
   
   dbSendUpdate(ch,'ALTER TABLE datadscr ADD date_done DATE')
   dbSendUpdate(ch,'ALTER TABLE filedscr ADD restrict_root_login NUMBER')
@@ -3735,7 +3735,7 @@ Aim:
   
   
   dbSendUpdate(ch,'drop SEQUENCE   "SERVERTASKS_SEQ"')
-  dbSendUpdate(ch,'CREATE SEQUENCE   "SERVERTASKS_SEQ"  MINVALUE 1  MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 7 CACHE 20 NOORDER  NOCYCLE')
+  dbSendUpdate(ch,'CREATE SEQUENCE   "SERVERTASKS_SEQ"  MINVALUE 1  MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE')
   dbSendUpdate(ch,'drop TABLE SERVERTASKS')
   
   dbSendUpdate(ch,'
@@ -3764,10 +3764,10 @@ Aim:
   dbSendUpdate(ch,'
   ALTER TRIGGER  "bi_SERVERTASKS" ENABLE
   ')
-  dbSendUpdate(ch, '
-  alter table "SERVERTASKS" add constraint
-  "SERVERTASKS_CON" primary key ("PKEY")
-  ')
+  #dbSendUpdate(ch, '
+  #alter table "SERVERTASKS" add constraint
+  #"SERVERTASKS_CON" primary key ("PKEY")
+  #')
   
   tbl  <- read.csv(textConnection(
   "TASKNAME, FREQUENCY
@@ -3801,6 +3801,130 @@ Aim:
   
   
 #+end_src
+**** COMMENT sync-tables-code
+#+name:sync-tables
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+  #### name:sync-tables####
+  require(ddiindexdb)
+  require(swishdbtools)
+  pwd  <- getPassword(remote=T)
+  ch <- connect2oracle(hostip ="115.146.93.225",db = "ddiindexdb", p = pwd)
+  # dev pwd is same
+  chdev <- connect2oracle(hostip ="115.146.93.108",db = "ddiindexdb", p = pwd)
+  
+  outdir <- "~/projects/asn-ltern.bitbucket.org/ServerDetails/backups"
+  outdir <- paste(outdir, Sys.Date(), sep ="/")
+  outdir
+  dir.create(outdir)
+  oth <- dbGetQuery(chdev, 'select * from OTHRSTDYMAT')
+  str(oth)
+  write.csv(oth, file.path(outdir,"oth.csv"), row.names=F)
+  key <- dbGetQuery(chdev, 'select * from KEYWORDS')
+  str(key)
+  write.csv(key, file.path(outdir,"key.csv"), row.names=F)
+  acc <- dbGetQuery(chdev, 'select * from ACCESSORS')
+  str(acc)
+  write.csv(acc, file.path(outdir,"acc.csv"), row.names=F)
+  aco <- dbGetQuery(chdev, 'select * from ACCESSSTDY')
+  str(aco)
+  write.csv(aco, file.path(outdir,"aco.csv"), row.names=F)
+  dat <- dbGetQuery(chdev, 'select * from DATADSCR')
+  str(dat)
+  write.csv(dat, file.path(outdir,"dat.csv"), row.names=F)
+  fil <- dbGetQuery(chdev, 'select * from filedscr')
+  str(fil)
+  write.csv(fil, file.path(outdir,"fil.csv"), row.names=F)
+  sty <- dbGetQuery(chdev, 'select * from stdydscr')
+  str(sty)
+  write.csv(sty, file.path(outdir,"sty.csv"), row.names=F)
+  
+  d <- sty
+  #### and now upload to the prod server
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_STDYDSCR" DISABLE')
+  #dbWriteTable(ch, "STDYDSCR", sty, append = T, row.names = F)
+  paste(names(d), collapse=",", sep= "")
+  for(i in 1:nrow(d)){
+  #i <- 1
+  print(i)
+  dbSendUpdate(ch,
+  # cat(
+  paste(
+  '
+  insert into STDYDSCR (
+  PKEY,TITL,IDNO,PRODUCER,PRODDATEDOC,BIBLCITDOC,AUTHENTY,COPYRIGHT,PRODDATESTDY,FUNDAG,DISTRBTR,SERNAME,VERSION,TIMEPRD,COLLDATE,GEOGCOVER,GEOGUNIT,ANLYUNIT,UNIVERSE,DATAKIND,CLEANOPS,CONFDEC,SPECPERM,RESTRCTN,NOTES,ABSTRACT,CHECKPRIORITY,CHECKED,BIBLCITSTDY,FIELDSOFRESEARCH,FUNDING_PROJECT
+  )
+  VALUES (',paste("'",paste(gsub("'","",ifelse(is.na(d[i,]),'',d[i,])),sep='',collapse="', '"),"'",sep=''),')',sep='')
+  )
+  }
+  
+  
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_STDYDSCR" ENABLE')
+  dbSendUpdate(ch,'drop SEQUENCE   "STDYDSCR_SEQ"')
+  newpk  <- dbGetQuery(ch,'select max(pkey) from stdydscr')
+  dbSendUpdate(ch,paste('create SEQUENCE   "STDYDSCR_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' CACHE 20 NOORDER  NOCYCLE', sep = ""))
+  
+  
+  ##################################################
+  d <- fil
+  #### and now upload to the prod server
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_FILEDSCR" DISABLE')
+  #dbWriteTable(ch, "STDYDSCR", sty, append = T, row.names = F)
+  paste(names(d), collapse=",", sep= "")
+  for(i in 1:nrow(d)){
+  #i <- 1
+  print(i)
+  dbSendUpdate(ch,
+  # cat(
+  paste(
+  '
+  insert into FILEDSCR (
+  FILEID,IDNO,FILENAME,FILETYPE,PROCSTAT,SPECPERMFILE,DATEARCHIVED,DATEDESTROY,FILEDSCR,FILELOCATION,NOTES,REQID,PUBLISHDDI,BACKUPVALID,DATEBACKUPVALID,CHECKED,BACKUPLOCATION,PRODDATEDOCFILE,PRODUCERDOCFILE,DESTROYED,RESTRICT_ROOT_LOGIN,USE_SSH_KEYS,FIREWALL_ENABLED,HOSTS_ALLOW_AND_DENY,SELINUX_ENABLED,TRIPWIRE_INSTALLED,MONITORING_INSTALLED,SECURITY_CHECKED,HOST,HOST_NAME_ALLOCATION,ATTACHED_STORAGE,EXTERNAL_STORAGE_LOCATION,EXTERNAL_STORAGE_PURPOSE,DATABASES,APPLICATIONS,USER_ACCESS,NUMBER_OF_USERS
+  )
+  VALUES (',paste("'",paste(gsub("'","",ifelse(is.na(d[i,]),'',d[i,])),sep='',collapse="', '"),"'",sep=''),')',sep='')
+  )
+  }
+  
+  
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_FILEDSCR" ENABLE')
+  dbSendUpdate(ch,'drop SEQUENCE   "FILEDSCR_SEQ"')
+  newpk  <- dbGetQuery(ch,'select max(fileid) from filedscr')
+  dbSendUpdate(ch,paste('create SEQUENCE   "FILEDSCR_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' CACHE 20 NOORDER  NOCYCLE', sep = ""))
+  
+  
+  ##################################################
+  d <- dat
+  d$DATE_DONE  <-
+    format(
+      as.Date(
+      substr(    d$DATE_DONE    ,1,10)
+      ,'%Y-%m-%d')
+           ,"%d/%b/%Y")
+  #### and now upload to the prod server
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_DATADSCR" DISABLE')
+  #dbWriteTable(ch, "STDYDSCR", sty, append = T, row.names = F)
+  paste(names(d), collapse=",", sep= "")
+  for(i in 1:nrow(d)){
+  #i <- 1
+  print(i)
+  dbSendUpdate(ch,
+  # cat(
+  paste(
+  '
+  insert into DATADSCR (
+  PKEY,LABL,NOTES,SPECPERMVAR,FILEID,DATE_DONE
+  )
+  VALUES (',paste("'",paste(gsub("'","",ifelse(is.na(d[i,]),'',d[i,])),sep='',collapse="', '"),"'",sep=''),')',sep='')
+  )
+  }
+   
+   
+  dbSendUpdate(ch,'ALTER TRIGGER  "bi_DATADSCR" ENABLE')
+  dbSendUpdate(ch,'drop SEQUENCE   "DATADSCR_SEQ"')
+  newpk  <- dbGetQuery(ch,'select max(pkey) from datadscr')
+  dbSendUpdate(ch,paste('create SEQUENCE   "DATADSCR_SEQ"  MINVALUE 1 MAXVALUE 999999999999999999999999999 INCREMENT BY 1 START WITH ',newpk+1,' CACHE 20 NOORDER  NOCYCLE', sep = ""))
+    
+#+end_src
+
 **** SAVE VERSIONS
 export application to dropbox/Catalogue/BACKups
 ** DDIindex
