@@ -4985,6 +4985,14 @@ Needs to be done from Brains as it needs the oracle client set up.
   
 #+end_src
 
+*** sync the home directory
+
+#+name:sync-home
+#+begin_src sh :session *shell* :tangle no :exports none :eval no
+#### name:sync-home####
+
+#+end_src
+
 ** Brawn
 *** Find out how big is it?
 AKA brawn-dbsize
@@ -5097,9 +5105,38 @@ scp  username@the.remote.server.zz:/backup_yyyymmdd.dump /path/to/localbackup
 #(set up passwordless ssh)
 #http://www.linuxproblem.org/art_9.html
 
-chrontab -e
-15 0 * * * rsync -arvR /home/ root@my.server.ip:/ 
+crontab -e
+15 0 * * * rsync -arvR --delete /home/ root@my.server.ip:/ 
 :wq
+
+# ok now describe a  bit better 
+from a backup machine 
+vi /etc/sysconfig/iptables
+# make sure your prod machine is there for port 22 (it is going to send data to this address)
+als go to /etc/hosts.allow and allow this machine
+# (set up passwordless ssh)
+from the remote machine
+copy public key to the backup user’s home directory on the backup machine, like this:
+scp ~/.ssh/id_rsa.pub root@115.146.92.162:
+# go to the backup machine
+copy public SSH key into the list of authorised keys for that user.
+#mkdir -p .ssh
+cat id_rsa.pub >> .ssh/authorized_keys
+
+Then lock down the permissions on .ssh and its contents, since the SSH server is fussy about this.
+
+$ chmod 700 .ssh
+$ chmod 400 .ssh/authorized_keys
+
+That’s it, passwordless-SSH is now set up: log out of the server then log back in:
+
+Now set up the remote prod server to send it's home dir at a regular time to the backup server
+crontab -e
+15 0 * * * rsync -arvR --delete /home/ root@my.server.ip:/home/brains_backup/ 
+ESC :wq
+# make sure rsync is up to date on both servers
+
+
 
 *** Restore databse dump into a new database on another machine.
 #+name:brawn-dump-restore-header
