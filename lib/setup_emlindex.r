@@ -1,20 +1,34 @@
 #################################################################
 require(swishdbtools)
-ch <- connect2postgres2("hanigan")
+ch <- connect2postgres2("data_inventory")
 
-dbSendUpdate(ch,"
-CREATE TABLE ltern.data_package (
-refid integer NOT NULL DEFAULT nextval('ltern.data_package_id_seq'::regclass),
+dbSendQuery(ch,
+  "
+      CREATE SEQUENCE public.dataset_id_seq
+        INCREMENT 1
+        MINVALUE 1
+        MAXVALUE 2147483648
+        START 1
+        CACHE 1;
+      ALTER TABLE public.dataset_id_seq
+        OWNER TO ivan_hanigan;
+  "
+)
+
+dbSendQuery(ch,"
+CREATE TABLE public.dataset (
+id integer NOT NULL DEFAULT nextval('public.dataset_id_seq'::regclass),
   pn_code varchar(255),
   plot_network_study_name varchar(255),
-  data_package varchar(255),
+  dataset varchar(255),
   tern_type varchar(255),
   ltern_publ_url varchar(255),
-  CONSTRAINT ltern_data_package_pkey PRIMARY KEY (refid)
+  CONSTRAINT dataset_pkey PRIMARY KEY (id)
   ) WITH (OIDS=FALSE);
-  ALTER TABLE ltern.data_package OWNER TO ivan_hanigan;
-  GRANT ALL ON TABLE ltern.data_package TO ltern;
+  ALTER TABLE public.dataset OWNER TO ivan_hanigan;
 ")
+
+
 
 ## dbSendUpdate(ch,'
 ## CREATE TABLE  "STDYDSCR"
