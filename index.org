@@ -1459,6 +1459,7 @@ Q2 from your previous build I saw you modified your user with vi /etc/passwd # a
 Depends on yourself.  Guessing that RStudio will be visible to the outside world without the need to VPN in?  If so and a external user who only needs to access to RStudio you would then change their login in /etc/passwd to provided example.  Users who will be accessing the server with EMacs, plain R Console vi SSH etc, you would not change.
 
 **** TODO sudo rights
+# update on ubuntu can use sudo adduser <username> sudo
 NB this isn't necessary unless you disable root
 add sudoers
 kudos2 http://helmingstay.blogspot.com.au/2012/02/adduser-myusername-adduser-myusername.html
@@ -2643,6 +2644,7 @@ To update R as ‘root’ on your system simply type
 #+name:updateR
 #+begin_src R :session *shell* :tangle no :exports reports :eval no
 yum update R
+
 #+end_src
 
 
@@ -2690,6 +2692,9 @@ check out the RSudio versions at: http://rstudio.org/download/server
 # yum install compat-libgfortran-41.x86_64 
 wget http://download2.rstudio.org/rstudio-server-0.97.551-x86_64.rpm
 sudo yum install --nogpgcheck rstudio-server-0.97.551-x86_64.rpm
+
+wget http://download2.rstudio.org/rstudio-server-rhel-0.99.451-x86_64.rpm
+sudo yum install --nogpgcheck rstudio-server-rhel-0.99.451-x86_64.rpm
 rstudio-server verify-installation
 #+end_src
 *** firewall access
@@ -3179,7 +3184,8 @@ chmod 0600 /home/user/.pgpass
 ################################################################
 # name:unixODBC
 yum list unixODBC*
-yum install unixODBC.x86_64  unixODBC-devel.x86_64 unixODBC-kde.x86_64 
+yum install unixODBC.x86_64  unixODBC-devel.x86_64 
+# unixODBC-kde.x86_64 
 R
 install.packages('RODBC')
 require(RODBC)

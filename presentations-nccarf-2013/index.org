@@ -6,6 +6,10 @@
 
 * COMMENT Notes
 ** TODO get the original from dropbox
+opensoft diagram originally built in
+~/Dropbox/projects/IvanPhD/Papers/NCCARF/poster-deprecated-see-github
+Hanigan-2013-NCCARF-presentation.org
+
 *** COMMENT get-orig-code
 #+name:get-orig
 #+begin_src R :session *R* :tangle no :exports none :eval no
