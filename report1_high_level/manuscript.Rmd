@@ -41,6 +41,7 @@ abstract: no
 %\VignetteIndexEntry{Example Manuscript}
 -->
 ```{r, eval = F, echo = F}
+setwd("~/projects/opensoftware-restricteddata.github.com/report1_high_level/")
 library(rmarkdown)
 library(knitr)
 library(knitcitations)
@@ -52,7 +53,7 @@ cite_options(citation_format = "pandoc", check.entries=FALSE)
 
 dir()
 render("manuscript.Rmd", "pdf_document")
-#browseURL("manuscript.pdf")
+browseURL("manuscript.pdf")
 ```
 ```{r, echo = F, results = 'hide'}
 # load
@@ -319,6 +320,43 @@ ${X_{lm}}$ = Projected Future ExposureVariables
 \emph{BaselineRate$_{jkl}$} = \emph{avgDeathsPerTime}/\emph{avgPopPerTime} in age$_j$, sex$_k$ and zone$_l$ 
 
 \emph{Population$_{jklm}$} = projected populations by age$_j$, sex$_k$, zone$_l$ and time$_m$
+
+
+```{r, eval = F, echo = F}
+dir()
+dir("~/data")
+indir <- "~/data/GARNAUT mental health archive/1 Data/Rain"
+dir(indir, pattern = "jpg")
+filelist  <- c("A1BDRY_RainSD07.jpg",             "A1BWET_RainSD07.jpg"            )
+for(fi in filelist){
+  #file.copy(file.path(indir, fi), fi)
+  txt <- sprintf("\\begin{figure}[!h]
+\\centering
+\\includegraphics[width=\\textwidth]{%s}
+\\caption{%s}
+\\label{fig:%s}
+\\end{figure}
+", fi, fi, fi)
+  cat(txt)
+}
+```
+
+## The Garnaut review climate change scenarios
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{A1BDRY_RainSD07.jpg}
+\caption{A1BDRY RainSD07}
+\label{fig:A1BDRYRainSD07}
+\end{figure}
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=\textwidth]{A1BWET_RainSD07.jpg}
+\caption{A1BWET RainSD07}
+\label{fig:A1BWET-RainSD07}
+\end{figure}
 
 
 # Discussion 
