@@ -1,3 +1,4 @@
+
 setwd("report1_high_level/")
 dat <- read.csv("data/rain_future_estimated_dry", stringsAsFactors = F)
 
