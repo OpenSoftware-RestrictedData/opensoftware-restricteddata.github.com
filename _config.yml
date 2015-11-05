@@ -1,0 +1,4 @@
+name: opensoftware-restricteddata
+description: opensoftware-restricteddata
+url: http://opensoftware-restricteddata.github.com
+exclude: report1_high_level/manuscript.Rmd
