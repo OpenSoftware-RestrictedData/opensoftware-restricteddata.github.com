@@ -425,3 +425,418 @@
 #+end_src
 
 * predicted attributable in future
+*** COMMENT fit_baseline_model
+#+name:fit_baseline_model
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+  #### name:fit_baseline_model ####
+  # create a drought variable for each category
+  # ie pre-calculated Drought by Age, Sex and Rural/Urban Region terms, constructed to have the value of the drought index in the specified groups (with Ages grouped by 20 year age brackets) and zero otherwise.
+  # NOTE that we initially fitted this model with a drought effect in each 10 year age bracket, however the 20 year age brackets give essentially the same results, and is simpler to calculate.
+    
+  require(mgcv)
+  require(splines)
+  
+  # Log transform drought variable, see data preparation for that diagnostic
+  data$logDroughtCount = log1p(data$avcount)
+  
+  # set up the formats of these variables
+  data$time=as.Date(paste(data$dthyy,data$dthmm,1,sep='-'))
+  data$dthmm=as.factor(data$dthmm)
+  data$mm=as.numeric(data$dthmm)
+  
+  # set up timevar for sinusoidal want
+  timevar <- as.data.frame(names(table(data$time)))
+  index <- 1:length(names(table(data$time)))
+  timevar$time2 <- index/ (length(index) / (length(index)/12))
+  names(timevar) <- c('time','timevar')
+  timevar$time <- as.Date(timevar$time)
+  data <- merge(data,timevar)
+  data$time <- as.numeric(data$time)
+  data$agegp <- as.factor(data$agegp)
+  data$sd_group <- as.factor(data$sd_group)
+  str(data)
+  
+  
+  data$rural <-ifelse(data$sd_group %in% c('Central West','Mid-North Coast','Murray','Murrumbidgee','North and Far Western','Northern','Richmond-Tweed','South Eastern'), 1, 0)
+    
+  data$agegp2 <-ifelse(data$agegp %in% c('10_19','20_29'), '10_29',
+  ifelse(data$agegp %in% c('30_39','40_49'), '30_49',
+  ifelse(data$agegp %in% c('50_59','60_69','70plus'), '50plus',
+  0)))
+    
+  data$agegp2 <- as.factor(data$agegp2)
+    
+  ages <- c('10_19','20_29','30_39','40_49','50_59','60_69','70plus')
+  ages2 <- c('10_29','30_49','50plus')
+    
+  # step thru each
+  ## for(sexs in 1:2){
+  ## # sexs <- c(2)#,2)
+  ## if(sexs == 1) {sexid <- 'Males'} else {sexid <- 'Females'}
+  ## #sexid <- c('Females')#,'Females')
+  ## for(rural in 0:1){
+  ## # rural <- c(1)#,0)
+  ## if(rural == 0) {ruralid <- c('urban')} else {ruralid<-'rural'} #,'urban')
+    
+  ## cat(
+  ## paste(
+  ## 'data$Drt',sexid,ages2,ruralid,' <- ifelse(data$agegp2 == ',ages2,' & data$sex == ',sexs,' & data$rural == ',rural,', data$logDroughtCount, 0)',
+  ## collapse = '
+  ## ',sep='')
+  ## )
+  ## cat('
+    
+  ## ')
+  ## }
+    
+  ## }
+    
+  # need to add ' to each agegp
+  data$DrtMales10_29urban <- ifelse(data$agegp2 == '10_29' & data$sex == 1 & data$rural == 0, data$logDroughtCount, 0)
+  data$DrtMales30_49urban <- ifelse(data$agegp2 == '30_49' & data$sex == 1 & data$rural == 0, data$logDroughtCount, 0)
+  data$DrtMales50plusurban <- ifelse(data$agegp2 == '50plus' & data$sex == 1 & data$rural == 0, data$logDroughtCount, 0)
+    
+  data$DrtMales10_29rural <- ifelse(data$agegp2 == '10_29' & data$sex == 1 & data$rural == 1, data$logDroughtCount, 0)
+  data$DrtMales30_49rural <- ifelse(data$agegp2 == '30_49' & data$sex == 1 & data$rural == 1, data$logDroughtCount, 0)
+  data$DrtMales50plusrural <- ifelse(data$agegp2 == '50plus' & data$sex == 1 & data$rural == 1, data$logDroughtCount, 0)
+    
+  data$DrtFemales10_29urban <- ifelse(data$agegp2 == '10_29' & data$sex == 2 & data$rural == 0, data$logDroughtCount, 0)
+  data$DrtFemales30_49urban <- ifelse(data$agegp2 == '30_49' & data$sex == 2 & data$rural == 0, data$logDroughtCount, 0)
+  data$DrtFemales50plusurban <- ifelse(data$agegp2 == '50plus' & data$sex == 2 & data$rural == 0, data$logDroughtCount, 0)
+    
+  data$DrtFemales10_29rural <- ifelse(data$agegp2 == '10_29' & data$sex == 2 & data$rural == 1, data$logDroughtCount, 0)
+  data$DrtFemales30_49rural <- ifelse(data$agegp2 == '30_49' & data$sex == 2 & data$rural == 1, data$logDroughtCount, 0)
+  data$DrtFemales50plusrural <- ifelse(data$agegp2 == '50plus' & data$sex == 2 & data$rural == 1, data$logDroughtCount, 0)
+    
+  ######################
+  #do,  The final drought model estimates by age, sex and region
+  ######################
+  # fit the GLM with recommended df
+  strt=Sys.time()
+  interactionDrtAgeSexRuralModel3 <- glm(deaths ~ sin(timevar*2*pi) + cos(timevar*2*pi)
+  + tmax_anomaly
+  + DrtMales10_29rural
+  + DrtMales30_49rural
+  + DrtMales50plusrural
+  + DrtFemales10_29rural
+  + DrtFemales30_49rural
+  + ns(DrtFemales50plusrural, df = 5)
+  + ns(DrtMales10_29urban, df = 6)
+  + DrtMales30_49urban
+  + ns(DrtMales50plusurban, df = 4)
+  + DrtFemales10_29urban
+  + ns(DrtFemales30_49urban, df = 3)
+  + DrtFemales50plusurban
+  + agegp2
+  + rural
+  + sd_group
+  + sex
+  + agegp
+  + agegp*sex*ns(time,3)
+  + offset(log(pop)), data=data,family=poisson)
+  #save.image()
+  endd=Sys.time()
+  print(endd-strt)
+  
+  summary(interactionDrtAgeSexRuralModel3)
+  #Rsquared.glm.gsm(interactionDrtAgeSexRuralModel3)
+  
+  
+  
+#+end_src
+
+*** COMMENT predict_attributable_future
+#+name:predict_attributable_future
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+  #### name:predict_attributable_future ####
+  drt <- read.csv("data/drought_future_estimated_dry.csv", stringsAsFactors = F)
+  # newnode get estimate as attributable deaths
+  # need to calculate
+  # y(attributableToX) = sum((y0 x (exp(beta * X) - 1) x Pop))
+  # where y0 is the baseline incidence rate for the health endpoint being quantified;
+  # Pop is the population affected and
+  # beta is the effect coefficient drawn from the model.
+    
+    
+  # get a test dataset
+  
+  paste(names(data)[c(2:9,17)],sep='', collapse="','")
+  data2 <- data[,c('sd_group','rural','sex','agegp','agegp2','dthyy', 'dthmm','deaths','pop','logDroughtCount')]
+  head(data2)
+  # use the average rates deaths/person/month
+  # newnode get descriptive deaths by age/sex/month/zone groups
+  # calculate baseline incidence
+    
+  names(data)
+  desc <- sqldf('
+  select sd_group, sex, agegp,avg(deaths) as avgMonthlyDeaths, avg(pop) as avgPop,
+  avg(deaths)/avg(pop) as avgRate
+  from data
+  group by sd_group, sex, agegp
+  order by sd_group, sex, agegp
+  ', drv = "SQLite")
+  head(desc)
+  desc[1:40,]
+  sqldf(
+  'select sd_group, sum(avgMonthlyDeaths), sum(avgPop)
+  from desc
+  group by sd_group
+  order by sd_group
+  ', drv = "SQLite")
+  subset(desc, sd_group == 'Sydney')
+  ## with(subset(data, sd_group == 'Sydney' & sex == 1), plot(agegp,deaths/pop))
+  ## with(subset(data, sd_group == 'Sydney' & sex == 1 & agegp == '70plus'),
+  ## plot(as.Date(paste(dthyy, dthmm, 1, sep='-')), deaths, type = 'l', col = 'grey')
+  ## )
+  ## abline(2.3392070,0)
+  ## dev.off()
+  # ok merge with the test dataset
+  str(desc)
+  data2 <- merge(data2, desc, by =  c('sd_group', 'sex', 'agegp'))
+  subset(desc, sd_group == 'Central West')
+  head(data2)
+    
+  #### Add the future drought estimates (log)
+  str(data2)
+  str(drt)
+  drt$logDroughtCount_future <- log1p(drt$count)
+  
+  
+  # now use the coefficient in
+  # y(attributable) = baselineIncidence x (exp(beta * X) - 1) x Pop
+  # recall I used
+  glmest<-summary(interactionDrtAgeSexRuralModel3)$coefficients
+  betai <- glmest[which(row.names(glmest)=='DrtMales30_49rural'),1]
+  sei <- glmest[which(row.names(glmest)=='DrtMales30_49rural'),2]
+  # estimate only for  DrtMales30_49rural
+  attributable <- subset(data2, rural == 1 & sex ==1 & agegp2 == '30_49')
+  table(attributable$sd_group)
+  str(attributable)
+  
+  # previous work used the monthly observed incidence
+  # for this work I will use the avg incidnce (and pop) over the 38
+  # years
+  # subset to rural, add age2
+  desc$rural <-ifelse(desc$sd_group %in% c('Central West','Mid-North Coast','Murray','Murrumbidgee','North and Far Western','Northern','Richmond-Tweed','South Eastern'), 1, 0)
+  desc$agegp2 <-ifelse(desc$agegp %in% c('10_19','20_29'), '10_29',
+  ifelse(desc$agegp %in% c('30_39','40_49'), '30_49',
+  ifelse(desc$agegp %in% c('50_59','60_69','70plus'), '50plus',
+  0)))
+    
+  desc$agegp2 <- as.factor(desc$agegp2)
+  
+  attributable2 <- subset(desc, rural == 1 & sex ==1 & agegp2 == '30_49')
+  table(attributable2$sd_group)
+  str(attributable2)
+  attributable2
+  str(drt)
+  drt$sd_group <- as.factor(drt$sd_group)
+  attributable2 <- merge(drt, attributable2, by = "sd_group")
+  str(attributable2)
+  attach(attributable2)
+    
+  attributable2$deathsAttributable <-
+  (avgMonthlyDeaths/avgPop) * (exp(betai * logDroughtCount_future) - 1) * avgPop
+  # SE
+  #LCI
+  attributable2$deathsAttributableLower <-
+  (avgMonthlyDeaths/avgPop) * (exp((betai - sei * 1.96) *  logDroughtCount_future) - 1) * avgPop
+  #UCI
+  attributable2$deathsAttributableUpper <-
+  (avgMonthlyDeaths/avgPop) * (exp((betai + sei * 1.96) * logDroughtCount_future) - 1) * avgPop
+    
+  detach(attributable2)
+  head(attributable2)
+    
+    
+  # now summarise by year
+  summaryAttributable <- sqldf(
+  'select year_future, sum(deathsAttributable) as deathsAttributable
+  from attributable2
+  group by year_future
+  order by year_future
+  ', drv = "SQLite")
+  summaryAttributable
+  # plot the estimated deaths
+  ## with(summaryAttributable,
+  ## plot(dthyy, deathsAttributable/deaths, type = 'l')
+  ## )
+  ## par(new=T)
+  ## with(summaryAttributable,
+  ## plot(dthyy, logDroughtCount, type = 'l',col = 'blue')
+  ## )
+  ## par(new=T)
+  ## with(summaryAttributable,
+  ## plot(dthyy, deaths, type = 'b',col = 'darkblue', pch=16)
+  ## )
+  # calcualte estimate
+    
+  estOut <- sqldf(
+  'select 
+  sum(deathsAttributable) as deathsAttributable,
+  sum(deathsAttributableLower) as deathsAttributableLower,
+  sum(deathsAttributableUpper) as deathsAttributableUpper
+  from attributable2
+  ', drv = "SQLite")
+    
+  # The predicted number of rural male suicides aged 30-49 per annum associated with droughts over our study period was 4.01 (95%CI 2.14 to 6.05)
+  estOut$deathsAttributable
+  # 152.3477
+  length(names(table(attributable2$year_future)))
+  estOut$deathsAttributable / 110
+  #[1] 11.33696
+   estOut$deathsAttributableLower / 110
+  #[1] 5.771919
+   estOut$deathsAttributableUpper / 110
+  #[1] 17.94065
+  
+#+end_src
+*** COMMENT estimates_per_drougth_year
+#+name:estimates_per_drougth_year
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+  #### name:estimates_per_drougth_year ####
+
+
+
+    
+  # This is not as good a representation as by drought year.
+  # to calculate number of drought years get average of the number of drought years by Rural Regions
+  # DROUGHT MONTHS DEFINED AS ANY MONTH WHERE THE DROUGHT INDEX IS
+  # GREATER THAN OR EQUAL TO 5.
+  droughtyears <- sqldf("select sd_group, sum(droughtmonth)/12 as droughtyears
+  from
+  (
+  select sd_group, agegp, sex, time, avcount,
+  case when avcount >= 5 then 1 else 0 end as droughtmonth
+  from data
+  where agegp = '10_19' and sex = 1
+  order by sd_group
+  ) t1
+  group by sd_group
+  ")
+    
+  # sanity check
+  qc <- sqldf("select sd_group, agegp, sex, time, avcount,
+        case when avcount >= 5 then 1 else 0 end as droughtmonth
+  from data
+  where agegp = '10_19' and sex = 1 and sd_group = 'Central West'
+  order by sd_group
+  ")
+    
+  png(file.path(rootdir,'CentralWestDrought19702007.png'),res=200,width = 2100, height = 1000)
+  with(qc, plot(time, avcount, type = 'l', axes=F))
+  with(qc, points(time, avcount, pch = 16, cex=.5))
+  box();axis(2);
+  axis(1,at=as.Date(paste(1970:2007,'-01-01',sep='')),labels=NA)
+  axis(1,at=as.Date(paste(seq(1970, 2007,5),'-01-01',sep='')),labels=seq(1970, 2007,5))
+       segments(as.Date(paste(1970:2007,'-01-01',sep='')),0,as.Date(paste(1970:2007,'-01-01',sep='')),12,lty=3)
+  segments(min(qc$time),5,max(qc$time),5)
+    
+  # calculate beginning and end of drougths
+  indicator <- cbind(qc$avcount,c(NA,qc[1:(nrow(qc)-1),'avcount']))
+  drtstrt <- which(indicator[,1] >=5 & indicator[,2] <5)
+  #points(qc$time[drtstrt],qc$avcount[drtstrt], col = 'red')
+  drtend <- which(indicator[,1] <5 & indicator[,2] >=5)
+  #points(qc$time[drtend-1],rep(5,length(drtend)))
+    
+     cbind(rep(c(min(qc$time)-(5*365),max(qc$time)+(5*365),max(qc$time)+(5*365),min(qc$time)-(5*365)),3),
+  c(drtstrt,drtstrt,drtend-1,drtend-1))
+    #polygon(c(min(qc$time)-(5*365),max(qc$time)+(5*365),max(qc$time)+(5*365),min(qc$time)-(5*365)),c(4,4,14,14),col='grey')
+  for(i in 1:9){
+  polygon(c(qc$time[drtstrt[i]],qc$time[drtend[i]-1],qc$time[drtend[i]-1],qc$time[drtstrt[i]]),
+  c(5,5,14,14), col='grey')
+  }
+  with(qc, lines(time, avcount))
+  with(qc, points(time, avcount, pch = 16, cex=.5))
+  #points(qc$time[drtstrt],qc$avcount[drtstrt], col = 'red')
+    legend('topleft',legend=c('droughtIndex','droughtDeclared'),fill=c(NA,'grey'),border=c(NA,'black'),lty=c(1,NA))
+  dev.off()
+    
+  # check against http://www.dpi.nsw.gov.au/agriculture/emergency/drought/planning/climate/advance-retreat
+    
+    
+  # THIS NEXT ONE CALCULATES THE NUMBER PER DROUGHT YEAR AND COMES UP WITH 17
+  # INTERESTING ATTEMPT THAT I MIGHT COME BACK TO
+  # BUT FOR NOW WE ARE NOT HAPPY TO INCORPORATE THE ARBITRARY DROUGHT THRESHOLDS IN OUR PREDICTION
+    
+    
+  droughtyearsRural <- droughtyears[!droughtyears$sd_group %in% c('Sydney','Hunter','Illawarra'),]
+  #                 sd_group droughtyears
+  # 1           Central West            3
+  # 4        Mid-North Coast            3
+  # 5                 Murray            2
+  # 6           Murrumbidgee            3
+  # 7  North and Far Western            2
+  # 8               Northern            2
+  # 9         Richmond-Tweed            5
+  # 10         South Eastern            4
+  mean(droughtyearsRural$droughtyears)
+  # 3
+  # so 3 out of 38
+  (3/38)*100 # 7.9%
+    
+  table(attributable$sd_group)
+  # set drought index to 0 if <5
+  attributable$logDroughtCountDeclared <- ifelse(attributable$logDroughtCount >= log1p(5), attributable$logDroughtCount, 0)
+  attach(attributable)
+  # TODO this is clobbering the previous calculation, it would be best to keep that and make new names?
+  attributable$deathsAttributable <-
+  (avgMonthlyDeaths/avgPop) * (exp(betai * logDroughtCountDeclared) - 1) * pop
+  # SE
+  #LCI
+  attributable$deathsAttributableLower <-
+  (avgMonthlyDeaths/avgPop) * (exp((betai - sei * 1.96) *  logDroughtCountDeclared) - 1) * pop
+  #UCI
+  attributable$deathsAttributableUpper <-
+  (avgMonthlyDeaths/avgPop) * (exp((betai + sei * 1.96) * logDroughtCountDeclared) - 1) * pop
+    
+  detach(attributable)
+  head(subset(attributable, logDroughtCountDeclared != 0))
+    
+    
+  # now summarise by year
+  summaryAttributable <- sqldf(
+  'select dthyy, sum(deathsAttributable) as deathsAttributable,
+  sum(deaths) as deaths,
+  sum(pop) as pop,
+  round(avg(logDroughtCountDeclared),1) as logDroughtCountDeclared
+    
+  from attributable
+  group by dthyy
+  order by dthyy
+  ')
+  summaryAttributable
+  # plot the estimated deaths
+  with(summaryAttributable,
+  plot(dthyy, deathsAttributable, type = 'b', pch = 16)
+  )
+  par(new=T)
+  with(summaryAttributable,
+  plot(dthyy, logDroughtCountDeclared, type = 'l',col = 'blue')
+  )
+  #   par(new=T)
+  #   with(summaryAttributable,
+  #    plot(dthyy, deaths, type = 'b',col = 'darkblue', pch=16)
+  #    )
+  # calcualte estimate
+    
+  estOut <- sqldf(
+  'select sum(deaths) as deaths,
+  sum(deathsAttributable) as deathsAttributable,
+  sum(deathsAttributableLower) as deathsAttributableLower,
+  sum(deathsAttributableUpper) as deathsAttributableUpper
+  from attributable
+  ')
+    
+  # The predicted number of rural male suicides aged 30-49 per drought year over our study period was 17.73 (95%CI 9.26 to 27.29)
+  estOut$deathsAttributable
+  # [1] 53.19648
+    
+  estOut$deathsAttributable / 3
+  # 17.73216
+  estOut$deathsAttributableLower / 3
+  # 9.260883
+  estOut$deathsAttributableUpper / 3
+  # 27.28826
+    
+#+end_src
