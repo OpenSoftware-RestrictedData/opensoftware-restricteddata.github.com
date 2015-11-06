@@ -19,385 +19,41 @@
 #+end_src
 
 * exposure
-** ranfall future probs
-*** COMMENT get_sd_codes
-#+name:get_sd_codes
-#+begin_src R :session *R* :tangle get_sd_codes.R :exports none :eval no
-  #### name:get_sd_codes ####
-  library(rpostgrestools)
-  ch <- connect2postgres2("postgis_hanigan")
-  
-  sd  <- dbGetQuery(ch, "select sdcode07, sdname07
-  from abs_sd.aussd07
-  where sdcode07 < '200'")
-  sd
-  ##    sdcode07        sdname07
-  ## 1       105          Sydney
-  ## 2       110          Hunter
-  ## 3       115       Illawarra
-  ## 4       120  Richmond-Tweed
-  ## 5       125 Mid-North Coast
-  ## 6       130        Northern
-  ## 7       135   North Western
-  ## 8       140    Central West
-  ## 9       145   South Eastern
-  ## 10      150    Murrumbidgee
-  ## 11      155          Murray
-  ## 12      160        Far West
-  ## > 
-#+end_src
-*** COMMENT rain future prob dry
-#+name:rain future prob
+*** TODO just get the preprocessed drought_futures from garnaut
 #+begin_src R :session *shell* :tangle no :exports none :eval no
-  #### name:rain future prob ####
-  library(reshape)
-  library(sqldf)
-  
-  indir  <- "~/projects/GARNAUT_CLIMATE_CHANGE_REVIEW/rain/data_derived"
-  dir(indir)
-  
-  # dryer
-  infile <- "A1FIR1_RainSD07_by_season.csv"
-  dat <- read.csv(file.path(indir, infile))
-  str(dat)
-  
-  # construct a time series for each SD of proportional changes
-  # first reshape, just NSW sds
-  names(dat)
-  sdlist <- names(dat)[grep("X1", names(dat))]
-  dat2 <- dat[,c("year", "order", "season", sdlist)]
-  str(dat2)
-  
-  dat3 <- melt(dat2, c("year","order","season"))
-  str(dat3)
-  
-  baseline <- sqldf("select *
-  from dat3
-  where variable like 'X1%'
-    and year = 1990
-  ")
-  names(dat3) <- gsub("order", "ord1", names(dat3))
-  head(dat3)
-  
-  
-  joind <- sqldf("select t1.year, t1.ord1, t1.season, t1.variable, t1.value/t2.value as proportion
-  from dat3 t1
-  left join baseline t2
-  on t1.season = t2.season and t1.variable = t2.variable
-  ", drv = "SQLite")
-  head(joind, 20)
-  
-  # need to aggregate the two far north west sds (160 + 135)
-  joind$sd_group <- joind$variable
-  joind$sd_group <- gsub("X135",   "North and Far Western", joind$sd_group) 
-  joind$sd_group <- gsub("X160",   "North and Far Western", joind$sd_group) 
-  
-  
-  joind$sd_group <- gsub("X105",          "Sydney", joind$sd_group) 
-  joind$sd_group <- gsub("X110",          "Hunter", joind$sd_group) 
-  joind$sd_group <- gsub("X115",       "Illawarra", joind$sd_group) 
-  joind$sd_group <- gsub("X120",  "Richmond-Tweed", joind$sd_group) 
-  joind$sd_group <- gsub("X125", "Mid-North Coast", joind$sd_group) 
-  joind$sd_group <- gsub("X130",        "Northern", joind$sd_group) 
-  joind$sd_group <- gsub("X140",    "Central West", joind$sd_group) 
-  joind$sd_group <- gsub("X145",   "South Eastern", joind$sd_group) 
-  joind$sd_group <- gsub("X150",    "Murrumbidgee", joind$sd_group) 
-  joind$sd_group <- gsub("X155",          "Murray", joind$sd_group) 
-  
-  joind <- sqldf("select year, ord1, season, sd_group, avg(proportion) as proportion
-  from joind
-  group by  year, ord1, season, sd_group
-  ", drv = "SQLite")
-  str(joind)
-  head(joind)
-  data.frame(table(joind$sd_group))
-  qc <- subset(joind, sd_group == "North and Far Western")
-  head(qc)
-  png("figures_and_tables/qc_dry_props_north_far_west.png")
-  plot(row.names(qc), qc$proportion, type = "l")
-  dev.off()
-  
-  # now need to disaggregate each month of the 3 mo seasons
-  seasons <- data.frame(season = c("djf", "djf","djf","mam", "mam","mam","jja","jja","jja", "son","son","son"),
-                        mm = c(12,1:11)
-                        )
-  seasons
-  str(joind)
-  joind_mnthly <- sqldf("select t1.sd_group, t1.year, t2.season, t2.mm, proportion
-  from joind t1
-  left join
-  seasons t2
-  on t1.season = t2.season
-  order by sd_group, year, mm",
-  drv = "SQLite")
-  str(joind_mnthly)
-  head(joind_mnthly, 24)
-  
-  qc <- subset(joind_mnthly, sd_group == "Central West")
-  png("figures_and_tables/qc_dry_props_central_west.png")
-  plot(row.names(qc), qc$proportion, type = "l")
-  dev.off()
-  dir()
-  write.csv(joind_mnthly, "data/rain_future_prob_dry.csv", row.names = F)
-  
-#+end_src
-
-*** COMMENT rain future prob wet
-#+name:rain future prob
-#+begin_src R :session *shell* :tangle no :exports none :eval no
-  #### name:rain future prob ####
-  indir  <- "~/projects/GARNAUT_CLIMATE_CHANGE_REVIEW/rain/data_derived"
-  dir(indir)
-  
-  # wet
-  infile  <- "A1FIR2_RainSD07_by_season.csv"
-  
-  
-#+end_src
-
-** drought historic
-*** COMMENT drt_historic
-#+name:drt_historic
-#+begin_src R :session *shell* :tangle no :exports none :eval no
-  #### name:drt_historic ####
-  # got this from pre-processing of suicide paper
-  drt  <- dbGetQuery(ch,
-  'select t2.geoid,cast(SD_code as numeric),SD_name,year,month,avg(t1.sum) as avsum,avg(t1.count) as avcount,avg(t1.rain) as avrain, avg(t1.rescaledpctile) as avindex,
-  case when avg(t1.count) >= 5  then avg(t1.count) else 0 end as threshold
-  from bom_grids.rain_NSW_1890_2008_4 as t1 join (
-          select abs_sd.nswsd91.gid as
-          geoid,abs_sd.nswsd91.SD_code,abs_sd.nswsd91.SD_name,bom_grids.grid_NSW.*
-          from abs_sd.nswsd91, bom_grids.grid_NSW
-          where st_intersects(abs_sd.nswsd91.the_geom,bom_grids.grid_NSW.the_geom)
-          order by SD_code,bom_grids.grid_NSW.gid
-  ) as t2 
-  on t1.gid=t2.gid
-  group by t2.geoid,SD_code,SD_name,year,month
-  order by SD_name, year, month
-  ')
-  str(drt)
-  data.frame(table(drt$sd_code))
-  
-  # BETTER
-  # FROM 
-  # just go ahead this time
-  recode_sds <- dbGetQuery(ch, "select * from recode_sds")
-  
-  qc <- sqldf(
-  'SELECT sd_group, year, month, avg(avrain) as avrain, avg(avcount) as avcount 
-  from drt t1
-  join recode_sds sds
-  on t1.sd_code=sds.sd_code
-  group by sd_group, year, month', drv = "SQLite")
-  
-  data.frame(table(qc$sd_group))
+  qc <- read.csv("~/projects/GARNAUT_CLIMATE_CHANGE_REVIEW/drought_futures/data/drought_future_estimated_dry.csv")
+  sd_i <- "Central West"
   str(qc)
-  
-  write.csv(qc, "data/drt_historic.csv", row.names = F)
-#+end_src
-
-** drought future
-*** COMMENT drt_future
-#+name:drt_future
-#+begin_src R :session *shell* :tangle no :exports none :eval no
-  #### name:drt_future ####
-  library(sqldf)
-  setwd(projdir)
-  rain_future <- read.csv("data/rain_future_prob_dry.csv")
-  rain_past <- read.csv("data/drt_historic.csv")
-  str(rain_future)
-  # add a joiner
-  rain_future$year_join <- rain_future$year - 100
-  names(rain_future) <- gsub("year$", "year_future", names(rain_future)) 
-  str(rain_past)
-  rain_merge  <- sqldf("select t1.sd_group, year, month, year_future, season, avrain,
-    proportion, avrain * proportion as rain_projected
-  from rain_past t1
-  join
-  rain_future t2
-  on t1.year = t2.year_join and t1.month = t2.mm and t1.sd_group = t2.sd_group
-  order by t2.sd_group, year, month
-  ", drv = "SQLite")
-  summary(rain_merge)
-  head(rain_merge)
-  tail(rain_merge)
-  
-  write.csv(rain_merge, "data/rain_future_estimated_dry", row.names = F)
-#+end_src
-*** COMMENT droughtIndex_future
-#+name:droughtIndex_future
-#+begin_src R :session *shell* :tangle code/droughtIndex_future.R :exports none :eval no
-  # now to setup the drought algorithm to use the thresholds from the
-  # historical record, to benchmark the projected future distribution
-  
-  #### name:droughtIndex_future ####
-  droughtIndex_future <- function(data,years,droughtThreshold=.375){
-  # a drought index based on integrated six-monthly rainfall percentiles.
-  # based on Professor Mike Hutchinson's work described in
-  # Smith D, Hutchinson M, McArthur R. Climatic and Agricultural Drought: Payments and Policy.
-  # Canberra, ACT: Centre for Resource and Environmental Studies, Australian National University. 1992.
-  
-  # Ivan C Hanigan
-  # June 2011.
-  # GPL2
-  # for updates please see https://github.com/ivanhanigan/HutchinsonDroughtIndex.
-  
-  # my input data are always a data.frame with 5 columns 'date (future','year(future)','month','rain(past)' 'rain_projected'
-  
-  #### PAST DISTRIBUTION  
-  #calculate M month totals
-  # started with 6 (current and prior months)
-    
-  # ASSUMES PAST RAIN IS IN FOURTH COLUMN  
-  x<-ts(data[,4],start=1,end=c(years,12),frequency=12)
-  x<-c(rep(NA,5),x+lag(x,1)+lag(x,2)+lag(x,3)+lag(x,4)+lag(x,5))
-  data$sixmnthtot<-x
-  #data<-na.omit(data)
-  #### FUTURE RAIN
-  # ASSUMES FUTURE IS IN COL 5
-  x2<-ts(data[,5],start=1,end=c(years,12),frequency=12)
-  x2<-c(rep(NA,5),x2+lag(x2,1)+lag(x2,2)+lag(x2,3)+lag(x2,4)+lag(x2,5))
-  data$sixmnthtot2<-x2
-  data<-na.omit(data)
-  #head(data)
-  #tail(data)
-  # rank in percentage terms with respect to the rainfall totals
-  # for the same sequence of 6-months over all years of record
-  dataout_final=matrix(nrow=0,ncol=7)
-  
-  for(i in 1:12){
-    #i =1
-    # col sixmnthto is the past rain, sixmnthtot2 is the future rain
-  x<-data[data$month==i,'sixmnthtot']
-  x2<-data[data$month==i,'sixmnthtot2']
-  
-  #x<-na.omit(x)
-  # get distribution of FUTURE RAIN
-  y <- (rank(x2)-1)/(length(x2)-1)
-  # checkpct<-cbind(data[data$month==i,],y)
-  # plot(checkpct$sixmnthtot,checkpct$y)
-  # rescale between -4 and +4 to replicate palmer index
-  z <- 8 * (y - .5)
-  # defaults set the threshold at -1 which is upper limit of mild drought in palmer index (3/8ths, or the 37.5th percentile)
-  # use future rain < past rain threshold
-  drought <- x2 <= quantile(x,droughtThreshold)
-  
-  # calculate the drought index for any months that fall below the threshold
-  zd <- z * drought
-  # save out to the data
-  dataout<-data[data$month==i,]
-  dataout$index<-z
-  dataout$indexBelowThreshold<-zd
-  dataout_final=rbind(dataout_final,dataout)
-  }
-  
-  data<-dataout_final[order(dataout_final$date),]
-  
-  # now calculate the indices
-  data$count<-as.numeric(0)
-  
-  for(j in 2:nrow(data)){
-    data$count[j] <- ifelse(data$indexBelowThreshold[j]==0,0,
-      ifelse(data$indexBelowThreshold[j-1]!=0,1+data$count[j-1],1)
-    )
-  }
-  
-  # enhanced drought revocation threshold
-  # In the enhanced version rather than stop counting when the rescaled percentiles rise above -1.0,
-  # we keep counting the months (or adding the negative anomalies)
-  # if the rescaled percentile is below 0.0 AND the drought threshold has already been reached.
-  # If the threshold has not been reached, then stop counting (or adding) as before
-  # if the rescaled percentile rises above -1.0.
-  
-  data$count2<-data$count
-  # j=1080 # 1980-06
-  # data[j,]
-  
-  for(j in 2:nrow(data)){
-    data$count2[j] <- if(data$count2[j-1] >= 5 & data$index[j] <= 0){
-      data$count2[j-1] + 1
-    } else {
-  # ifelse(data$count[j-1] > 0 & data$index[j] < 0, 1+data$count[j-1],
-      data$count2[j]
-    }
-  }
+  qc$date <- as.Date(qc$date)
+  dir()
+  qc2 <- qc[qc$sd_group == sd_i,]
+  png("figures_and_tables/qc_drought_count_central_west.png", width = 1200, height = 600)
+  with(qc2,
+       plot(date, count, type = "l")
+       )
+  dev.off()
+  # perhaps let's exclude years > 2090 as too the uncertain?
+  drt <- qc[qc$year > 2008,]
   
   
-  data$sums<-as.numeric(0)
   
-  for(j in 2:nrow(data)){
-  data$sums[j]<-ifelse(data$indexBelowThreshold[j]==0,0,
-  ifelse(data$indexBelowThreshold[j-1]!=0,
-  data$indexBelowThreshold[j]+data$sums[j-1],
-  data$indexBelowThreshold[j]))
-  }
+  qc <- read.csv("~/projects/GARNAUT_CLIMATE_CHANGE_REVIEW/drought_futures/data/drought_future_estimated_wet.csv")
+  sd_i <- "Central West"
+  str(qc)
+  qc$date <- as.Date(qc$date)
+  dir()
+  qc2 <- qc[qc$sd_group == sd_i,]
+  png("figures_and_tables/qc_drought_count_central_west_wet.png", width = 1200, height = 600)
+  with(qc2,
+       plot(date, count, type = "l")
+       )
+  dev.off()
   
-  
-  data$sums2<-data$sums
-  # j=1069 # 1980-06
-  # data[j,]
-  
-  for(j in 2:nrow(data)){
-  data$sums2[j] <- if(data$sums2[j-1] <= -17.5 & data$index[j] <= 0){
-  data$sums2[j-1] + data$index[j]
-  } else {
-  # ifelse(data$count[j-1] > 0 & data$index[j] < 0, 1+data$count[j-1],
-  data$sums2[j]
-  }
-  }
-  #plot(data$date, data$count, type = "l")
-  #abline(5,0)
-  droughtIndices<-data
-  
-  return(droughtIndices)
-  }
+  drt_wet <- qc[qc$year > 2008,]
   
 #+end_src
-
-*** COMMENT drought_future_estimated_dry
-#+name:drought_future_estimated_dry
-#+begin_src R :session *R* :tangle code/droughtIndex_future-test.R :exports none :eval no
-  setwd("report1_high_level/")
-  dat <- read.csv("data/rain_future_estimated_dry", stringsAsFactors = F)
-  
-  # drop the first year as only half
-  names(dat)
-  
-  head(dat)
-  dat$date <- as.Date(paste(dat$year_future, dat$month, 1, sep = "-"))
-  
-  sds <- names(table(dat$sd_group))
-  sds
-  par(mfrow=c(2,6))
-  sd_drt_out <- matrix(nrow=0,ncol=14)
-  for(sd_i in sds){
-  #  sd_i <- sds[1]
-  dat2 <- dat[dat$year > 1890 & dat$sd_group == sd_i, c('date','year_future','month','avrain','rain_projected')]
-  summary(dat2)
-  plot(dat2$date, dat2$avrain, type = "l", col='grey') 
-  lines(dat2$date, dat2$rain_projected, col = 'blue')
-  title(sd_i)
-  nyear <- length(names(table(dat2$year_future)))
-  nyear
-  
-  sd_drt <- droughtIndex_future(
-    data=dat2
-    ,
-    years=nyear
-    ,
-    droughtThreshold=.375
-    )
-  sd_drt <- data.frame(sd_group = sd_i, sd_drt)
-  sd_drt_out <- rbind(sd_drt_out, sd_drt)
-  }
-  summary(sd_drt_out)
-  write.csv(sd_drt_out, "data/drought_future_estimated_dry.csv", row.names = F)
-  
-#+end_src
-
 * baseline outcome
 *** COMMENT baseline_outcome
-#+name:baseline_outcome
 #+begin_src R :session *shell* :tangle no :exports none :eval no
   #### name:baseline_outcome ####
   require(swishdbtools) # get from http://swish-climate-impact-assessment.github.io/tools/swishdbtools/swishdbtools-downloads.html
@@ -425,9 +81,8 @@
 #+end_src
 
 * predicted attributable in future
-*** COMMENT fit_baseline_model
-#+name:fit_baseline_model
-#+begin_src R :session *shell* :tangle no :exports none :eval no
+*** clean_set_datatypes.R
+#+begin_src R :session *shell* :tangle code/clean_set_datatypes.R :exports none :eval no
   #### name:fit_baseline_model ####
   # create a drought variable for each category
   # ie pre-calculated Drought by Age, Sex and Rural/Urban Region terms, constructed to have the value of the drought index in the specified groups (with Ages grouped by 20 year age brackets) and zero otherwise.
@@ -507,6 +162,9 @@
   data$DrtFemales10_29rural <- ifelse(data$agegp2 == '10_29' & data$sex == 2 & data$rural == 1, data$logDroughtCount, 0)
   data$DrtFemales30_49rural <- ifelse(data$agegp2 == '30_49' & data$sex == 2 & data$rural == 1, data$logDroughtCount, 0)
   data$DrtFemales50plusrural <- ifelse(data$agegp2 == '50plus' & data$sex == 2 & data$rural == 1, data$logDroughtCount, 0)
+#+end_src
+*** fit_baseline_model
+#+begin_src R :session *shell* :tangle code/do_fit_model.R :exports none :eval no
     
   ######################
   #do,  The final drought model estimates by age, sex and region
@@ -545,11 +203,11 @@
   
 #+end_src
 
-*** COMMENT predict_attributable_future
+*** predict_attributable_future
 #+name:predict_attributable_future
 #+begin_src R :session *shell* :tangle no :exports none :eval no
   #### name:predict_attributable_future ####
-  drt <- read.csv("data/drought_future_estimated_dry.csv", stringsAsFactors = F)
+  # DEPRECATED drt <- read.csv("data/drought_future_estimated_dry.csv", stringsAsFactors = F)
   # newnode get estimate as attributable deaths
   # need to calculate
   # y(attributableToX) = sum((y0 x (exp(beta * X) - 1) x Pop))
@@ -595,6 +253,14 @@
   data2 <- merge(data2, desc, by =  c('sd_group', 'sex', 'agegp'))
   subset(desc, sd_group == 'Central West')
   head(data2)
+#+end_src
+*** COMMENT dry
+#+name:dry
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+   #### name:dry ####
+
+
+
     
   #### Add the future drought estimates (log)
   str(data2)
@@ -651,10 +317,10 @@
     
   # now summarise by year
   summaryAttributable <- sqldf(
-  'select year_future, sum(deathsAttributable) as deathsAttributable
+  'select year, sum(deathsAttributable) as deathsAttributable
   from attributable2
-  group by year_future
-  order by year_future
+  group by year
+  order by year
   ', drv = "SQLite")
   summaryAttributable
   # plot the estimated deaths
@@ -681,16 +347,136 @@
     
   # The predicted number of rural male suicides aged 30-49 per annum associated with droughts over our study period was 4.01 (95%CI 2.14 to 6.05)
   estOut$deathsAttributable
-  # 152.3477
-  length(names(table(attributable2$year_future)))
-  estOut$deathsAttributable / 110
-  #[1] 11.33696
-   estOut$deathsAttributableLower / 110
-  #[1] 5.771919
-   estOut$deathsAttributableUpper / 110
-  #[1] 17.94065
+  length(names(table(attributable2$year)))
+  estOut$deathsAttributable / 92
+  estOut$deathsAttributableLower / 92
+  estOut$deathsAttributableUpper / 92
+    
+  # DRY scenario given all years 2009-2100 droughts
+  ## > estOut$deathsAttributable
+  ## [1] 819.4857
+  ## > length(names(table(attributable2$year)))
+  ## [1] 92
+  ## > estOut$deathsAttributable / 92
+  ## [1] 8.907453
+  ## >  estOut$deathsAttributableLower / 92
+  ## [1] 4.563259
+  ## >  estOut$deathsAttributableUpper / 92
+  ## [1] 14.00149
+   
   
 #+end_src
+*** COMMENT wet
+#+name:dry
+#+begin_src R :session *shell* :tangle no :exports none :eval no
+  
+    
+  #### Add the future drought estimates (log)
+  str(data2)
+  str(drt_wet)
+  drt <- drt_wet
+  drt$logDroughtCount_future <- log1p(drt$count)
+  
+  
+  # now use the coefficient in
+  # y(attributable) = baselineIncidence x (exp(beta * X) - 1) x Pop
+  # recall I used
+  glmest<-summary(interactionDrtAgeSexRuralModel3)$coefficients
+  betai <- glmest[which(row.names(glmest)=='DrtMales30_49rural'),1]
+  sei <- glmest[which(row.names(glmest)=='DrtMales30_49rural'),2]
+  # estimate only for  DrtMales30_49rural
+  attributable <- subset(data2, rural == 1 & sex ==1 & agegp2 == '30_49')
+  table(attributable$sd_group)
+  str(attributable)
+  
+  # previous work used the monthly observed incidence
+  # for this work I will use the avg incidnce (and pop) over the 38
+  # years
+  # subset to rural, add age2
+  desc$rural <-ifelse(desc$sd_group %in% c('Central West','Mid-North Coast','Murray','Murrumbidgee','North and Far Western','Northern','Richmond-Tweed','South Eastern'), 1, 0)
+  desc$agegp2 <-ifelse(desc$agegp %in% c('10_19','20_29'), '10_29',
+  ifelse(desc$agegp %in% c('30_39','40_49'), '30_49',
+  ifelse(desc$agegp %in% c('50_59','60_69','70plus'), '50plus',
+  0)))
+    
+  desc$agegp2 <- as.factor(desc$agegp2)
+  
+  attributable2 <- subset(desc, rural == 1 & sex ==1 & agegp2 == '30_49')
+  table(attributable2$sd_group)
+  str(attributable2)
+  attributable2
+  str(drt)
+  drt$sd_group <- as.factor(drt$sd_group)
+  attributable2 <- merge(drt, attributable2, by = "sd_group")
+  str(attributable2)
+  attach(attributable2)
+    
+  attributable2$deathsAttributable <-
+  (avgMonthlyDeaths/avgPop) * (exp(betai * logDroughtCount_future) - 1) * avgPop
+  # SE
+  #LCI
+  attributable2$deathsAttributableLower <-
+  (avgMonthlyDeaths/avgPop) * (exp((betai - sei * 1.96) *  logDroughtCount_future) - 1) * avgPop
+  #UCI
+  attributable2$deathsAttributableUpper <-
+  (avgMonthlyDeaths/avgPop) * (exp((betai + sei * 1.96) * logDroughtCount_future) - 1) * avgPop
+    
+  detach(attributable2)
+  head(attributable2)
+    
+    
+  # now summarise by year
+  summaryAttributable <- sqldf(
+  'select year, sum(deathsAttributable) as deathsAttributable
+  from attributable2
+  group by year
+  order by year
+  ', drv = "SQLite")
+  summaryAttributable
+  # plot the estimated deaths
+  ## with(summaryAttributable,
+  ## plot(dthyy, deathsAttributable/deaths, type = 'l')
+  ## )
+  ## par(new=T)
+  ## with(summaryAttributable,
+  ## plot(dthyy, logDroughtCount, type = 'l',col = 'blue')
+  ## )
+  ## par(new=T)
+  ## with(summaryAttributable,
+  ## plot(dthyy, deaths, type = 'b',col = 'darkblue', pch=16)
+  ## )
+  # calcualte estimate
+    
+  estOut <- sqldf(
+  'select 
+  sum(deathsAttributable) as deathsAttributable,
+  sum(deathsAttributableLower) as deathsAttributableLower,
+  sum(deathsAttributableUpper) as deathsAttributableUpper
+  from attributable2
+  ', drv = "SQLite")
+    
+  # The predicted number of rural male suicides aged 30-49 per annum associated with droughts over our study period was 4.01 (95%CI 2.14 to 6.05)
+  estOut$deathsAttributable
+  length(names(table(attributable2$year)))
+  estOut$deathsAttributable / 92
+  estOut$deathsAttributableLower / 92
+  estOut$deathsAttributableUpper / 92
+    
+  # DRY scenario given all years 2009-2100 droughts
+  ## > estOut$deathsAttributable
+  ## [1] 269.3154
+  ## > length(names(table(attributable2$year)))
+  ## [1] 92
+  ## > estOut$deathsAttributable / 92
+  ## [1] 2.927341
+  ## > estOut$deathsAttributableLower / 92
+  ## [1] 1.542382
+  ## > estOut$deathsAttributableUpper / 92
+  ## [1] 4.465849
+   
+  
+#+end_src
+
 *** COMMENT estimates_per_drougth_year
 #+name:estimates_per_drougth_year
 #+begin_src R :session *shell* :tangle no :exports none :eval no
