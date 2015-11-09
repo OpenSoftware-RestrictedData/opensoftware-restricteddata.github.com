@@ -34,7 +34,7 @@
   dev.off()
   # perhaps let's exclude years > 2090 as too the uncertain?
   drt <- qc[qc$year > 2008,]
-  
+  qc[qc$year == 1900 & qc$month == 1,]
   
   
   qc <- read.csv("~/projects/GARNAUT_CLIMATE_CHANGE_REVIEW/drought_futures/data/drought_future_estimated_wet.csv")
@@ -52,6 +52,70 @@
   drt_wet <- qc[qc$year > 2008,]
   
 #+end_src
+*** COMMENT or use awap grids and csiro access
+*** awap
+#+name:or use awap grids and csiro access
+#+begin_src R :session *R* :tangle code/awap_grids_on_nswsd.R :exports none :eval no
+  #### name:or use awap grids and csiro access ####
+  require(swishdbtools)
+  if(!require(raster)) install.packages("raster", dependencies = T); require(raster)
+  if(!require(rgdal)) install.packages("rgdal", dependencies = T); require(rgdal)
+  library(sqldf)  
+  
+  
+  projdir <- "~/projects/opensoftware-restricteddata.github.com/report1_high_level"
+  setwd(projdir)
+  dir()
+  outfile <- "awap_rain_nswsd07.csv"
+  
+  # load the spatial data for nsw sds
+  #args(readOGR2)
+  pwd <- getPassword(remote = T)
+  shp <- readOGR2(hostip = "gislibrary.anu.edu.au", user = "gislibrary", db = "gislibrary", layer = "abs_sd.aussd07", p = pwd)
+  
+  #shp <- readOGR2(hostip = "localhost", user = "ivan_hanigan", db = "postgis_hanigan", layer = "abs_sd.aussd07", p = pwd)
+  head(shp@data)
+  shp <- shp[shp@data$state07==1,]
+  writeOGR(shp, "data", "nswsd07", driver = "ESRI Shapefile")
+  
+  png("figures_and_tables/qc_sdmap.png")
+  plot(shp)
+  dev.off()
+  shp@data
+  
+  # now climate data
+  
+  indir <- "~/ResearchData/AWAP_GRIDS/AWAP_GRIDS_RAIN_MONTHLY"
+  #dir(indir)
+  
+  setwd(indir)
+  cfiles <-  dir(pattern="tif$")
+  cfiles[1:10]
+  tail(cfiles)
+  for(i in seq_len(length(cfiles))){
+    #i <- 1 ## for stepping thru
+    gridname <- cfiles[[i]]
+    r <- raster(gridname)
+    e <- extract(r, shp, df=T, fun = mean)
+    e1 <- shp
+    e1@data$values <- e[,2]
+    e1@data$gridname <- gridname
+    # e1@data
+    # write to to target file
+    write.table(e1@data, file.path(projdir,"data", outfile),
+      col.names = i == 1, append = i>1 , sep = ",", row.names = FALSE)
+  }
+  setwd(projdir)
+  dat <- read.csv(file.path("data",outfile))
+  names(dat)
+  names(table(dat$gridname))
+  qc_foo <- qc[qc$year == 1900 & qc$month == 1,]
+  qc_foo2 <- dat[grep("190001", dat$gridname),]
+  with(merge(qc_foo, qc_foo2, by.x = "sd_group", by.y = "sdname07")[,c("sd_group", "avrain", "values")],
+       plot(avrain, values)
+       )
+#+end_src
+
 * baseline outcome
 *** COMMENT baseline_outcome
 #+begin_src R :session *shell* :tangle no :exports none :eval no
