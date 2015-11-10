@@ -343,9 +343,29 @@ for(fi in filelist){
 
 ## The Garnaut review climate change scenarios
 
+We can demonstrate the use of this system by using the climate change scenarios held on the database to project out future droughts, and use the confidential suicide data that is safely stored there to estimate baseline risks and future burden of suicide attributable to the droughts.  Because the server system is easy to access and modify, and these results are reproducible, alternate scenarios and assumptions can be tested.
+
+In the table below, the two rainfall scenarios used by Berry et al 2008 and Bambrick et al 2008 are used to demonstrate this drought impact assessment.  This shows that the estimated impact of climate change can vary a lot given the input datasets.  The codes used to fit models, project scenarios and estimate burden of deaths is all available on the system and can be assessed and modified.
+
+```{r, eval = T, echo = F, results = 'asis'}
+library(xtable)
+tab <- read.csv(textConnection("Scenario, Deaths per annum, LCI, UCI
+Historical (1970-2008), 4.01, 2.14, 6.05
+A1FIR1 (Dry), 8.91, 4.56, 14.00
+A1FIR2 (Wet), 2.93, 1.5, 4.47
+"), strip.white = T)
+#tab
+print(xtable(tab), comment = F, include.rownames = F)
+
+```
+
+\clearpage
+
+Below are pictorial represenations of the climate change scenarios influence on rainfall across the country.
+
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\textwidth]{A1BDRY_RainSD07.jpg}
+\includegraphics[width=.5\textwidth]{A1BDRY_RainSD07.jpg}
 \caption{A1BDRY RainSD07}
 \label{fig:A1BDRYRainSD07}
 \end{figure}
@@ -353,10 +373,11 @@ for(fi in filelist){
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\textwidth]{A1BWET_RainSD07.jpg}
+\includegraphics[width=.5\textwidth]{A1BWET_RainSD07.jpg}
 \caption{A1BWET RainSD07}
 \label{fig:A1BWET-RainSD07}
 \end{figure}
+
 
 
 # Discussion 
