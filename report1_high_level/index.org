@@ -9,7 +9,7 @@
 * INIT
 ** COMMENT init
 #+name:init
-#+begin_src R :session *shell* :tangle no :exports none :eval no
+#+begin_src R :session *shell* :tangle no :exports none :eval yes
   #### name:init ####
   projdir  <- "~/projects/opensoftware-restricteddata.github.com/report1_high_level"
   setwd(projdir)
@@ -17,6 +17,24 @@
   
   
 #+end_src
+
+#+RESULTS: init
+| A1BDRY_RainSD07.jpg    |
+| A1BWET_RainSD07.jpg    |
+| code                   |
+| components             |
+| data                   |
+| Figure1.png            |
+| index.org              |
+| manuscript_files       |
+| manuscript.pdf         |
+| manuscript.Rmd         |
+| manuscript.Rmd~        |
+| manuscript.tex         |
+| meemodified.csl        |
+| opensoft.pdf           |
+| opensoft_workflow.xlsx |
+| references.bib         |
 
 * exposure
 *** TODO just get the preprocessed drought_futures from garnaut
@@ -27,7 +45,7 @@
   qc$date <- as.Date(qc$date)
   dir()
   qc2 <- qc[qc$sd_group == sd_i,]
-  png("figures_and_tables/qc_drought_count_central_west.png", width = 1200, height = 600)
+  png("graphs/qc_drought_count_central_west.png", width = 1200, height = 600)
   with(qc2,
        plot(date, count, type = "l")
        )
@@ -43,7 +61,7 @@
   qc$date <- as.Date(qc$date)
   dir()
   qc2 <- qc[qc$sd_group == sd_i,]
-  png("figures_and_tables/qc_drought_count_central_west_wet.png", width = 1200, height = 600)
+  png("graphs/qc_drought_count_central_west_wet.png", width = 1200, height = 600)
   with(qc2,
        plot(date, count, type = "l")
        )
@@ -52,10 +70,10 @@
   drt_wet <- qc[qc$year > 2008,]
   
 #+end_src
-*** COMMENT or use awap grids and csiro access
-*** awap
+
+*** TODO DEPRECATED BoM awap is improved historical, but took too long to do zonal stats per SD
 #+name:or use awap grids and csiro access
-#+begin_src R :session *R* :tangle code/awap_grids_on_nswsd.R :exports none :eval no
+#+begin_src R :session *shell* :tangle code/awap_grids_on_nswsd.R :exports none :eval no
   #### name:or use awap grids and csiro access ####
   require(swishdbtools)
   if(!require(raster)) install.packages("raster", dependencies = T); require(raster)
@@ -78,7 +96,7 @@
   shp <- shp[shp@data$state07==1,]
   writeOGR(shp, "data", "nswsd07", driver = "ESRI Shapefile")
   
-  png("figures_and_tables/qc_sdmap.png")
+  png("graphs/qc_sdmap.png")
   plot(shp)
   dev.off()
   shp@data
@@ -114,6 +132,131 @@
   with(merge(qc_foo, qc_foo2, by.x = "sd_group", by.y = "sdname07")[,c("sd_group", "avrain", "values")],
        plot(avrain, values)
        )
+#+end_src
+
+*** TODO CSIRO ACCESS is improved future
+#+name:CSIRO ACCESS is improved future
+#+begin_src R :session *shell* :tangle code/csiro_access_nswsd_future.R :exports none :eval no
+  #### name:CSIRO ACCESS is improved future ####
+  # see 'climate change csiro access'
+  library(swishdbtools)
+  library(raster)
+  library(rgdal)
+  library(sqldf)  
+  library(ncdf4)
+  
+  projdir <- "~/projects/opensoftware-restricteddata.github.com/report1_high_level"
+  setwd(projdir)
+  dir()
+  outfile <- "csiro_rain_nswsd07.csv"
+  
+  # load the spatial data for nsw sds
+  #args(readOGR2)
+  #get_passwordTable()
+  ## pwd <- getPassword(remote = T)
+  ## shp <- readOGR2(hostip = "gislibrary.anu.edu.au", user = "gislibrary", db = "gislibrary", layer = "abs_sd.aussd07", p = pwd)
+  
+  ## #shp <- readOGR2(hostip = "localhost", user = "ivan_hanigan", db = "postgis_hanigan", layer = "abs_sd.aussd07", p = pwd)
+  ## head(shp@data)
+  ## shp <- shp[shp@data$state07==1,]
+  ## writeOGR(shp, "data", "nswsd07", driver = "ESRI Shapefile")
+  
+  shp <- readOGR("data", "nswsd07")
+  # TODO subset so island is gone
+  png("graphs/qc_sdmap.png")
+  plot(shp)
+  dev.off()
+  shp@data
+  
+  # now climate data
+  
+  indir <- "~/ResearchData/CSIRO-ACCESS-NSW-past-and-future-2100/data_provided"
+  dir(indir)
+  ## [1] "NSW_pr_Amon_ACCESS1-3_historical_r1i1p1_185001-200512.nc"
+  ## [2] "NSW_pr_Amon_ACCESS1-3_rcp85_r1i1p1_200601-210012.nc"     
+  
+  setwd(indir)
+  
+  dir(indir)
+  infile <- "NSW_pr_Amon_ACCESS1-3_historical_r1i1p1_185001-200512.nc"
+  in_nc <- file.path(indir, infile)
+  
+  nc <- nc_open(in_nc)
+  nc
+  nc_close(nc)
+      ##  3 dimensions:
+      ##     longitude  Size:9
+      ##         units: degrees_east
+      ##         long_name: longitude
+      ##     latitude  Size:8
+      ##         units: degrees_north
+      ##         long_name: latitude
+      ##     value  Size:1872   *** is unlimited ***
+      ##         units: unknown
+      ##         long_name: value
+  
+      ## 3 global attributes:
+      ##     Conventions: CF-1.4
+      ##     created_by: R, packages ncdf and raster (version 2.3-12)
+      ##     date: 2015-11-10 11:04:37
+  
+  
+  in_nc
+  yy  <- data.frame(yy = 1850:2005)
+  mm  <-  data.frame(mm= 1:12)
+  mnths <- sqldf("select * from yy join mm order by yy, mm")
+  nrow(mnths)
+  # 1872
+  head(mnths, 24)
+  
+  for(i in 1:1872){
+  #  i = 1
+    r <- raster(in_nc, band = i)  
+    gridname <- paste(mnths[i,1],mnths[i,2], 1, sep = "-")
+  #print(gridname)
+  #}
+    e <- extract(r, shp, df=T, fun = mean)
+  ## Warning message:
+  ## In .local(x, y, ...) :
+  ##   Transforming SpatialPolygons to the CRS of the Raster
+  ## shp is   ..@ proj4string:Formal class 'CRS' [package "sp"] with 1 slot
+  ## .. .. ..@ projargs: chr "+proj=longlat +ellps=GRS80 +no_defs"
+  ## r is   ..@ crs     :Formal class 'CRS' [package "sp"] with 1 slot
+  ##.. .. ..@ projargs: chr "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
+    
+    e1 <- shp@data
+    e1$values <- e[,2]
+    e1$gridname <- gridname
+    # e1
+    # NOTE THAT MID NORTH COAST IS NA
+    # write to to target file
+    write.table(e1,
+                file.path(projdir,"data", outfile),
+                col.names = i == 1, append = i>1 , sep = ",", row.names = FALSE
+                )
+  }
+  getwd()
+  setwd(projdir)
+  dat <- read.csv(file.path("data",outfile))
+  names(dat)
+  dat$gridname <- as.Date(dat$gridname)
+  dat$year <- as.numeric(substr(dat$gridname ,1, 4))
+  dat$month <- as.numeric(substr(dat$gridname ,6, 7))
+  #names(table(dat$gridname))
+  str(dat)
+  
+  str(qc)
+  qc_foo <- qc[qc$year >= 1900,]
+  qc_foo2 <- dat[dat$year >= 1900,]
+  qc_foo3  <- merge(qc_foo, qc_foo2, by.x = c("sd_group", "year", "month"), by.y = c("sdname07", "year" , "month"))[,c("sd_group", "year", "month", "avrain", "values")]
+  head(qc_foo3)
+  png("graphs/qc_csiro_vs_bom_grids.png")
+  with(qc_foo3,
+        plot(avrain, values)
+        )
+  title("qc csiro vs bomgrids 1900-2005")
+  dev.off()
+  
 #+end_src
 
 * baseline outcome

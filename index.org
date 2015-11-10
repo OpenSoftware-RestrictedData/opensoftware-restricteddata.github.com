@@ -4626,7 +4626,16 @@ su username
 ln -s /home/ResearchData /home/username/ResearchData
 
 #+end_src
-
+** TODO example workflow to dev a local data package and publish to shared
+- work in personal workspace then as root
+[root@i-00002e43 ResearchData]# mkdir GARNAUT_CLIMATE_CHANGE_REVIEW
+[root@i-00002e43 ResearchData]# chown -R root:researchdata /home/ResearchData
+[root@i-00002e43 ResearchData]# chmod -R 0750 /home/ResearchData
+[root@i-00002e43 ResearchData]# ls -l
+[root@i-00002e43 ResearchData]# cd GARNAUT_CLIMATE_CHANGE_REVIEW/
+[root@i-00002e43 GARNAUT_CLIMATE_CHANGE_REVIEW]# cp -R /home/ivan_hanigan/projects/GARNAUT_CLIMATE_CHANGE_REVIEW/* ./
+[root@i-00002e43 GARNAUT_CLIMATE_CHANGE_REVIEW]# rm GARNAUT_CLIMATE_CHANGE_REVIEW.Rproj 
+rm: remove regular file `GARNAUT_CLIMATE_CHANGE_REVIEW.Rproj'? y
 
 ** TODO Share with windows network
 *** COMMENT share-with-windows-code
