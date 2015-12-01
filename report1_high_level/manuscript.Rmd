@@ -118,7 +118,7 @@ other hand scientists need to make their methods, models and
 assumptions transparent and available for scientific debate even
 though the datasets may require authorisation to access.
     
-\paragraph*{Results:} We built a safe Server/Client Computational
+\paragraph*{Results:} We built a secure Server/Client Computational
 Environment for using open software with restricted data.  We
 demonstrate the use of this system using drought and suicide as a case study.  
 We describe the potential use of this system in modelling climate change scenarios.

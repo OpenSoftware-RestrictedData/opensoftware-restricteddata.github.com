@@ -834,6 +834,25 @@
     
 #+end_src
 * report
+*** COMMENT go
+#+name:go
+#+begin_src R :session *R* :tangle no :exports none :eval yes
+  #### name:go ####
+  setwd("~/projects/opensoftware-restricteddata.github.com/report1_high_level/")
+  library(rmarkdown)
+  library(knitr)
+  library(knitcitations)
+  library(bibtex)
+  cleanbib()
+  #rm("bib")
+  #options("cite_format"="pandoc")
+  cite_options(citation_format = "pandoc", check.entries=FALSE)
+  
+  dir()
+  render("manuscript.Rmd", "pdf_document")
+  #browseURL("manuscript.pdf")
+#+end_src
+
 *** COMMENT manuscript.Rmd
 #+name:manuscript.Rmd
 #+begin_src R :session *R* :tangle manuscript.Rmd :exports none :eval no :padline no
@@ -957,7 +976,7 @@ other hand scientists need to make their methods, models and
 assumptions transparent and available for scientific debate even
 though the datasets may require authorisation to access.
     
-\paragraph*{Results:} We built a safe Server/Client Computational
+\paragraph*{Results:} We built a secure Server/Client Computational
 Environment for using open software with restricted data.  We
 demonstrate the use of this system using drought and suicide as a case study.  
 We describe the potential use of this system in modelling climate change scenarios.
