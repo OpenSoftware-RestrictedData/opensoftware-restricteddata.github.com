@@ -109,7 +109,7 @@ knit_hooks$set(output = function(x, options) {
 \paragraph*{Background:} This essay was written to accompany the material presented as a
 speedtalk and poster at the National Climate Change Adaptation
 Research Facility Conference 'Climate Adaptation knowledge and
-partnership', June 2013, Sydney.  The poster and slideshow are both available to download from this website: [http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/](http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/)
+partnership', June 2013, Sydney.  The poster and slideshow are both available to download from this website: [http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/](http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/)
 
 \paragraph*{Methods:} The paper reports on a project to build tools and procedures for enhancing open and transparent analysis of restricted datasets.
 Some datasets such as suicide or climate
