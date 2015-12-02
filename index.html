@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Open Software for Restricted Data: an Environmental Epidemiology example"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2015-11-05T11:11+1100"/>
+<meta name="generated" content="2015-12-02T14:33+1100"/>
 <meta name="author" content="Ivan Hanigan, Steven McEachern and David Fisher "/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -122,202 +122,204 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1 Abstract</a></li>
-<li><a href="#sec-2">2 Introduction /introduction.html</a></li>
-<li><a href="#sec-3">3 Deploying Virtual Machines</a>
+<li><a href="#sec-1">1 Copyright</a></li>
+<li><a href="#sec-2">2 Abstract</a></li>
+<li><a href="#sec-3">3 Introduction /introduction.html</a></li>
+<li><a href="#sec-4">4 Deploying Virtual Machines</a>
 <ul>
-<li><a href="#sec-3-1">3.1 Description</a></li>
-<li><a href="#sec-3-2">3.2 Accessing Virtual Machines on the Australian  Research Cloud</a>
+<li><a href="#sec-4-1">4.1 Description</a></li>
+<li><a href="#sec-4-2">4.2 Accessing Virtual Machines on the Australian  Research Cloud</a>
 <ul>
-<li><a href="#sec-3-2-1">3.2.1 Launch an instance</a></li>
-<li><a href="#sec-3-2-2">3.2.2 security-groups header</a></li>
-<li><a href="#sec-3-2-3">3.2.3 requesting help</a></li>
-<li><a href="#sec-3-2-4">3.2.4 connect using ssh</a></li>
+<li><a href="#sec-4-2-1">4.2.1 Launch an instance</a></li>
+<li><a href="#sec-4-2-2">4.2.2 security-groups header</a></li>
+<li><a href="#sec-4-2-3">4.2.3 requesting help</a></li>
+<li><a href="#sec-4-2-4">4.2.4 connect using ssh</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-3">3.3 Setting up the basic server framework</a>
+<li><a href="#sec-4-3">4.3 Setting up the basic server framework</a>
 <ul>
-<li><a href="#sec-3-3-1">3.3.1 Install any updates using the yum package manager</a></li>
+<li><a href="#sec-4-3-1">4.3.1 Install any updates using the yum package manager</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-4">3.4 Security measures</a>
+<li><a href="#sec-4-4">4.4 Security measures</a>
 <ul>
-<li><a href="#sec-3-4-1">3.4.1 add a ssh key</a></li>
-<li><a href="#sec-3-4-2">3.4.2 Restrict ssh access to a specific ip address/range</a></li>
+<li><a href="#sec-4-4-1">4.4.1 add a ssh key</a></li>
+<li><a href="#sec-4-4-2">4.4.2 Restrict ssh access to a specific ip address/range</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-5">3.5 Setting the host.* TCP Wrappers</a>
+<li><a href="#sec-4-5">4.5 Setting the host.* TCP Wrappers</a>
 <ul>
-<li><a href="#sec-3-5-1">3.5.1 Setting the host.* TCP Wrappers header</a></li>
-<li><a href="#sec-3-5-2">3.5.2 Security Enhanced Linux (selinux)</a></li>
-<li><a href="#sec-3-5-3">3.5.3 Install some base packages</a></li>
+<li><a href="#sec-4-5-1">4.5.1 Setting the host.* TCP Wrappers header</a></li>
+<li><a href="#sec-4-5-2">4.5.2 Security Enhanced Linux (selinux)</a></li>
+<li><a href="#sec-4-5-3">4.5.3 Install some base packages</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-6">3.6 Hardware set-up</a>
+<li><a href="#sec-4-6">4.6 Hardware set-up</a>
 <ul>
-<li><a href="#sec-3-6-1">3.6.1 Swap space /swapon.html</a></li>
-<li><a href="#sec-3-6-2">3.6.2 Persistent Net Rules Should Be Avoided On Centos</a></li>
-<li><a href="#sec-3-6-3">3.6.3 Disk Storage</a></li>
+<li><a href="#sec-4-6-1">4.6.1 Swap space /swapon.html</a></li>
+<li><a href="#sec-4-6-2">4.6.2 Persistent Net Rules Should Be Avoided On Centos</a></li>
+<li><a href="#sec-4-6-3">4.6.3 Disk Storage</a></li>
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 The Brawn</a>
+<li><a href="#sec-5">5 The Brawn</a>
 <ul>
-<li><a href="#sec-4-1">4.1 OpenGeo Suite (Postgres and friends)</a>
+<li><a href="#sec-5-1">5.1 OpenGeo Suite (Postgres and friends)</a>
 <ul>
-<li><a href="#sec-4-1-1">4.1.1 Restricted OpenGeo Suite /opengeosuite-restricted.html</a></li>
+<li><a href="#sec-5-1-1">5.1.1 Restricted OpenGeo Suite /opengeosuite-restricted.html</a></li>
 </ul>
 </li>
-<li><a href="#sec-4-2">4.2 Postgres standalone</a>
+<li><a href="#sec-5-2">5.2 Postgres standalone</a>
 <ul>
-<li><a href="#sec-4-2-1">4.2.1 PostgreSQL /postgresql.html</a></li>
-<li><a href="#sec-4-2-2">4.2.2 PostGIS 2.0 /postgis.html</a></li>
-<li><a href="#sec-4-2-3">4.2.3 PostgreSQL Migration /postgres-migrate.html</a></li>
+<li><a href="#sec-5-2-1">5.2.1 PostgreSQL /postgresql.html</a></li>
+<li><a href="#sec-5-2-2">5.2.2 PostGIS 2.0 /postgis.html</a></li>
+<li><a href="#sec-5-2-3">5.2.3 PostgreSQL Migration /postgres-migrate.html</a></li>
 </ul>
 </li>
-<li><a href="#sec-4-3">4.3 Tuning Postgres Performance</a>
+<li><a href="#sec-5-3">5.3 Tuning Postgres Performance</a>
 <ul>
-<li><a href="#sec-4-3-1">4.3.1 Important shared memory settings /sharedmemory.html</a></li>
-<li><a href="#sec-4-3-2">4.3.2 Postgres conf</a></li>
-<li><a href="#sec-4-3-3">4.3.3 Test loading some shapefiles</a></li>
+<li><a href="#sec-5-3-1">5.3.1 Important shared memory settings /sharedmemory.html</a></li>
+<li><a href="#sec-5-3-2">5.3.2 Postgres conf</a></li>
+<li><a href="#sec-5-3-3">5.3.3 Test loading some shapefiles</a></li>
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 The Brains</a>
+<li><a href="#sec-6">6 The Brains</a>
 <ul>
-<li><a href="#sec-5-1">5.1 R Server</a>
+<li><a href="#sec-6-1">6.1 R Server</a>
 <ul>
-<li><a href="#sec-5-1-1">5.1.1 R</a></li>
-<li><a href="#sec-5-1-2">5.1.2 package management and R updates</a></li>
-<li><a href="#sec-5-1-3">5.1.3 Rstudio</a></li>
-<li><a href="#sec-5-1-4">5.1.4 firewall access</a></li>
-<li><a href="#sec-5-1-5">5.1.5 SSL/HHTPS and running a proxy server</a></li>
-<li><a href="#sec-5-1-6">5.1.6 git</a></li>
-<li><a href="#sec-5-1-7">5.1.7 ssh for github</a></li>
-<li><a href="#sec-5-1-8">5.1.8 gdal</a></li>
-<li><a href="#sec-5-1-9">5.1.9 geos</a></li>
-<li><a href="#sec-5-1-10">5.1.10 or under ubuntu</a></li>
-<li><a href="#sec-5-1-11">5.1.11 test readOGR</a></li>
-<li><a href="#sec-5-1-12">5.1.12 rgraphviz</a></li>
-<li><a href="#sec-5-1-13">5.1.13 test</a></li>
-<li><a href="#sec-5-1-14">5.1.14 install just the postgres bits required for RPostgreSQL package</a></li>
-<li><a href="#sec-5-1-15">5.1.15 postgis utilities</a></li>
-<li><a href="#sec-5-1-16">5.1.16 unixODBC</a></li>
+<li><a href="#sec-6-1-1">6.1.1 R</a></li>
+<li><a href="#sec-6-1-2">6.1.2 package management and R updates</a></li>
+<li><a href="#sec-6-1-3">6.1.3 Rstudio</a></li>
+<li><a href="#sec-6-1-4">6.1.4 firewall access</a></li>
+<li><a href="#sec-6-1-5">6.1.5 SSL/HHTPS and running a proxy server</a></li>
+<li><a href="#sec-6-1-6">6.1.6 git</a></li>
+<li><a href="#sec-6-1-7">6.1.7 ssh for github</a></li>
+<li><a href="#sec-6-1-8">6.1.8 gdal</a></li>
+<li><a href="#sec-6-1-9">6.1.9 geos</a></li>
+<li><a href="#sec-6-1-10">6.1.10 or under ubuntu</a></li>
+<li><a href="#sec-6-1-11">6.1.11 test readOGR</a></li>
+<li><a href="#sec-6-1-12">6.1.12 rgraphviz</a></li>
+<li><a href="#sec-6-1-13">6.1.13 test</a></li>
+<li><a href="#sec-6-1-14">6.1.14 install just the postgres bits required for RPostgreSQL package</a></li>
+<li><a href="#sec-6-1-15">6.1.15 postgis utilities</a></li>
+<li><a href="#sec-6-1-16">6.1.16 unixODBC</a></li>
 </ul>
 </li>
-<li><a href="#sec-5-2">5.2 Test the Backups of this Minimal R Sever.</a>
+<li><a href="#sec-6-2">6.2 Test the Backups of this Minimal R Sever.</a>
 <ul>
-<li><a href="#sec-5-2-1">5.2.1 Backup the 2nd Disc</a></li>
-<li><a href="#sec-5-2-2">5.2.2 Launch from this snapshot and test the R server and 2nd Disc</a></li>
-<li><a href="#sec-5-2-3">5.2.3 the permissions of the user on their home directory cause issues for logging in.</a></li>
+<li><a href="#sec-6-2-1">6.2.1 Backup the 2nd Disc</a></li>
+<li><a href="#sec-6-2-2">6.2.2 Launch from this snapshot and test the R server and 2nd Disc</a></li>
+<li><a href="#sec-6-2-3">6.2.3 the permissions of the user on their home directory cause issues for logging in.</a></li>
 </ul>
 </li>
-<li><a href="#sec-5-3">5.3 Oracle XE Permissions and Users System</a>
+<li><a href="#sec-6-3">6.3 Oracle XE Permissions and Users System</a>
 <ul>
-<li><a href="#sec-5-3-1">5.3.1 backup local ubuntu version</a></li>
-<li><a href="#sec-5-3-2">5.3.2 INIT</a></li>
-<li><a href="#sec-5-3-3">5.3.3 SWAP</a></li>
-<li><a href="#sec-5-3-4">5.3.4 DOWNLOAD AND SCP</a></li>
-<li><a href="#sec-5-3-5">5.3.5 Install the database</a></li>
-<li><a href="#sec-5-3-6">5.3.6 import application and set Security</a></li>
-<li><a href="#sec-5-3-7">5.3.7 explain the table creation script</a></li>
-<li><a href="#sec-5-3-8">5.3.8 set up R, RJDBC and ROracle</a></li>
-<li><a href="#sec-5-3-9">5.3.9 maintenance</a></li>
-<li><a href="#sec-5-3-10">5.3.10 unlock</a></li>
-<li><a href="#sec-5-3-11">5.3.11 unlock header</a></li>
-<li><a href="#sec-5-3-12">5.3.12 extending/revising the database to track servers and files</a></li>
+<li><a href="#sec-6-3-1">6.3.1 backup local ubuntu version</a></li>
+<li><a href="#sec-6-3-2">6.3.2 INIT</a></li>
+<li><a href="#sec-6-3-3">6.3.3 SWAP</a></li>
+<li><a href="#sec-6-3-4">6.3.4 DOWNLOAD AND SCP</a></li>
+<li><a href="#sec-6-3-5">6.3.5 Install the database</a></li>
+<li><a href="#sec-6-3-6">6.3.6 import application and set Security</a></li>
+<li><a href="#sec-6-3-7">6.3.7 explain the table creation script</a></li>
+<li><a href="#sec-6-3-8">6.3.8 set up R, RJDBC and ROracle</a></li>
+<li><a href="#sec-6-3-9">6.3.9 maintenance</a></li>
+<li><a href="#sec-6-3-10">6.3.10 unlock</a></li>
+<li><a href="#sec-6-3-11">6.3.11 unlock header</a></li>
+<li><a href="#sec-6-3-12">6.3.12 extending/revising the database to track servers and files</a></li>
 </ul>
 </li>
-<li><a href="#sec-5-4">5.4 DDIindex</a>
+<li><a href="#sec-6-4">6.4 DDIindex</a>
 <ul>
-<li><a href="#sec-5-4-1">5.4.1 TOMCAT</a></li>
-<li><a href="#sec-5-4-2">5.4.2 UPLOAD THE DDIINDEX</a></li>
-<li><a href="#sec-5-4-3">5.4.3 MySQL</a></li>
-<li><a href="#sec-5-4-4">5.4.4 make sure ddiindex can connect to mysql as ddiindex user</a></li>
-<li><a href="#sec-5-4-5">5.4.5 Check the security implications of allowing write permissions here</a></li>
-<li><a href="#sec-5-4-6">5.4.6 Running the Indexer</a></li>
-<li><a href="#sec-5-4-7">5.4.7 personalise the ddiindex</a></li>
+<li><a href="#sec-6-4-1">6.4.1 TOMCAT</a></li>
+<li><a href="#sec-6-4-2">6.4.2 UPLOAD THE DDIINDEX</a></li>
+<li><a href="#sec-6-4-3">6.4.3 MySQL</a></li>
+<li><a href="#sec-6-4-4">6.4.4 make sure ddiindex can connect to mysql as ddiindex user</a></li>
+<li><a href="#sec-6-4-5">6.4.5 Check the security implications of allowing write permissions here</a></li>
+<li><a href="#sec-6-4-6">6.4.6 Running the Indexer</a></li>
+<li><a href="#sec-6-4-7">6.4.7 personalise the ddiindex</a></li>
 </ul>
 </li>
-<li><a href="#sec-5-5">5.5 Set up a private git server for data and code</a></li>
-<li><a href="#sec-5-6">5.6 True-Crypt encrypted volumes</a></li>
-<li><a href="#sec-5-7">5.7 ResearchData storage</a></li>
-<li><a href="#sec-5-8">5.8 Share with windows network</a></li>
+<li><a href="#sec-6-5">6.5 Set up a private git server for data and code</a></li>
+<li><a href="#sec-6-6">6.6 True-Crypt encrypted volumes</a></li>
+<li><a href="#sec-6-7">6.7 ResearchData storage</a></li>
+<li><a href="#sec-6-8">6.8 example workflow to dev a local data package and publish to shared</a></li>
+<li><a href="#sec-6-9">6.9 Share with windows network</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6 Procedures for add users to the system.</a>
+<li><a href="#sec-7">7 Procedures for add users to the system.</a>
 <ul>
-<li><a href="#sec-6-1">6.1 Description of the access procedure</a>
+<li><a href="#sec-7-1">7.1 Description of the access procedure</a>
 <ul>
-<li><a href="#sec-6-1-1">6.1.1 Getting Access</a></li>
-<li><a href="#sec-6-1-2">6.1.2 Managing Access</a></li>
-<li><a href="#sec-6-1-3">6.1.3 Ending Access</a></li>
+<li><a href="#sec-7-1-1">7.1.1 Getting Access</a></li>
+<li><a href="#sec-7-1-2">7.1.2 Managing Access</a></li>
+<li><a href="#sec-7-1-3">7.1.3 Ending Access</a></li>
 </ul>
 </li>
-<li><a href="#sec-6-2">6.2 The process user administrators go through to set up users</a>
+<li><a href="#sec-7-2">7.2 The process user administrators go through to set up users</a>
 <ul>
-<li><a href="#sec-6-2-1">6.2.1 lodge request in user db</a></li>
-<li><a href="#sec-6-2-2">6.2.2 r-nceph</a></li>
+<li><a href="#sec-7-2-1">7.2.1 lodge request in user db</a></li>
+<li><a href="#sec-7-2-2">7.2.2 r-nceph</a></li>
 </ul>
 </li>
-<li><a href="#sec-6-3">6.3 brains</a>
+<li><a href="#sec-7-3">7.3 brains</a>
 <ul>
-<li><a href="#sec-6-3-1">6.3.1 linux user</a></li>
-<li><a href="#sec-6-3-2">6.3.2 mysql (check ddiindex)</a></li>
+<li><a href="#sec-7-3-1">7.3.1 linux user</a></li>
+<li><a href="#sec-7-3-2">7.3.2 mysql (check ddiindex)</a></li>
 </ul>
 </li>
-<li><a href="#sec-6-4">6.4 brawn</a>
+<li><a href="#sec-7-4">7.4 brawn</a>
 <ul>
-<li><a href="#sec-6-4-1">6.4.1 postgres</a></li>
-<li><a href="#sec-6-4-2">6.4.2 geoserver</a></li>
-<li><a href="#sec-6-4-3">6.4.3 alliance wiki</a></li>
-<li><a href="#sec-6-4-4">6.4.4 email details without password</a></li>
-<li><a href="#sec-6-4-5">6.4.5 text message the set password</a></li>
+<li><a href="#sec-7-4-1">7.4.1 postgres</a></li>
+<li><a href="#sec-7-4-2">7.4.2 geoserver</a></li>
+<li><a href="#sec-7-4-3">7.4.3 alliance wiki</a></li>
+<li><a href="#sec-7-4-4">7.4.4 email details without password</a></li>
+<li><a href="#sec-7-4-5">7.4.5 text message the set password</a></li>
 </ul>
 </li>
-<li><a href="#sec-6-5">6.5 edits to oraphi via sql</a>
+<li><a href="#sec-7-5">7.5 edits to oraphi via sql</a>
 <ul>
-<li><a href="#sec-6-5-1">6.5.1 revocation</a></li>
+<li><a href="#sec-7-5-1">7.5.1 revocation</a></li>
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-7">7 Backups</a>
+<li><a href="#sec-8">8 Backups</a>
 <ul>
-<li><a href="#sec-7-1">7.1 General</a>
+<li><a href="#sec-8-1">8.1 General</a>
 <ul>
-<li><a href="#sec-7-1-1">7.1.1 maintenance</a></li>
-<li><a href="#sec-7-1-2">7.1.2 nearline for potential restore</a></li>
-<li><a href="#sec-7-1-3">7.1.3 archive and remove</a></li>
+<li><a href="#sec-8-1-1">8.1.1 maintenance</a></li>
+<li><a href="#sec-8-1-2">8.1.2 nearline for potential restore</a></li>
+<li><a href="#sec-8-1-3">8.1.3 archive and remove</a></li>
 </ul>
 </li>
-<li><a href="#sec-7-2">7.2 General concerns</a></li>
-<li><a href="#sec-7-3">7.3 Brains</a>
+<li><a href="#sec-8-2">8.2 General concerns</a></li>
+<li><a href="#sec-8-3">8.3 Brains</a>
 <ul>
-<li><a href="#sec-7-3-1">7.3.1 Backup oraphi</a></li>
-<li><a href="#sec-7-3-2">7.3.2 sync the home directory</a></li>
+<li><a href="#sec-8-3-1">8.3.1 Backup oraphi</a></li>
+<li><a href="#sec-8-3-2">8.3.2 sync the home directory</a></li>
 </ul>
 </li>
-<li><a href="#sec-7-4">7.4 Brawn</a>
+<li><a href="#sec-8-4">8.4 Brawn</a>
 <ul>
-<li><a href="#sec-7-4-1">7.4.1 Find out how big is it?</a></li>
-<li><a href="#sec-7-4-2">7.4.2 Dump and download it to a secure computer</a></li>
-<li><a href="#sec-7-4-3">7.4.3 or simple home backup</a></li>
-<li><a href="#sec-7-4-4">7.4.4 Restore databse dump into a new database on another machine.</a></li>
-<li><a href="#sec-7-4-5">7.4.5 launch a new Nectar VM from the snapshot image</a></li>
-<li><a href="#sec-7-4-6">7.4.6 mount the 2nd disc and load/restore the postgres db and data into it</a></li>
+<li><a href="#sec-8-4-1">8.4.1 Find out how big is it?</a></li>
+<li><a href="#sec-8-4-2">8.4.2 Dump and download it to a secure computer</a></li>
+<li><a href="#sec-8-4-3">8.4.3 or simple home backup</a></li>
+<li><a href="#sec-8-4-4">8.4.4 Restore databse dump into a new database on another machine.</a></li>
+<li><a href="#sec-8-4-5">8.4.5 launch a new Nectar VM from the snapshot image</a></li>
+<li><a href="#sec-8-4-6">8.4.6 mount the 2nd disc and load/restore the postgres db and data into it</a></li>
 </ul>
 </li>
-<li><a href="#sec-7-5">7.5 Disaster Recovery Plan</a>
+<li><a href="#sec-8-5">8.5 Disaster Recovery Plan</a>
 <ul>
-<li><a href="#sec-7-5-1">7.5.1 test a snapshot</a></li>
-<li><a href="#sec-7-5-2">7.5.2 60GB disk is not being saved in snapshots</a></li>
-<li><a href="#sec-7-5-3">7.5.3 Restore ORAPHI</a></li>
+<li><a href="#sec-8-5-1">8.5.1 test a snapshot</a></li>
+<li><a href="#sec-8-5-2">8.5.2 60GB disk is not being saved in snapshots</a></li>
+<li><a href="#sec-8-5-3">8.5.3 Restore ORAPHI</a></li>
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-8">8 Examples</a>
+<li><a href="#sec-9">9 Examples</a>
 <ul>
-<li><a href="#sec-8-1">8.1 Pumilio for Bioacoustics</a></li>
+<li><a href="#sec-9-1">9.1 Pumilio for Bioacoustics</a></li>
 </ul>
 </li>
 </ul>
@@ -325,8 +327,19 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Abstract</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Copyright</h2>
 <div class="outline-text-2" id="text-1">
+
+<p>Copyright is the GNU General Public License version 2 WITHOUT ANY WARRANTY,
+Ivan C Hanigan &lt;ivan.hanigan@gmail.com&gt; 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Abstract</h2>
+<div class="outline-text-2" id="text-2">
 
 
 <div class="abstract">
@@ -344,7 +357,7 @@ for the JavaScript code in this tag.
 
 
 <p>
-Last Updated 5th November 2015
+Last Updated 2nd December 2015
 </p>
 <p>
 Increasing concerns over privacy in Australia and globally, combined
@@ -402,9 +415,9 @@ access data such as the Australian Deaths dataset.
 
 </div>
 
-<div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Introduction /introduction.html</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Introduction /introduction.html</h2>
+<div class="outline-text-2" id="text-3">
 
 
 
@@ -448,16 +461,16 @@ potential future outcomes from different standpoints.
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Deploying Virtual Machines</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Deploying Virtual Machines</h2>
+<div class="outline-text-2" id="text-4">
 
 
 </div>
 
-<div id="outline-container-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Description</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Description</h3>
+<div class="outline-text-3" id="text-4-1">
 
 <p>We want to deploy the service as a symbiotic pair of virtual images that together will provide integrated data storage and analysis services in the cloud.
 Our recent review of the system prototype I developed suggested a need for two servers to comprise this system; to provide a more robust and powerful combination of structural and functional aspects.
@@ -476,16 +489,16 @@ The services hosted by the pair of servers will be:
 
 </div>
 
-<div id="outline-container-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Accessing Virtual Machines on the Australian  Research Cloud</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Accessing Virtual Machines on the Australian  Research Cloud</h3>
+<div class="outline-text-3" id="text-4-2">
 
 
 </div>
 
-<div id="outline-container-3-2-1" class="outline-4">
-<h4 id="sec-3-2-1"><span class="section-number-4">3.2.1</span> Launch an instance</h4>
-<div class="outline-text-4" id="text-3-2-1">
+<div id="outline-container-4-2-1" class="outline-4">
+<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> Launch an instance</h4>
+<div class="outline-text-4" id="text-4-2-1">
 
 <ul>
 <li>Log on to the research cloud using your Australian University details <a href="http://www.nectar.org.au/research-cloud/">http://www.nectar.org.au/research-cloud/</a>.
@@ -513,9 +526,9 @@ The services hosted by the pair of servers will be:
 
 </div>
 
-<div id="outline-container-3-2-2" class="outline-4">
-<h4 id="sec-3-2-2"><span class="section-number-4">3.2.2</span> security-groups header</h4>
-<div class="outline-text-4" id="text-3-2-2">
+<div id="outline-container-4-2-2" class="outline-4">
+<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> security-groups header</h4>
+<div class="outline-text-4" id="text-4-2-2">
 
 
 
@@ -523,9 +536,9 @@ The services hosted by the pair of servers will be:
 
 </div>
 
-<div id="outline-container-3-2-3" class="outline-4">
-<h4 id="sec-3-2-3"><span class="section-number-4">3.2.3</span> requesting help</h4>
-<div class="outline-text-4" id="text-3-2-3">
+<div id="outline-container-4-2-3" class="outline-4">
+<h4 id="sec-4-2-3"><span class="section-number-4">4.2.3</span> requesting help</h4>
+<div class="outline-text-4" id="text-4-2-3">
 
 <p>To: rc-support@nectar.org.au
 Subject: Request about snapshot status
@@ -560,9 +573,9 @@ CRICOS provider #00120C.
 
 </div>
 
-<div id="outline-container-3-2-4" class="outline-4">
-<h4 id="sec-3-2-4"><span class="section-number-4">3.2.4</span> connect using ssh</h4>
-<div class="outline-text-4" id="text-3-2-4">
+<div id="outline-container-4-2-4" class="outline-4">
+<h4 id="sec-4-2-4"><span class="section-number-4">4.2.4</span> connect using ssh</h4>
+<div class="outline-text-4" id="text-4-2-4">
 
 <p>If using Windows make sure you have git or WinSCP installed.  Opening a bash
 shell from these will enable you to connect to your server using ssh. Then the contents of the following orgmode chunks can be evaluated on the remote server.
@@ -591,17 +604,17 @@ ssh -i keypairname root@your.new.ip.address
 
 </div>
 
-<div id="outline-container-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Setting up the basic server framework</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Setting up the basic server framework</h3>
+<div class="outline-text-3" id="text-4-3">
 
 <p>This is done in a similar way for both the Brains and the Brawn servers.
 </p>
 </div>
 
-<div id="outline-container-3-3-1" class="outline-4">
-<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> Install any updates using the yum package manager</h4>
-<div class="outline-text-4" id="text-3-3-1">
+<div id="outline-container-4-3-1" class="outline-4">
+<h4 id="sec-4-3-1"><span class="section-number-4">4.3.1</span> Install any updates using the yum package manager</h4>
+<div class="outline-text-4" id="text-4-3-1">
 
 <p>This is recommended to do every week to maintain the server in good condition, especially regarding security software. 
 </p>
@@ -615,9 +628,9 @@ ssh -i keypairname root@your.new.ip.address
 
 </div>
 
-<div id="outline-container-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Security measures</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Security measures</h3>
+<div class="outline-text-3" id="text-4-4">
 
 <p>The following section sets some restrictions on the server.
 I would like to know how important it is to restrict root login and also if we can permit login via ssh and port 22 if it is only open to the NCEPH VPN range?  If so I just leave the below as yes yes yes?
@@ -640,9 +653,9 @@ There are various TODOs hidden in the source code document.
 
 </div>
 
-<div id="outline-container-3-4-1" class="outline-4">
-<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> <span class="todo TODO">TODO</span> add a ssh key</h4>
-<div class="outline-text-4" id="text-3-4-1">
+<div id="outline-container-4-4-1" class="outline-4">
+<h4 id="sec-4-4-1"><span class="section-number-4">4.4.1</span> <span class="todo TODO">TODO</span> add a ssh key</h4>
+<div class="outline-text-4" id="text-4-4-1">
 
 <ul>
 <li>get the private/public key generated
@@ -660,9 +673,9 @@ There are various TODOs hidden in the source code document.
 
 </div>
 
-<div id="outline-container-3-4-2" class="outline-4">
-<h4 id="sec-3-4-2"><span class="section-number-4">3.4.2</span> Restrict ssh access to a specific ip address/range</h4>
-<div class="outline-text-4" id="text-3-4-2">
+<div id="outline-container-4-4-2" class="outline-4">
+<h4 id="sec-4-4-2"><span class="section-number-4">4.4.2</span> Restrict ssh access to a specific ip address/range</h4>
+<div class="outline-text-4" id="text-4-4-2">
 
 
 
@@ -672,16 +685,16 @@ There are various TODOs hidden in the source code document.
 
 </div>
 
-<div id="outline-container-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Setting the host.* TCP Wrappers</h3>
-<div class="outline-text-3" id="text-3-5">
+<div id="outline-container-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Setting the host.* TCP Wrappers</h3>
+<div class="outline-text-3" id="text-4-5">
 
 
 </div>
 
-<div id="outline-container-3-5-1" class="outline-4">
-<h4 id="sec-3-5-1"><span class="section-number-4">3.5.1</span> Setting the host.* TCP Wrappers header</h4>
-<div class="outline-text-4" id="text-3-5-1">
+<div id="outline-container-4-5-1" class="outline-4">
+<h4 id="sec-4-5-1"><span class="section-number-4">4.5.1</span> Setting the host.* TCP Wrappers header</h4>
+<div class="outline-text-4" id="text-4-5-1">
 
 
 
@@ -689,13 +702,13 @@ There are various TODOs hidden in the source code document.
 
 </div>
 
-<div id="outline-container-3-5-2" class="outline-4">
-<h4 id="sec-3-5-2"><span class="section-number-4">3.5.2</span> Security Enhanced Linux (selinux)</h4>
-<div class="outline-text-4" id="text-3-5-2">
+<div id="outline-container-4-5-2" class="outline-4">
+<h4 id="sec-4-5-2"><span class="section-number-4">4.5.2</span> Security Enhanced Linux (selinux)</h4>
+<div class="outline-text-4" id="text-4-5-2">
 
 <p>To run the Database and the Rstudio server it is best to disable the selinux.  
 </p><ul>
-<li id="sec-3-5-2-1"><span class="todo TODO">TODO</span> Find out if this is necessary for PostgreSQL as well as Rstudio.<br/>
+<li id="sec-4-5-2-1"><span class="todo TODO">TODO</span> Find out if this is necessary for PostgreSQL as well as Rstudio.<br/>
 
 
 
@@ -718,9 +731,9 @@ vi /etc/selinux/config
 
 </div>
 
-<div id="outline-container-3-5-3" class="outline-4">
-<h4 id="sec-3-5-3"><span class="section-number-4">3.5.3</span> Install some base packages</h4>
-<div class="outline-text-4" id="text-3-5-3">
+<div id="outline-container-4-5-3" class="outline-4">
+<h4 id="sec-4-5-3"><span class="section-number-4">4.5.3</span> Install some base packages</h4>
+<div class="outline-text-4" id="text-4-5-3">
 
 <p>There are a few commonly used packages recommended for both Brawn and Brains.
 </p>
@@ -734,9 +747,9 @@ vi /etc/selinux/config
 
 </div>
 
-<div id="outline-container-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Hardware set-up</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Hardware set-up</h3>
+<div class="outline-text-3" id="text-4-6">
 
 <p>Now we will note the size and number of the disc partitions.
 </p>
@@ -748,9 +761,9 @@ vi /etc/selinux/config
 
 </div>
 
-<div id="outline-container-3-6-1" class="outline-4">
-<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> Swap space /swapon.html</h4>
-<div class="outline-text-4" id="text-3-6-1">
+<div id="outline-container-4-6-1" class="outline-4">
+<h4 id="sec-4-6-1"><span class="section-number-4">4.6.1</span> Swap space /swapon.html</h4>
+<div class="outline-text-4" id="text-4-6-1">
 
 
 
@@ -794,9 +807,9 @@ I will come back and review this, also I was too lazy to add to boot so just do 
 
 </div>
 
-<div id="outline-container-3-6-2" class="outline-4">
-<h4 id="sec-3-6-2"><span class="section-number-4">3.6.2</span> Persistent Net Rules Should Be Avoided On Centos</h4>
-<div class="outline-text-4" id="text-3-6-2">
+<div id="outline-container-4-6-2" class="outline-4">
+<h4 id="sec-4-6-2"><span class="section-number-4">4.6.2</span> Persistent Net Rules Should Be Avoided On Centos</h4>
+<div class="outline-text-4" id="text-4-6-2">
 
 <p>The current "CentOS 6.2 amd64" image (ID 21401), if launched and
 snapshotted, is not connectible when launched from this snapshot due
@@ -822,9 +835,9 @@ rm /etc/udev/rules.d/70-persistent-net.rules
 
 </div>
 
-<div id="outline-container-3-6-3" class="outline-4">
-<h4 id="sec-3-6-3"><span class="section-number-4">3.6.3</span> Disk Storage</h4>
-<div class="outline-text-4" id="text-3-6-3">
+<div id="outline-container-4-6-3" class="outline-4">
+<h4 id="sec-4-6-3"><span class="section-number-4">4.6.3</span> Disk Storage</h4>
+<div class="outline-text-4" id="text-4-6-3">
 
 <p>Every VM on the Research Cloud has a 10GB primary disk which is used for the image you launch. The Primary disk is copied in a snapshot, so anything on this primary disk can be backed up via snapshots.  In addition every Virtual Machine will get secondary storage. This secondary disk is not copied or backed up via snapshots.  If you reboot your virtual machine, the secondary disk data remains in tact. If you shut down your VM, the data disappears (it is not persistent).
 </p>
@@ -846,7 +859,7 @@ hdparm -tT /dev/vdb
 
 
 <ul>
-<li id="sec-3-6-3-1"><span class="todo TODO">TODO</span> find out recommended practice for backups, and purpose of 'object storage'<br/>
+<li id="sec-4-6-3-1"><span class="todo TODO">TODO</span> find out recommended practice for backups, and purpose of 'object storage'<br/>
 <ul>
 <li><a href="http://support.rc.nectar.org.au/technical_guides/object_storage.html">http://support.rc.nectar.org.au/technical_guides/object_storage.html</a>
 </li>
@@ -891,27 +904,27 @@ print buckets
 
 </div>
 
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> The Brawn</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> The Brawn</h2>
+<div class="outline-text-2" id="text-5">
 
 <p>The Brawn is a PostgreSQL Geographical Information System (GIS) Database server.
 </p>
 </div>
 
-<div id="outline-container-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> OpenGeo Suite (Postgres and friends)</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> OpenGeo Suite (Postgres and friends)</h3>
+<div class="outline-text-3" id="text-5-1">
 
 
 </div>
 
-<div id="outline-container-4-1-1" class="outline-4">
-<h4 id="sec-4-1-1"><span class="section-number-4">4.1.1</span> Restricted OpenGeo Suite /opengeosuite-restricted.html</h4>
-<div class="outline-text-4" id="text-4-1-1">
+<div id="outline-container-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> Restricted OpenGeo Suite /opengeosuite-restricted.html</h4>
+<div class="outline-text-4" id="text-5-1-1">
 
 <ul>
-<li id="sec-4-1-1-1">The OpenGeo Suite Installer<br/>
+<li id="sec-5-1-1-1">The OpenGeo Suite Installer<br/>
 
 
 
@@ -953,7 +966,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 </li>
 </ul>
 <ul>
-<li id="sec-4-1-1-2">Upgrade tomcat6<br/>
+<li id="sec-5-1-1-2">Upgrade tomcat6<br/>
 
 
 
@@ -1073,7 +1086,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 </li>
 </ul>
 <ul>
-<li id="sec-4-1-1-3">Secure tomcat<br/>
+<li id="sec-5-1-1-3">Secure tomcat<br/>
 <ul>
 <li>We have a service called Nessus that reviewed the VM tomcat port 
 </li>
@@ -1082,7 +1095,7 @@ The OpenGeo Suite provides a complete spatial data server software stack.  I use
 </ul>
 
 <ul>
-<li id="sec-4-1-1-3-1">Apache Tomcat servlet/JSP container default files<br/>
+<li id="sec-5-1-1-3-1">Apache Tomcat servlet/JSP container default files<br/>
 Synopsis
 The remote web server contains example files.
 Description
@@ -1115,7 +1128,7 @@ cd <i>usr/share/apache-tomcat-6.0.37/webapps rm -R -f examples</i>
 </li>
 </ul>
 <ul>
-<li id="sec-4-1-1-3-2">CGI Generic Cross-Site Scripting (persistent, 3rd Pass)<br/>
+<li id="sec-5-1-1-3-2">CGI Generic Cross-Site Scripting (persistent, 3rd Pass)<br/>
 A CGI application hosted on the remote web server is potentially prone to cross-site scripting attacks.
 Description
 The remote web server hosts one or more CGI scripts that fail to adequately sanitize request strings containing
@@ -1136,16 +1149,16 @@ Restrict access to the vulnerable application and contact the vendor for a patch
 
 </div>
 
-<div id="outline-container-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Postgres standalone</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Postgres standalone</h3>
+<div class="outline-text-3" id="text-5-2">
 
 
 </div>
 
-<div id="outline-container-4-2-1" class="outline-4">
-<h4 id="sec-4-2-1"><span class="section-number-4">4.2.1</span> PostgreSQL /postgresql.html</h4>
-<div class="outline-text-4" id="text-4-2-1">
+<div id="outline-container-5-2-1" class="outline-4">
+<h4 id="sec-5-2-1"><span class="section-number-4">5.2.1</span> PostgreSQL /postgresql.html</h4>
+<div class="outline-text-4" id="text-5-2-1">
 
 
 
@@ -1177,7 +1190,7 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 
 <ul>
-<li id="sec-4-2-1-1">Configure PostgreSQL connection settings<br/>
+<li id="sec-5-2-1-1">Configure PostgreSQL connection settings<br/>
 
 
 
@@ -1224,7 +1237,7 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 </li>
 </ul>
 <ul>
-<li id="sec-4-2-1-2">Allow connection to postgres through the firewall<br/>
+<li id="sec-5-2-1-2">Allow connection to postgres through the firewall<br/>
 
 
 
@@ -1243,12 +1256,12 @@ PostgreSQL is an Open Source database that can be extended with GIS functionalit
 
 </div>
 
-<div id="outline-container-4-2-2" class="outline-4">
-<h4 id="sec-4-2-2"><span class="section-number-4">4.2.2</span> PostGIS 2.0 /postgis.html</h4>
-<div class="outline-text-4" id="text-4-2-2">
+<div id="outline-container-5-2-2" class="outline-4">
+<h4 id="sec-5-2-2"><span class="section-number-4">5.2.2</span> PostGIS 2.0 /postgis.html</h4>
+<div class="outline-text-4" id="text-5-2-2">
 
 <ul>
-<li id="sec-4-2-2-1">Postgis<br/>
+<li id="sec-5-2-2-1">Postgis<br/>
 
 
 
@@ -1290,7 +1303,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 </li>
 </ul>
 <ul>
-<li id="sec-4-2-2-2">GDAL, PROJ and GEOS<br/>
+<li id="sec-5-2-2-2">GDAL, PROJ and GEOS<br/>
 
 
 
@@ -1312,7 +1325,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 </li>
 </ul>
 <ul>
-<li id="sec-4-2-2-3">Create Database<br/>
+<li id="sec-5-2-2-3">Create Database<br/>
 
 
 
@@ -1330,7 +1343,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 </li>
 </ul>
 <ul>
-<li id="sec-4-2-2-4">Create a GIS user and a group<br/>
+<li id="sec-5-2-2-4">Create a GIS user and a group<br/>
 
 
 
@@ -1356,7 +1369,7 @@ The PostGIS suite enables a PostgreSQL database with spatial data types and anal
 </li>
 </ul>
 <ul>
-<li id="sec-4-2-2-5">Specific transformations grid for Australian projections AGD66 to GDA94<br/>
+<li id="sec-5-2-2-5">Specific transformations grid for Australian projections AGD66 to GDA94<br/>
 
 
 
@@ -1394,7 +1407,7 @@ Thanks to [Joe Guillaume](https://github.com/josephguillaume) and [Francis Markh
 </li>
 </ul>
 <ul>
-<li id="sec-4-2-2-6">Test transform<br/>
+<li id="sec-5-2-2-6">Test transform<br/>
 
 
 
@@ -1436,12 +1449,12 @@ cat(sql)
 
 </div>
 
-<div id="outline-container-4-2-3" class="outline-4">
-<h4 id="sec-4-2-3"><span class="section-number-4">4.2.3</span> PostgreSQL Migration /postgres-migrate.html</h4>
-<div class="outline-text-4" id="text-4-2-3">
+<div id="outline-container-5-2-3" class="outline-4">
+<h4 id="sec-5-2-3"><span class="section-number-4">5.2.3</span> PostgreSQL Migration /postgres-migrate.html</h4>
+<div class="outline-text-4" id="text-5-2-3">
 
 <ul>
-<li id="sec-4-2-3-1">Migrate the data<br/>
+<li id="sec-5-2-3-1">Migrate the data<br/>
 
 
 
@@ -1482,7 +1495,7 @@ To take advantage of the extra storage on the secondary disk we mounted in the i
 </li>
 </ul>
 <ul>
-<li id="sec-4-2-3-2">Set up backups<br/>
+<li id="sec-5-2-3-2">Set up backups<br/>
 From here to a secure location at my work.
 
 
@@ -1493,16 +1506,16 @@ From here to a secure location at my work.
 
 </div>
 
-<div id="outline-container-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Tuning Postgres Performance</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Tuning Postgres Performance</h3>
+<div class="outline-text-3" id="text-5-3">
 
 
 </div>
 
-<div id="outline-container-4-3-1" class="outline-4">
-<h4 id="sec-4-3-1"><span class="section-number-4">4.3.1</span> Important shared memory settings /sharedmemory.html</h4>
-<div class="outline-text-4" id="text-4-3-1">
+<div id="outline-container-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1"><span class="section-number-4">5.3.1</span> Important shared memory settings /sharedmemory.html</h4>
+<div class="outline-text-4" id="text-5-3-1">
 
 
 
@@ -1574,18 +1587,18 @@ The default settings in PostgreSQL are usually pretty good but these memory sett
 
 </div>
 
-<div id="outline-container-4-3-2" class="outline-4">
-<h4 id="sec-4-3-2"><span class="section-number-4">4.3.2</span> <span class="todo TODO">TODO</span> Postgres conf</h4>
-<div class="outline-text-4" id="text-4-3-2">
+<div id="outline-container-5-3-2" class="outline-4">
+<h4 id="sec-5-3-2"><span class="section-number-4">5.3.2</span> <span class="todo TODO">TODO</span> Postgres conf</h4>
+<div class="outline-text-4" id="text-5-3-2">
 
 <p>I noticed when installing opengeo on RHEL and Ubuntu that the installer changes more parameters on the Ubuntu conf file.  Compare these with diff and update RHEL to reflect the settings for ubuntu.
 </p></div>
 
 </div>
 
-<div id="outline-container-4-3-3" class="outline-4">
-<h4 id="sec-4-3-3"><span class="section-number-4">4.3.3</span> Test loading some shapefiles</h4>
-<div class="outline-text-4" id="text-4-3-3">
+<div id="outline-container-5-3-3" class="outline-4">
+<h4 id="sec-5-3-3"><span class="section-number-4">5.3.3</span> Test loading some shapefiles</h4>
+<div class="outline-text-4" id="text-5-3-3">
 
 <p>on your ubuntu desktop install postgis and gdal (see above)
 </p>
@@ -1598,7 +1611,7 @@ sudo apt-get install postgis
 <p>
 then let's demo the Tasmanian SLAs:
 </p><ul>
-<li id="sec-4-3-3-1">download the shapefiles<br/>
+<li id="sec-5-3-3-1">download the shapefiles<br/>
 
 
 
@@ -1652,7 +1665,7 @@ download.file(<span style="color: #2aa198;">'http://www.abs.gov.au/AUSSTATS/subs
 </li>
 </ul>
 <ul>
-<li id="sec-4-3-3-2">upload the shp2psql<br/>
+<li id="sec-5-3-3-2">upload the shp2psql<br/>
 
 
 
@@ -1679,24 +1692,24 @@ shp2pgsql -s 4283 -D tassla06.shp public.tassla06 &gt; tassla06.sql
 
 </div>
 
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> The Brains</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> The Brains</h2>
+<div class="outline-text-2" id="text-6">
 
 <p>The Brains is a Statistical Analysis engine (running the R environment) integrated with a metadata registry.
 </p>
 </div>
 
-<div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> R Server</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> R Server</h3>
+<div class="outline-text-3" id="text-6-1">
 
 
 </div>
 
-<div id="outline-container-5-1-1" class="outline-4">
-<h4 id="sec-5-1-1"><span class="section-number-4">5.1.1</span> R</h4>
-<div class="outline-text-4" id="text-5-1-1">
+<div id="outline-container-6-1-1" class="outline-4">
+<h4 id="sec-6-1-1"><span class="section-number-4">6.1.1</span> R</h4>
+<div class="outline-text-4" id="text-6-1-1">
 
 
 
@@ -1722,9 +1735,9 @@ To update R as ‘root’ on your system simply type
 
 </div>
 
-<div id="outline-container-5-1-2" class="outline-4">
-<h4 id="sec-5-1-2"><span class="section-number-4">5.1.2</span> <span class="todo TODO">TODO</span> package management and R updates</h4>
-<div class="outline-text-4" id="text-5-1-2">
+<div id="outline-container-6-1-2" class="outline-4">
+<h4 id="sec-6-1-2"><span class="section-number-4">6.1.2</span> <span class="todo TODO">TODO</span> package management and R updates</h4>
+<div class="outline-text-4" id="text-6-1-2">
 
 <p>Kudos2
 <a href="http://zvfak.blogspot.com.au/2012/06/updating-r-but-keeping-your-installed.html">http://zvfak.blogspot.com.au/2012/06/updating-r-but-keeping-your-installed.html</a>
@@ -1763,9 +1776,9 @@ update.packages()
 
 </div>
 
-<div id="outline-container-5-1-3" class="outline-4">
-<h4 id="sec-5-1-3"><span class="section-number-4">5.1.3</span> Rstudio</h4>
-<div class="outline-text-4" id="text-5-1-3">
+<div id="outline-container-6-1-3" class="outline-4">
+<h4 id="sec-6-1-3"><span class="section-number-4">6.1.3</span> Rstudio</h4>
+<div class="outline-text-4" id="text-6-1-3">
 
 <p>check out the RSudio versions at: <a href="http://rstudio.org/download/server">http://rstudio.org/download/server</a>
 </p>
@@ -1791,9 +1804,9 @@ rstudio-server verify-installation
 
 </div>
 
-<div id="outline-container-5-1-4" class="outline-4">
-<h4 id="sec-5-1-4"><span class="section-number-4">5.1.4</span> firewall access</h4>
-<div class="outline-text-4" id="text-5-1-4">
+<div id="outline-container-6-1-4" class="outline-4">
+<h4 id="sec-6-1-4"><span class="section-number-4">6.1.4</span> firewall access</h4>
+<div class="outline-text-4" id="text-6-1-4">
 
 
 
@@ -1815,9 +1828,9 @@ Check that you can log on via port 8787.  Note that this is an unsecure R server
 
 </div>
 
-<div id="outline-container-5-1-5" class="outline-4">
-<h4 id="sec-5-1-5"><span class="section-number-4">5.1.5</span> SSL/HHTPS and running a proxy server</h4>
-<div class="outline-text-4" id="text-5-1-5">
+<div id="outline-container-6-1-5" class="outline-4">
+<h4 id="sec-6-1-5"><span class="section-number-4">6.1.5</span> SSL/HHTPS and running a proxy server</h4>
+<div class="outline-text-4" id="text-6-1-5">
 
 
 
@@ -1908,9 +1921,9 @@ sudo /etc/init.d/rstudio-server restart
 
 </div>
 
-<div id="outline-container-5-1-6" class="outline-4">
-<h4 id="sec-5-1-6"><span class="section-number-4">5.1.6</span> git</h4>
-<div class="outline-text-4" id="text-5-1-6">
+<div id="outline-container-6-1-6" class="outline-4">
+<h4 id="sec-6-1-6"><span class="section-number-4">6.1.6</span> git</h4>
+<div class="outline-text-4" id="text-6-1-6">
 
 
 
@@ -1923,9 +1936,9 @@ sudo /etc/init.d/rstudio-server restart
 
 </div>
 
-<div id="outline-container-5-1-7" class="outline-4">
-<h4 id="sec-5-1-7"><span class="section-number-4">5.1.7</span> ssh for github</h4>
-<div class="outline-text-4" id="text-5-1-7">
+<div id="outline-container-6-1-7" class="outline-4">
+<h4 id="sec-6-1-7"><span class="section-number-4">6.1.7</span> ssh for github</h4>
+<div class="outline-text-4" id="text-6-1-7">
 
 <ul>
 <li>in rstudio
@@ -1942,9 +1955,9 @@ sudo /etc/init.d/rstudio-server restart
 
 </div>
 
-<div id="outline-container-5-1-8" class="outline-4">
-<h4 id="sec-5-1-8"><span class="section-number-4">5.1.8</span> gdal</h4>
-<div class="outline-text-4" id="text-5-1-8">
+<div id="outline-container-6-1-8" class="outline-4">
+<h4 id="sec-6-1-8"><span class="section-number-4">6.1.8</span> gdal</h4>
+<div class="outline-text-4" id="text-6-1-8">
 
 
 
@@ -1960,9 +1973,9 @@ yum install gdal-devel.x86_64 proj-devel.x86_64
 
 </div>
 
-<div id="outline-container-5-1-9" class="outline-4">
-<h4 id="sec-5-1-9"><span class="section-number-4">5.1.9</span> geos</h4>
-<div class="outline-text-4" id="text-5-1-9">
+<div id="outline-container-6-1-9" class="outline-4">
+<h4 id="sec-6-1-9"><span class="section-number-4">6.1.9</span> geos</h4>
+<div class="outline-text-4" id="text-6-1-9">
 
 
 
@@ -1974,9 +1987,9 @@ yum install gdal-devel.x86_64 proj-devel.x86_64
 
 </div>
 
-<div id="outline-container-5-1-10" class="outline-4">
-<h4 id="sec-5-1-10"><span class="section-number-4">5.1.10</span> or under ubuntu</h4>
-<div class="outline-text-4" id="text-5-1-10">
+<div id="outline-container-6-1-10" class="outline-4">
+<h4 id="sec-6-1-10"><span class="section-number-4">6.1.10</span> or under ubuntu</h4>
+<div class="outline-text-4" id="text-6-1-10">
 
 
 
@@ -2001,9 +2014,9 @@ sudo apt-get install libproj-dev
 
 </div>
 
-<div id="outline-container-5-1-11" class="outline-4">
-<h4 id="sec-5-1-11"><span class="section-number-4">5.1.11</span> test readOGR</h4>
-<div class="outline-text-4" id="text-5-1-11">
+<div id="outline-container-6-1-11" class="outline-4">
+<h4 id="sec-6-1-11"><span class="section-number-4">6.1.11</span> test readOGR</h4>
+<div class="outline-text-4" id="text-6-1-11">
 
 <p>NB only possible once the PostGIS install is complete, see below.
 </p>
@@ -2069,9 +2082,9 @@ writeOGR(pts, <span style="color: #2aa198;">'test.shp'</span>, <span style="colo
 
 </div>
 
-<div id="outline-container-5-1-12" class="outline-4">
-<h4 id="sec-5-1-12"><span class="section-number-4">5.1.12</span> rgraphviz</h4>
-<div class="outline-text-4" id="text-5-1-12">
+<div id="outline-container-6-1-12" class="outline-4">
+<h4 id="sec-6-1-12"><span class="section-number-4">6.1.12</span> rgraphviz</h4>
+<div class="outline-text-4" id="text-6-1-12">
 
 
 
@@ -2096,9 +2109,9 @@ R
 
 </div>
 
-<div id="outline-container-5-1-13" class="outline-4">
-<h4 id="sec-5-1-13"><span class="section-number-4">5.1.13</span> test</h4>
-<div class="outline-text-4" id="text-5-1-13">
+<div id="outline-container-6-1-13" class="outline-4">
+<h4 id="sec-6-1-13"><span class="section-number-4">6.1.13</span> test</h4>
+<div class="outline-text-4" id="text-6-1-13">
 
 
 
@@ -2114,9 +2127,9 @@ git@github.com:ivanhanigan/disentangle.git
 
 </div>
 
-<div id="outline-container-5-1-14" class="outline-4">
-<h4 id="sec-5-1-14"><span class="section-number-4">5.1.14</span> install just the postgres bits required for RPostgreSQL package</h4>
-<div class="outline-text-4" id="text-5-1-14">
+<div id="outline-container-6-1-14" class="outline-4">
+<h4 id="sec-6-1-14"><span class="section-number-4">6.1.14</span> install just the postgres bits required for RPostgreSQL package</h4>
+<div class="outline-text-4" id="text-6-1-14">
 
 
 
@@ -2148,9 +2161,9 @@ R
 
 </div>
 
-<div id="outline-container-5-1-15" class="outline-4">
-<h4 id="sec-5-1-15"><span class="section-number-4">5.1.15</span> postgis utilities</h4>
-<div class="outline-text-4" id="text-5-1-15">
+<div id="outline-container-6-1-15" class="outline-4">
+<h4 id="sec-6-1-15"><span class="section-number-4">6.1.15</span> postgis utilities</h4>
+<div class="outline-text-4" id="text-6-1-15">
 
 
 
@@ -2182,9 +2195,9 @@ chmod 0600 /home/user/.pgpass
 
 </div>
 
-<div id="outline-container-5-1-16" class="outline-4">
-<h4 id="sec-5-1-16"><span class="section-number-4">5.1.16</span> <span class="todo TODO">TODO</span> unixODBC</h4>
-<div class="outline-text-4" id="text-5-1-16">
+<div id="outline-container-6-1-16" class="outline-4">
+<h4 id="sec-6-1-16"><span class="section-number-4">6.1.16</span> <span class="todo TODO">TODO</span> unixODBC</h4>
+<div class="outline-text-4" id="text-6-1-16">
 
 
 
@@ -2205,17 +2218,17 @@ R
 
 </div>
 
-<div id="outline-container-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Test the Backups of this Minimal R Sever.</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Test the Backups of this Minimal R Sever.</h3>
+<div class="outline-text-3" id="text-6-2">
 
 <p>To test that this will restore successfully if there is a crash or the VM becomes corrupted take a snapshot from the ResearchCloud dashboard website and launch it to a new VM.  Note that this will only restore the 10GB primary disc which has our software but not the user data which is on the secondary disc so try mounting that and check that the new VM will be a good replacement of the old one.
 </p>
 </div>
 
-<div id="outline-container-5-2-1" class="outline-4">
-<h4 id="sec-5-2-1"><span class="section-number-4">5.2.1</span> Backup the 2nd Disc</h4>
-<div class="outline-text-4" id="text-5-2-1">
+<div id="outline-container-6-2-1" class="outline-4">
+<h4 id="sec-6-2-1"><span class="section-number-4">6.2.1</span> Backup the 2nd Disc</h4>
+<div class="outline-text-4" id="text-6-2-1">
 
 
 
@@ -2250,18 +2263,18 @@ rm homebackup.zip
 
 </div>
 
-<div id="outline-container-5-2-2" class="outline-4">
-<h4 id="sec-5-2-2"><span class="section-number-4">5.2.2</span> Launch from this snapshot and test the R server and 2nd Disc</h4>
-<div class="outline-text-4" id="text-5-2-2">
+<div id="outline-container-6-2-2" class="outline-4">
+<h4 id="sec-6-2-2"><span class="section-number-4">6.2.2</span> Launch from this snapshot and test the R server and 2nd Disc</h4>
+<div class="outline-text-4" id="text-6-2-2">
 
 
 </div>
 
 </div>
 
-<div id="outline-container-5-2-3" class="outline-4">
-<h4 id="sec-5-2-3"><span class="section-number-4">5.2.3</span> <span class="todo TODO">TODO</span> the permissions of the user on their home directory cause issues for logging in.</h4>
-<div class="outline-text-4" id="text-5-2-3">
+<div id="outline-container-6-2-3" class="outline-4">
+<h4 id="sec-6-2-3"><span class="section-number-4">6.2.3</span> <span class="todo TODO">TODO</span> the permissions of the user on their home directory cause issues for logging in.</h4>
+<div class="outline-text-4" id="text-6-2-3">
 
 <p>I've just used userdel -r username, then useradd etc and use their own user account to scp the backup files across.
 One solution is to not offer backup services, then users will have to undertake to load all data again from a fresh server if it failed.  Data could be backed up on Brawn only?
@@ -2271,17 +2284,17 @@ One solution is to not offer backup services, then users will have to undertake 
 
 </div>
 
-<div id="outline-container-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Oracle XE Permissions and Users System</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Oracle XE Permissions and Users System</h3>
+<div class="outline-text-3" id="text-6-3">
 
 <p>Installing Oracle XE, this is used as a data registry and I have a HTML-DB application available from XXXXXX to be used.  It is called OraPUS because the Oracle XE license restricts any references to Oracle in the name of the application.  There are other restrictions on this licence such as XXXXX.
 </p>
 </div>
 
-<div id="outline-container-5-3-1" class="outline-4">
-<h4 id="sec-5-3-1"><span class="section-number-4">5.3.1</span> backup local ubuntu version</h4>
-<div class="outline-text-4" id="text-5-3-1">
+<div id="outline-container-6-3-1" class="outline-4">
+<h4 id="sec-6-3-1"><span class="section-number-4">6.3.1</span> backup local ubuntu version</h4>
+<div class="outline-text-4" id="text-6-3-1">
 
 <p>I have a ubuntu pc as my main desktop and also backups
 to create oracle on this I needed a centos virtual Machines
@@ -2319,9 +2332,9 @@ Now, it should work. I will be posting a detailed article soon for my readers so
 
 </div>
 
-<div id="outline-container-5-3-2" class="outline-4">
-<h4 id="sec-5-3-2"><span class="section-number-4">5.3.2</span> INIT</h4>
-<div class="outline-text-4" id="text-5-3-2">
+<div id="outline-container-6-3-2" class="outline-4">
+<h4 id="sec-6-3-2"><span class="section-number-4">6.3.2</span> INIT</h4>
+<div class="outline-text-4" id="text-6-3-2">
 
 
 
@@ -2346,9 +2359,9 @@ yum update
 
 </div>
 
-<div id="outline-container-5-3-3" class="outline-4">
-<h4 id="sec-5-3-3"><span class="section-number-4">5.3.3</span> SWAP</h4>
-<div class="outline-text-4" id="text-5-3-3">
+<div id="outline-container-6-3-3" class="outline-4">
+<h4 id="sec-6-3-3"><span class="section-number-4">6.3.3</span> SWAP</h4>
+<div class="outline-text-4" id="text-6-3-3">
 
 <p>MAKE SURE YOU HAVE 2GB SWAP, this is required for install but I have deleted it aftward and things still work
 <a href="http://bvirtual.nl/2009/08/add-more-swap-space-to-running-linux.html">http://bvirtual.nl/2009/08/add-more-swap-space-to-running-linux.html</a>
@@ -2377,9 +2390,9 @@ free -m | grep Swap
 
 </div>
 
-<div id="outline-container-5-3-4" class="outline-4">
-<h4 id="sec-5-3-4"><span class="section-number-4">5.3.4</span> DOWNLOAD AND SCP</h4>
-<div class="outline-text-4" id="text-5-3-4">
+<div id="outline-container-6-3-4" class="outline-4">
+<h4 id="sec-6-3-4"><span class="section-number-4">6.3.4</span> DOWNLOAD AND SCP</h4>
+<div class="outline-text-4" id="text-6-3-4">
 
 <p>create free oracle account.  download to local and then upload to server.
 </p>
@@ -2392,9 +2405,9 @@ free -m | grep Swap
 
 </div>
 
-<div id="outline-container-5-3-5" class="outline-4">
-<h4 id="sec-5-3-5"><span class="section-number-4">5.3.5</span> Install the database</h4>
-<div class="outline-text-4" id="text-5-3-5">
+<div id="outline-container-6-3-5" class="outline-4">
+<h4 id="sec-6-3-5"><span class="section-number-4">6.3.5</span> Install the database</h4>
+<div class="outline-text-4" id="text-6-3-5">
 
 <p>I followed these online guides:
 <a href="http://youtu.be/DRZg8tfmldA">http://youtu.be/DRZg8tfmldA</a> (this needs VNC or other)
@@ -2492,9 +2505,9 @@ Now log on:
 
 </div>
 
-<div id="outline-container-5-3-6" class="outline-4">
-<h4 id="sec-5-3-6"><span class="section-number-4">5.3.6</span> import application and set Security</h4>
-<div class="outline-text-4" id="text-5-3-6">
+<div id="outline-container-6-3-6" class="outline-4">
+<h4 id="sec-6-3-6"><span class="section-number-4">6.3.6</span> import application and set Security</h4>
+<div class="outline-text-4" id="text-6-3-6">
 
 <p>import the application 102
 then set authentication 
@@ -2532,9 +2545,9 @@ Navigate to the Authentication Schemes:
 
 </div>
 
-<div id="outline-container-5-3-7" class="outline-4">
-<h4 id="sec-5-3-7"><span class="section-number-4">5.3.7</span> <span class="todo TODO">TODO</span> explain the table creation script</h4>
-<div class="outline-text-4" id="text-5-3-7">
+<div id="outline-container-6-3-7" class="outline-4">
+<h4 id="sec-6-3-7"><span class="section-number-4">6.3.7</span> <span class="todo TODO">TODO</span> explain the table creation script</h4>
+<div class="outline-text-4" id="text-6-3-7">
 
 <p>now go to lib/setup<sub>oracle</sub><sub>of</sub><sub>delphe</sub>.r
 to build the tables
@@ -2542,9 +2555,9 @@ to build the tables
 
 </div>
 
-<div id="outline-container-5-3-8" class="outline-4">
-<h4 id="sec-5-3-8"><span class="section-number-4">5.3.8</span> set up R, RJDBC and ROracle</h4>
-<div class="outline-text-4" id="text-5-3-8">
+<div id="outline-container-6-3-8" class="outline-4">
+<h4 id="sec-6-3-8"><span class="section-number-4">6.3.8</span> set up R, RJDBC and ROracle</h4>
+<div class="outline-text-4" id="text-6-3-8">
 
 <p>Using RJDBC is what I recommend.  I found ROracle suboptimal.
 </p>
@@ -2579,25 +2592,25 @@ ch <span style="color: #268bd2; font-weight: bold;">&lt;-</span> connect2oracle(
 
 </div>
 
-<div id="outline-container-5-3-9" class="outline-4">
-<h4 id="sec-5-3-9"><span class="section-number-4">5.3.9</span> <span class="todo TODO">TODO</span> maintenance</h4>
-<div class="outline-text-4" id="text-5-3-9">
+<div id="outline-container-6-3-9" class="outline-4">
+<h4 id="sec-6-3-9"><span class="section-number-4">6.3.9</span> <span class="todo TODO">TODO</span> maintenance</h4>
+<div class="outline-text-4" id="text-6-3-9">
 
 </div>
 
 </div>
 
-<div id="outline-container-5-3-10" class="outline-4">
-<h4 id="sec-5-3-10"><span class="section-number-4">5.3.10</span> unlock</h4>
-<div class="outline-text-4" id="text-5-3-10">
+<div id="outline-container-6-3-10" class="outline-4">
+<h4 id="sec-6-3-10"><span class="section-number-4">6.3.10</span> unlock</h4>
+<div class="outline-text-4" id="text-6-3-10">
 
 </div>
 
 </div>
 
-<div id="outline-container-5-3-11" class="outline-4">
-<h4 id="sec-5-3-11"><span class="section-number-4">5.3.11</span> unlock header</h4>
-<div class="outline-text-4" id="text-5-3-11">
+<div id="outline-container-6-3-11" class="outline-4">
+<h4 id="sec-6-3-11"><span class="section-number-4">6.3.11</span> unlock header</h4>
+<div class="outline-text-4" id="text-6-3-11">
 
 
 
@@ -2650,9 +2663,9 @@ ALTER PROFILE DEFAULT LIMIT PASSWORD<span style="color: #268bd2; font-style: ita
 
 </div>
 
-<div id="outline-container-5-3-12" class="outline-4">
-<h4 id="sec-5-3-12"><span class="section-number-4">5.3.12</span> extending/revising the database to track servers and files</h4>
-<div class="outline-text-4" id="text-5-3-12">
+<div id="outline-container-6-3-12" class="outline-4">
+<h4 id="sec-6-3-12"><span class="section-number-4">6.3.12</span> extending/revising the database to track servers and files</h4>
+<div class="outline-text-4" id="text-6-3-12">
 
 <p>Aim:
 </p><ul>
@@ -2670,7 +2683,7 @@ ALTER PROFILE DEFAULT LIMIT PASSWORD<span style="color: #268bd2; font-style: ita
 
 
 <ul>
-<li id="sec-5-3-12-1">change the names and fields<br/>
+<li id="sec-6-3-12-1">change the names and fields<br/>
 <ul>
 <li>go to page, edit page, remove fields one at a time
 </li>
@@ -2728,7 +2741,7 @@ ALTER PROFILE DEFAULT LIMIT PASSWORD<span style="color: #268bd2; font-style: ita
 </li>
 </ul>
 <ul>
-<li id="sec-5-3-12-2">SAVE VERSIONS<br/>
+<li id="sec-6-3-12-2">SAVE VERSIONS<br/>
 export application to dropbox/Catalogue/BACKups
 </li>
 </ul>
@@ -2737,17 +2750,17 @@ export application to dropbox/Catalogue/BACKups
 
 </div>
 
-<div id="outline-container-5-4" class="outline-3">
-<h3 id="sec-5-4"><span class="section-number-3">5.4</span> DDIindex</h3>
-<div class="outline-text-3" id="text-5-4">
+<div id="outline-container-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> DDIindex</h3>
+<div class="outline-text-3" id="text-6-4">
 
 <p>The DDIindex is a java based catalogue that was written by the Australian Data Archives at the ANU (Formerly the ASSDA <a href="http://assda.anu.edu.au/ddiindex.html">http://assda.anu.edu.au/ddiindex.html</a>). The original application source is still available from the ASSDA site but I am using the one I have archived because it has some configurations that I don't remember who to make again at the moment.
 </p>
 </div>
 
-<div id="outline-container-5-4-1" class="outline-4">
-<h4 id="sec-5-4-1"><span class="section-number-4">5.4.1</span> TOMCAT</h4>
-<div class="outline-text-4" id="text-5-4-1">
+<div id="outline-container-6-4-1" class="outline-4">
+<h4 id="sec-6-4-1"><span class="section-number-4">6.4.1</span> TOMCAT</h4>
+<div class="outline-text-4" id="text-6-4-1">
 
 <p><a href="http://coastalrocket.blogspot.com.au/2012/08/installing-geostack-on-centos-6-64bit.html">http://coastalrocket.blogspot.com.au/2012/08/installing-geostack-on-centos-6-64bit.html</a>
 </p>
@@ -2796,18 +2809,18 @@ changing the Tomcat Port
 
 </div>
 
-<div id="outline-container-5-4-2" class="outline-4">
-<h4 id="sec-5-4-2"><span class="section-number-4">5.4.2</span> UPLOAD THE DDIINDEX</h4>
-<div class="outline-text-4" id="text-5-4-2">
+<div id="outline-container-6-4-2" class="outline-4">
+<h4 id="sec-6-4-2"><span class="section-number-4">6.4.2</span> UPLOAD THE DDIINDEX</h4>
+<div class="outline-text-4" id="text-6-4-2">
 
 
 </div>
 
 </div>
 
-<div id="outline-container-5-4-3" class="outline-4">
-<h4 id="sec-5-4-3"><span class="section-number-4">5.4.3</span> MySQL</h4>
-<div class="outline-text-4" id="text-5-4-3">
+<div id="outline-container-6-4-3" class="outline-4">
+<h4 id="sec-6-4-3"><span class="section-number-4">6.4.3</span> MySQL</h4>
+<div class="outline-text-4" id="text-6-4-3">
 
 <p><a href="http://www.if-not-true-then-false.com/2010/install-mysql-on-fedora-centos-red-hat-rhel/">http://www.if-not-true-then-false.com/2010/install-mysql-on-fedora-centos-red-hat-rhel/</a>
 </p>
@@ -2850,9 +2863,9 @@ mysql -h localhost -u root -p security &lt; security_2010-04-27-1259.sql;
 
 </div>
 
-<div id="outline-container-5-4-4" class="outline-4">
-<h4 id="sec-5-4-4"><span class="section-number-4">5.4.4</span> make sure ddiindex can connect to mysql as ddiindex user</h4>
-<div class="outline-text-4" id="text-5-4-4">
+<div id="outline-container-6-4-4" class="outline-4">
+<h4 id="sec-6-4-4"><span class="section-number-4">6.4.4</span> make sure ddiindex can connect to mysql as ddiindex user</h4>
+<div class="outline-text-4" id="text-6-4-4">
 
 
 
@@ -2880,9 +2893,9 @@ and search.jsp
 
 </div>
 
-<div id="outline-container-5-4-5" class="outline-4">
-<h4 id="sec-5-4-5"><span class="section-number-4">5.4.5</span> <span class="todo TODO">TODO</span> Check the security implications of allowing write permissions here</h4>
-<div class="outline-text-4" id="text-5-4-5">
+<div id="outline-container-6-4-5" class="outline-4">
+<h4 id="sec-6-4-5"><span class="section-number-4">6.4.5</span> <span class="todo TODO">TODO</span> Check the security implications of allowing write permissions here</h4>
+<div class="outline-text-4" id="text-6-4-5">
 
 <p>I found I need to allow write access to the  xmldata folder for uploads of the xml metadata files.
 </p>
@@ -2906,9 +2919,9 @@ chmod 0777 /opt/ddiindex/ewedb_s
 
 </div>
 
-<div id="outline-container-5-4-6" class="outline-4">
-<h4 id="sec-5-4-6"><span class="section-number-4">5.4.6</span> Running the Indexer</h4>
-<div class="outline-text-4" id="text-5-4-6">
+<div id="outline-container-6-4-6" class="outline-4">
+<h4 id="sec-6-4-6"><span class="section-number-4">6.4.6</span> Running the Indexer</h4>
+<div class="outline-text-4" id="text-6-4-6">
 
 <p>Log on as an admin user (set in the MySQL userEJB table) and you can run the indexer.jsp
 Before doing this the first time I did the following:
@@ -2931,9 +2944,9 @@ Before doing this the first time I did the following:
 
 </div>
 
-<div id="outline-container-5-4-7" class="outline-4">
-<h4 id="sec-5-4-7"><span class="section-number-4">5.4.7</span> personalise the ddiindex</h4>
-<div class="outline-text-4" id="text-5-4-7">
+<div id="outline-container-6-4-7" class="outline-4">
+<h4 id="sec-6-4-7"><span class="section-number-4">6.4.7</span> personalise the ddiindex</h4>
+<div class="outline-text-4" id="text-6-4-7">
 
 <p>ie home.jsp
    &lt;div class="intro"&gt;The Graduate Information Literacy Program at ANU now offers resources for researchers and graduate students on data management planning: a comprehensive Manual and a Data Management Planning Template. &lt;a href="<a href="http://ilp.anu.edu.au/dm/">http://ilp.anu.edu.au/dm/</a>" target="<sub>blank</sub>"&gt;<a href="http://ilp.anu.edu.au/dm">http://ilp.anu.edu.au/dm</a>&lt;/a&gt;&lt;/div&gt;
@@ -2943,9 +2956,9 @@ Before doing this the first time I did the following:
 
 </div>
 
-<div id="outline-container-5-5" class="outline-3">
-<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Set up a private git server for data and code</h3>
-<div class="outline-text-3" id="text-5-5">
+<div id="outline-container-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Set up a private git server for data and code</h3>
+<div class="outline-text-3" id="text-6-5">
 
 
 
@@ -2954,9 +2967,9 @@ Before doing this the first time I did the following:
 
 </div>
 
-<div id="outline-container-5-6" class="outline-3">
-<h3 id="sec-5-6"><span class="section-number-3">5.6</span> True-Crypt encrypted volumes</h3>
-<div class="outline-text-3" id="text-5-6">
+<div id="outline-container-6-6" class="outline-3">
+<h3 id="sec-6-6"><span class="section-number-3">6.6</span> True-Crypt encrypted volumes</h3>
+<div class="outline-text-3" id="text-6-6">
 
 <p>The servers are secure but we will sometimes want local copies and so should use truecrypt or another option.  I am using Ubuntu as my desktop so here is the instructions.
 </p>
@@ -2989,9 +3002,9 @@ sudo apt-get update &amp;&amp; sudo apt-get install truecrypt
 
 </div>
 
-<div id="outline-container-5-7" class="outline-3">
-<h3 id="sec-5-7"><span class="section-number-3">5.7</span> <span class="todo TODO">TODO</span> ResearchData storage</h3>
-<div class="outline-text-3" id="text-5-7">
+<div id="outline-container-6-7" class="outline-3">
+<h3 id="sec-6-7"><span class="section-number-3">6.7</span> <span class="todo TODO">TODO</span> ResearchData storage</h3>
+<div class="outline-text-3" id="text-6-7">
 
 
 
@@ -3015,15 +3028,35 @@ ln -s /home/ResearchData /home/username/ResearchData
 
 </pre>
 
-
-
 </div>
 
 </div>
 
-<div id="outline-container-5-8" class="outline-3">
-<h3 id="sec-5-8"><span class="section-number-3">5.8</span> <span class="todo TODO">TODO</span> Share with windows network</h3>
-<div class="outline-text-3" id="text-5-8">
+<div id="outline-container-6-8" class="outline-3">
+<h3 id="sec-6-8"><span class="section-number-3">6.8</span> <span class="todo TODO">TODO</span> example workflow to dev a local data package and publish to shared</h3>
+<div class="outline-text-3" id="text-6-8">
+
+<ul>
+<li>work in personal workspace then as root
+</li>
+</ul>
+
+<p>[root@i-00002e43 ResearchData]# mkdir GARNAUT<sub>CLIMATE</sub><sub>CHANGE</sub><sub>REVIEW</sub>
+[root@i-00002e43 ResearchData]# chown -R root:researchdata /home/ResearchData
+[root@i-00002e43 ResearchData]# chmod -R 0750 /home/ResearchData
+[root@i-00002e43 ResearchData]# ls -l
+[root@i-00002e43 ResearchData]# cd GARNAUT<sub>CLIMATE</sub><sub>CHANGE</sub><sub>REVIEW</sub>/
+[root@i-00002e43 GARNAUT<sub>CLIMATE</sub><sub>CHANGE</sub><sub>REVIEW]</sub># cp -R <i>home/ivan<sub>hanigan</sub>/projects/GARNAUT<sub>CLIMATE</sub><sub>CHANGE</sub><sub>REVIEW</sub>/* .</i>
+[root@i-00002e43 GARNAUT<sub>CLIMATE</sub><sub>CHANGE</sub><sub>REVIEW]</sub># rm GARNAUT<sub>CLIMATE</sub><sub>CHANGE</sub><sub>REVIEW</sub>.Rproj 
+rm: remove regular file `GARNAUT<sub>CLIMATE</sub><sub>CHANGE</sub><sub>REVIEW</sub>.Rproj'? y
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-6-9" class="outline-3">
+<h3 id="sec-6-9"><span class="section-number-3">6.9</span> <span class="todo TODO">TODO</span> Share with windows network</h3>
+<div class="outline-text-3" id="text-6-9">
 
 
 
@@ -3032,23 +3065,23 @@ ln -s /home/ResearchData /home/username/ResearchData
 
 </div>
 
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Procedures for add users to the system.</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Procedures for add users to the system.</h2>
+<div class="outline-text-2" id="text-7">
 
 
 </div>
 
-<div id="outline-container-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Description of the access procedure</h3>
-<div class="outline-text-3" id="text-6-1">
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Description of the access procedure</h3>
+<div class="outline-text-3" id="text-7-1">
 
 
 </div>
 
-<div id="outline-container-6-1-1" class="outline-4">
-<h4 id="sec-6-1-1"><span class="section-number-4">6.1.1</span> Getting Access</h4>
-<div class="outline-text-4" id="text-6-1-1">
+<div id="outline-container-7-1-1" class="outline-4">
+<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> Getting Access</h4>
+<div class="outline-text-4" id="text-7-1-1">
 
 <p>The "Getting Access" procedure to help users apply for and gain access to mortality data is shown in Figure 1, and a more detailed description of the process is shown in the Appendix, Figure 4. The process is a set of formally defined steps that are designed to move the User through two general stages:
 </p><ul>
@@ -3067,9 +3100,9 @@ ln -s /home/ResearchData /home/username/ResearchData
 
 </div>
 
-<div id="outline-container-6-1-2" class="outline-4">
-<h4 id="sec-6-1-2"><span class="section-number-4">6.1.2</span> Managing Access</h4>
-<div class="outline-text-4" id="text-6-1-2">
+<div id="outline-container-7-1-2" class="outline-4">
+<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> Managing Access</h4>
+<div class="outline-text-4" id="text-7-1-2">
 
 <p>Procedures for managing access are shown in Figure 2 (and in the Appendix, Figure 5). These activities are intended to maintain information on the current state of projects using the mortality data, and to report any changes in situation to the State Registries. The User Administrator is responsible for conduct of the "Managing Access" procedures.
 </p>
@@ -3082,9 +3115,9 @@ Once a response is received, the User Administrator then enters the relevant inf
 
 </div>
 
-<div id="outline-container-6-1-3" class="outline-4">
-<h4 id="sec-6-1-3"><span class="section-number-4">6.1.3</span> Ending Access</h4>
-<div class="outline-text-4" id="text-6-1-3">
+<div id="outline-container-7-1-3" class="outline-4">
+<h4 id="sec-7-1-3"><span class="section-number-4">7.1.3</span> Ending Access</h4>
+<div class="outline-text-4" id="text-7-1-3">
 
 <p>The procedure for ending access aims to ensure that data are both securely and sustainably stored.  It is very important that files used for authorised projects are never re-used in un-authorised projects, but that future researchers may have the opportunity to create an authorised project and potentially replicate historical analyses.  This is an important part of reproducible research and the robust practice of scientific enquiry.
 </p>
@@ -3093,17 +3126,17 @@ Once a response is received, the User Administrator then enters the relevant inf
 
 </div>
 
-<div id="outline-container-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> The process user administrators go through to set up users</h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> The process user administrators go through to set up users</h3>
+<div class="outline-text-3" id="text-7-2">
 
 <p>When adding users go to the oraphi and track their permissions
 </p>
 </div>
 
-<div id="outline-container-6-2-1" class="outline-4">
-<h4 id="sec-6-2-1"><span class="section-number-4">6.2.1</span> lodge request in user db</h4>
-<div class="outline-text-4" id="text-6-2-1">
+<div id="outline-container-7-2-1" class="outline-4">
+<h4 id="sec-7-2-1"><span class="section-number-4">7.2.1</span> lodge request in user db</h4>
+<div class="outline-text-4" id="text-7-2-1">
 
 <ul>
 <li>new study into nceph ddiindexdb 
@@ -3120,9 +3153,9 @@ Once a response is received, the User Administrator then enters the relevant inf
 
 </div>
 
-<div id="outline-container-6-2-2" class="outline-4">
-<h4 id="sec-6-2-2"><span class="section-number-4">6.2.2</span> r-nceph</h4>
-<div class="outline-text-4" id="text-6-2-2">
+<div id="outline-container-7-2-2" class="outline-4">
+<h4 id="sec-7-2-2"><span class="section-number-4">7.2.2</span> r-nceph</h4>
+<div class="outline-text-4" id="text-7-2-2">
 
 <p>production goes thru david fisher
 testbed done by me
@@ -3131,16 +3164,16 @@ testbed done by me
 
 </div>
 
-<div id="outline-container-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> brains</h3>
-<div class="outline-text-3" id="text-6-3">
+<div id="outline-container-7-3" class="outline-3">
+<h3 id="sec-7-3"><span class="section-number-3">7.3</span> brains</h3>
+<div class="outline-text-3" id="text-7-3">
 
 
 </div>
 
-<div id="outline-container-6-3-1" class="outline-4">
-<h4 id="sec-6-3-1"><span class="section-number-4">6.3.1</span> linux user</h4>
-<div class="outline-text-4" id="text-6-3-1">
+<div id="outline-container-7-3-1" class="outline-4">
+<h4 id="sec-7-3-1"><span class="section-number-4">7.3.1</span> linux user</h4>
+<div class="outline-text-4" id="text-7-3-1">
 
 
 
@@ -3155,9 +3188,9 @@ passwd userxxx
 
 </div>
 
-<div id="outline-container-6-3-2" class="outline-4">
-<h4 id="sec-6-3-2"><span class="section-number-4">6.3.2</span> mysql (check ddiindex)</h4>
-<div class="outline-text-4" id="text-6-3-2">
+<div id="outline-container-7-3-2" class="outline-4">
+<h4 id="sec-7-3-2"><span class="section-number-4">7.3.2</span> mysql (check ddiindex)</h4>
+<div class="outline-text-4" id="text-7-3-2">
 
 
 
@@ -3168,7 +3201,7 @@ insert into UserEJB (id, password, admin) values (<span style="color: #2aa198;">
 </pre>
 
 <ul>
-<li id="sec-6-3-2-1">oracle (oraphi)<br/>
+<li id="sec-7-3-2-1">oracle (oraphi)<br/>
 <ul>
 <li>log in as admin user to ddiindexdb workspace and go to administration, 
 </li>
@@ -3179,7 +3212,7 @@ insert into UserEJB (id, password, admin) values (<span style="color: #2aa198;">
 </li>
 </ul>
 <ul>
-<li id="sec-6-3-2-2">github<br/>
+<li id="sec-7-3-2-2">github<br/>
 <ul>
 <li>downstream users can just download zips from github
 </li>
@@ -3196,16 +3229,16 @@ insert into UserEJB (id, password, admin) values (<span style="color: #2aa198;">
 
 </div>
 
-<div id="outline-container-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> brawn</h3>
-<div class="outline-text-3" id="text-6-4">
+<div id="outline-container-7-4" class="outline-3">
+<h3 id="sec-7-4"><span class="section-number-3">7.4</span> brawn</h3>
+<div class="outline-text-3" id="text-7-4">
 
 
 </div>
 
-<div id="outline-container-6-4-1" class="outline-4">
-<h4 id="sec-6-4-1"><span class="section-number-4">6.4.1</span> <span class="todo TODO">TODO</span> postgres</h4>
-<div class="outline-text-4" id="text-6-4-1">
+<div id="outline-container-7-4-1" class="outline-4">
+<h4 id="sec-7-4-1"><span class="section-number-4">7.4.1</span> <span class="todo TODO">TODO</span> postgres</h4>
+<div class="outline-text-4" id="text-7-4-1">
 
 <p>Need to find out if this 0.0.0.0/0 is a big no-no?
 </p>
@@ -3235,9 +3268,9 @@ select pg_reload_conf();
 
 </div>
 
-<div id="outline-container-6-4-2" class="outline-4">
-<h4 id="sec-6-4-2"><span class="section-number-4">6.4.2</span> geoserver</h4>
-<div class="outline-text-4" id="text-6-4-2">
+<div id="outline-container-7-4-2" class="outline-4">
+<h4 id="sec-7-4-2"><span class="section-number-4">7.4.2</span> geoserver</h4>
+<div class="outline-text-4" id="text-7-4-2">
 
 <ul>
 <li>general users don't need log in
@@ -3250,9 +3283,9 @@ select pg_reload_conf();
 
 </div>
 
-<div id="outline-container-6-4-3" class="outline-4">
-<h4 id="sec-6-4-3"><span class="section-number-4">6.4.3</span> alliance wiki</h4>
-<div class="outline-text-4" id="text-6-4-3">
+<div id="outline-container-7-4-3" class="outline-4">
+<h4 id="sec-7-4-3"><span class="section-number-4">7.4.3</span> alliance wiki</h4>
+<div class="outline-text-4" id="text-7-4-3">
 
 <p><a href="https://alliance.anu.edu.au/welcome/">https://alliance.anu.edu.au/welcome/</a> 
 uses their anu password
@@ -3260,9 +3293,9 @@ uses their anu password
 
 </div>
 
-<div id="outline-container-6-4-4" class="outline-4">
-<h4 id="sec-6-4-4"><span class="section-number-4">6.4.4</span> email details without password</h4>
-<div class="outline-text-4" id="text-6-4-4">
+<div id="outline-container-7-4-4" class="outline-4">
+<h4 id="sec-7-4-4"><span class="section-number-4">7.4.4</span> email details without password</h4>
+<div class="outline-text-4" id="text-7-4-4">
 
 
 <p>
@@ -3300,9 +3333,9 @@ CRICOS provider #00120C.
 
 </div>
 
-<div id="outline-container-6-4-5" class="outline-4">
-<h4 id="sec-6-4-5"><span class="section-number-4">6.4.5</span> text message the set password</h4>
-<div class="outline-text-4" id="text-6-4-5">
+<div id="outline-container-7-4-5" class="outline-4">
+<h4 id="sec-7-4-5"><span class="section-number-4">7.4.5</span> text message the set password</h4>
+<div class="outline-text-4" id="text-7-4-5">
 
 <p>This solution is adequate.  Might want to invest in a sacrificial SIM card to avoid having too many phone calls?
 </p></div>
@@ -3310,9 +3343,9 @@ CRICOS provider #00120C.
 
 </div>
 
-<div id="outline-container-6-5" class="outline-3">
-<h3 id="sec-6-5"><span class="section-number-3">6.5</span> edits to oraphi via sql</h3>
-<div class="outline-text-3" id="text-6-5">
+<div id="outline-container-7-5" class="outline-3">
+<h3 id="sec-7-5"><span class="section-number-3">7.5</span> edits to oraphi via sql</h3>
+<div class="outline-text-3" id="text-7-5">
 
 
 
@@ -3326,9 +3359,9 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 
 </div>
 
-<div id="outline-container-6-5-1" class="outline-4">
-<h4 id="sec-6-5-1"><span class="section-number-4">6.5.1</span> revocation</h4>
-<div class="outline-text-4" id="text-6-5-1">
+<div id="outline-container-7-5-1" class="outline-4">
+<h4 id="sec-7-5-1"><span class="section-number-4">7.5.1</span> revocation</h4>
+<div class="outline-text-4" id="text-7-5-1">
 
 
 
@@ -3344,39 +3377,39 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 
 </div>
 
-<div id="outline-container-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Backups</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Backups</h2>
+<div class="outline-text-2" id="text-8">
 
 
 </div>
 
-<div id="outline-container-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> General</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> General</h3>
+<div class="outline-text-3" id="text-8-1">
 
 
 </div>
 
-<div id="outline-container-7-1-1" class="outline-4">
-<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> maintenance</h4>
-<div class="outline-text-4" id="text-7-1-1">
-
-</div>
-
-</div>
-
-<div id="outline-container-7-1-2" class="outline-4">
-<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> nearline for potential restore</h4>
-<div class="outline-text-4" id="text-7-1-2">
+<div id="outline-container-8-1-1" class="outline-4">
+<h4 id="sec-8-1-1"><span class="section-number-4">8.1.1</span> maintenance</h4>
+<div class="outline-text-4" id="text-8-1-1">
 
 </div>
 
 </div>
 
-<div id="outline-container-7-1-3" class="outline-4">
-<h4 id="sec-7-1-3"><span class="section-number-4">7.1.3</span> archive and remove</h4>
-<div class="outline-text-4" id="text-7-1-3">
+<div id="outline-container-8-1-2" class="outline-4">
+<h4 id="sec-8-1-2"><span class="section-number-4">8.1.2</span> nearline for potential restore</h4>
+<div class="outline-text-4" id="text-8-1-2">
+
+</div>
+
+</div>
+
+<div id="outline-container-8-1-3" class="outline-4">
+<h4 id="sec-8-1-3"><span class="section-number-4">8.1.3</span> archive and remove</h4>
+<div class="outline-text-4" id="text-8-1-3">
 
 
 </div>
@@ -3384,24 +3417,24 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 
 </div>
 
-<div id="outline-container-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> General concerns</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> General concerns</h3>
+<div class="outline-text-3" id="text-8-2">
 
 </div>
 
 </div>
 
-<div id="outline-container-7-3" class="outline-3">
-<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Brains</h3>
-<div class="outline-text-3" id="text-7-3">
+<div id="outline-container-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> Brains</h3>
+<div class="outline-text-3" id="text-8-3">
 
 
 </div>
 
-<div id="outline-container-7-3-1" class="outline-4">
-<h4 id="sec-7-3-1"><span class="section-number-4">7.3.1</span> Backup oraphi</h4>
-<div class="outline-text-4" id="text-7-3-1">
+<div id="outline-container-8-3-1" class="outline-4">
+<h4 id="sec-8-3-1"><span class="section-number-4">8.3.1</span> Backup oraphi</h4>
+<div class="outline-text-4" id="text-8-3-1">
 
 <p>Needs to be done from Brains as it needs the oracle client set up.
 </p>
@@ -3433,9 +3466,9 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 
 </div>
 
-<div id="outline-container-7-3-2" class="outline-4">
-<h4 id="sec-7-3-2"><span class="section-number-4">7.3.2</span> sync the home directory</h4>
-<div class="outline-text-4" id="text-7-3-2">
+<div id="outline-container-8-3-2" class="outline-4">
+<h4 id="sec-8-3-2"><span class="section-number-4">8.3.2</span> sync the home directory</h4>
+<div class="outline-text-4" id="text-8-3-2">
 
 
 
@@ -3445,16 +3478,16 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 
 </div>
 
-<div id="outline-container-7-4" class="outline-3">
-<h3 id="sec-7-4"><span class="section-number-3">7.4</span> Brawn</h3>
-<div class="outline-text-3" id="text-7-4">
+<div id="outline-container-8-4" class="outline-3">
+<h3 id="sec-8-4"><span class="section-number-3">8.4</span> Brawn</h3>
+<div class="outline-text-3" id="text-8-4">
 
 
 </div>
 
-<div id="outline-container-7-4-1" class="outline-4">
-<h4 id="sec-7-4-1"><span class="section-number-4">7.4.1</span> Find out how big is it?</h4>
-<div class="outline-text-4" id="text-7-4-1">
+<div id="outline-container-8-4-1" class="outline-4">
+<h4 id="sec-8-4-1"><span class="section-number-4">8.4.1</span> Find out how big is it?</h4>
+<div class="outline-text-4" id="text-8-4-1">
 
 <p>AKA brawn-dbsize
 </p>
@@ -3464,23 +3497,23 @@ where accessornames = <span style="color: #2aa198;">'username'</span>;
 
 </div>
 
-<div id="outline-container-7-4-2" class="outline-4">
-<h4 id="sec-7-4-2"><span class="section-number-4">7.4.2</span> Dump and download it to a secure computer</h4>
-<div class="outline-text-4" id="text-7-4-2">
+<div id="outline-container-8-4-2" class="outline-4">
+<h4 id="sec-8-4-2"><span class="section-number-4">8.4.2</span> Dump and download it to a secure computer</h4>
+<div class="outline-text-4" id="text-8-4-2">
 
 <ul>
-<li id="sec-7-4-2-1">file system backup<br/>
+<li id="sec-8-4-2-1">file system backup<br/>
 
 </li>
 </ul>
 <ul>
-<li id="sec-7-4-2-2">backup-brawn-filesystem header<br/>
+<li id="sec-8-4-2-2">backup-brawn-filesystem header<br/>
 
 
 </li>
 </ul>
 <ul>
-<li id="sec-7-4-2-3">pgdump<br/>
+<li id="sec-8-4-2-3">pgdump<br/>
 Backup the pg<sub>dump</sub> to your workplace or another VM on the Research Cloud.
 
 
@@ -3519,9 +3552,9 @@ Then add this script.
 
 </div>
 
-<div id="outline-container-7-4-3" class="outline-4">
-<h4 id="sec-7-4-3"><span class="section-number-4">7.4.3</span> or simple home backup</h4>
-<div class="outline-text-4" id="text-7-4-3">
+<div id="outline-container-8-4-3" class="outline-4">
+<h4 id="sec-8-4-3"><span class="section-number-4">8.4.3</span> or simple home backup</h4>
+<div class="outline-text-4" id="text-8-4-3">
 
 <p>#(set up passwordless ssh)
 #<a href="http://www.linuxproblem.org/art_9.html">http://www.linuxproblem.org/art_9.html</a>
@@ -3564,9 +3597,9 @@ ESC :wq
 
 </div>
 
-<div id="outline-container-7-4-4" class="outline-4">
-<h4 id="sec-7-4-4"><span class="section-number-4">7.4.4</span> Restore databse dump into a new database on another machine.</h4>
-<div class="outline-text-4" id="text-7-4-4">
+<div id="outline-container-8-4-4" class="outline-4">
+<h4 id="sec-8-4-4"><span class="section-number-4">8.4.4</span> Restore databse dump into a new database on another machine.</h4>
+<div class="outline-text-4" id="text-8-4-4">
 
 
 
@@ -3577,17 +3610,17 @@ ESC :wq
 
 </div>
 
-<div id="outline-container-7-4-5" class="outline-4">
-<h4 id="sec-7-4-5"><span class="section-number-4">7.4.5</span> <span class="todo TODO">TODO</span> launch a new Nectar VM from the snapshot image</h4>
-<div class="outline-text-4" id="text-7-4-5">
+<div id="outline-container-8-4-5" class="outline-4">
+<h4 id="sec-8-4-5"><span class="section-number-4">8.4.5</span> <span class="todo TODO">TODO</span> launch a new Nectar VM from the snapshot image</h4>
+<div class="outline-text-4" id="text-8-4-5">
 
 </div>
 
 </div>
 
-<div id="outline-container-7-4-6" class="outline-4">
-<h4 id="sec-7-4-6"><span class="section-number-4">7.4.6</span> <span class="todo TODO">TODO</span> mount the 2nd disc and load/restore the postgres db and data into it</h4>
-<div class="outline-text-4" id="text-7-4-6">
+<div id="outline-container-8-4-6" class="outline-4">
+<h4 id="sec-8-4-6"><span class="section-number-4">8.4.6</span> <span class="todo TODO">TODO</span> mount the 2nd disc and load/restore the postgres db and data into it</h4>
+<div class="outline-text-4" id="text-8-4-6">
 
 
 
@@ -3596,21 +3629,21 @@ ESC :wq
 
 </div>
 
-<div id="outline-container-7-5" class="outline-3">
-<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Disaster Recovery Plan</h3>
-<div class="outline-text-3" id="text-7-5">
+<div id="outline-container-8-5" class="outline-3">
+<h3 id="sec-8-5"><span class="section-number-3">8.5</span> Disaster Recovery Plan</h3>
+<div class="outline-text-3" id="text-8-5">
 
 
 </div>
 
-<div id="outline-container-7-5-1" class="outline-4">
-<h4 id="sec-7-5-1"><span class="section-number-4">7.5.1</span> test a snapshot</h4>
-<div class="outline-text-4" id="text-7-5-1">
+<div id="outline-container-8-5-1" class="outline-4">
+<h4 id="sec-8-5-1"><span class="section-number-4">8.5.1</span> test a snapshot</h4>
+<div class="outline-text-4" id="text-8-5-1">
 
 <p>should test snapshots 3-monthly?
 </p>
 <ul>
-<li id="sec-7-5-1-1">cleaning up links on github<br/>
+<li id="sec-8-5-1-1">cleaning up links on github<br/>
 in case of a completely failed VM, launching a fresh VM from snapshot will give a different IP-address and so Github and other links, and user's bookmarks will need to be revised.
 </li>
 </ul>
@@ -3618,18 +3651,18 @@ in case of a completely failed VM, launching a fresh VM from snapshot will give 
 
 </div>
 
-<div id="outline-container-7-5-2" class="outline-4">
-<h4 id="sec-7-5-2"><span class="section-number-4">7.5.2</span> <span class="todo TODO">TODO</span> 60GB disk is not being saved in snapshots</h4>
-<div class="outline-text-4" id="text-7-5-2">
+<div id="outline-container-8-5-2" class="outline-4">
+<h4 id="sec-8-5-2"><span class="section-number-4">8.5.2</span> <span class="todo TODO">TODO</span> 60GB disk is not being saved in snapshots</h4>
+<div class="outline-text-4" id="text-8-5-2">
 
 <p>Will also need to investigate the restore procedure (and security) for the secondary disc.
 </p></div>
 
 </div>
 
-<div id="outline-container-7-5-3" class="outline-4">
-<h4 id="sec-7-5-3"><span class="section-number-4">7.5.3</span> <span class="todo TODO">TODO</span> Restore ORAPHI</h4>
-<div class="outline-text-4" id="text-7-5-3">
+<div id="outline-container-8-5-3" class="outline-4">
+<h4 id="sec-8-5-3"><span class="section-number-4">8.5.3</span> <span class="todo TODO">TODO</span> Restore ORAPHI</h4>
+<div class="outline-text-4" id="text-8-5-3">
 
 <p>This should have restored ok with data intact from the last snapshot.
 If not first set up oracle and the tables.
@@ -3642,16 +3675,16 @@ In the event of an upgrade to a tested replacement you may find that the content
 
 </div>
 
-<div id="outline-container-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Examples</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Examples</h2>
+<div class="outline-text-2" id="text-9">
 
 
 </div>
 
-<div id="outline-container-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Pumilio for Bioacoustics</h3>
-<div class="outline-text-3" id="text-8-1">
+<div id="outline-container-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Pumilio for Bioacoustics</h3>
+<div class="outline-text-3" id="text-9-1">
 
 <p><a href="file:///home/ivan_hanigan/projects/pumilio-bushfm/index.html">~/projects/pumilio-bushfm/index.org</a>
 </p>

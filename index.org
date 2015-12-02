@@ -5,6 +5,11 @@
 #+LaTeX_CLASS_OPTIONS: [a4paper]
 #+LaTeX_HEADER: \usepackage{verbatim}
 #+LaTeX_HEADER: \graphicspath{{./reports/}}
+
+* Copyright
+Copyright is the GNU General Public License version 2 WITHOUT ANY WARRANTY,
+Ivan C Hanigan <ivan.hanigan@gmail.com> 
+
 * Abstract
 #+BEGIN_abstract
 Ivan Hanigan 1, Steven McEachern 2, David Fisher 3.
@@ -14,7 +19,7 @@ Ivan Hanigan 1, Steven McEachern 2, David Fisher 3.
 - 2 Australian Data Archive, Australian National University
 - 3 Information Technology Services, Australian National University
 
-Last Updated 5th November 2015
+Last Updated 2nd December 2015
 
 Increasing concerns over privacy in Australia and globally, combined
 with the risk from hacking and the accidental release of large-scale

@@ -32,6 +32,11 @@ Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Clima
 - [[http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/presentation-hanigan-final.pdf][Speedtalk]]
 - [[http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/report1_high_level/manuscript.pdf][Essay]]
 
+Copyright is the GNU General Public License version 2 WITHOUT ANY WARRANTY,
+Ivan C Hanigan <ivan.hanigan@gmail.com> 
+
+2015-12-02
+
 * COMMENT Aim
 
 - Restrictions data have increased recently. 
