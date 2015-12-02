@@ -28,14 +28,15 @@ This was presented as:
 
 Hanigan IC, Fisher D and McEachern S. Open Software for Restricted Data: a Climate/Suicide Health Impact Assessment Example. Speedtalk and Poster. National Climate Change Adaptation Research Facility  Conference 'Climate Adaptation knowledge and partnership'. June 2013, Sydney.
 
-- [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/poster.pdf][Poster]]
-- [[http://opensoftware-restricteddata.github.io/presentations-nccarf-2013/presentation-hanigan-final.pdf][Speedtalk]]
+- [[http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/poster.pdf][Poster]]
+- [[http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/presentation-hanigan-final.pdf][Speedtalk]]
+- [[http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/report1_high_level/manuscript.pdf][Essay]]
 
-* Aim
+* COMMENT Aim
 
 - Restrictions data have increased recently. 
 - Access to data and analytic software addresses the:\\
-* TODO Addresses the Replicability Crisis, (Peng 2011, Science, 334).
+* COMMENT TODO Addresses the Replicability Crisis, (Peng 2011, Science, 334).
 - We built a safe Sever/Client IT environment for this. 
 - We show a Case Study of Suicide and Climate Impacts research.
 
