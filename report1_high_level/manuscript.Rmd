@@ -143,17 +143,29 @@ datasets may require authorisation to access `r citep(bib[["Peng2011"]])`.
 
 Restrictions around access to data have increased recently in
 Australia, especially to the national mortality database after the
-discovery of an incident in which researchers at the University of
-Queensland School of Population Health, dissatisfied with the time
-it was taking the data custodians to provide data, had hacked into
-information about deaths in Australia `r citep(bib[["OKeefe2007"]])`.  
-The subsequent investigations lead to
-a wide ranging modification to the procedures for approval and
-provision of these data that make the access much more restricted.
+discovery of an incident in which Australian population health
+researcher Dr Stephen Begg, dissatisfied with the time it was taking
+the data custodians to provide data, had hacked into information about
+deaths in Australia `r citep(bib[["OKeefe2007"]])`.  The subsequent
+investigations led to a wide ranging modification to the procedures
+for approval and provision of these data that make the access much
+more restricted.
   
-The Replicability Crisis `r citep(bib[["Peng2011"]])` has emerged, reducing public confidence in statements by scientists. The true extent of the problem may turn out to be overstated `r citep(bib[["Jager2014"]])` however the concern should be addressed to avoid the problems a lack of confidence in scientific publications would entail. Appropriate access to data and analytic software addresses this issue.   We investigated available workflow tools for data management and analysis and implemented a range of these products on our server.  This server has enhanced our capacity for experimentation, reviews, revisions and extensions of work in this field.  We present the results of this project and report that it has streamlined access to population health and environmental data for analysis.  
+The Reproducibility Crisis `r citep(bib[["Peng2011"]])` has emerged,
+reducing public confidence in statements by scientists. The true
+extent of the problem may turn out to be overstated
+`r citep(bib[["Jager2014"]])` however the concern should be addressed
+to avoid the problems a lack of confidence in scientific publications
+would entail. Appropriate access to data and analytic software
+addresses this issue.  We investigated available workflow tools for
+data management and analysis and implemented a range of these products
+on our server.  This server has enhanced our capacity for
+experimentation, reviews, revisions and extensions of work in this
+field.  We present the results of this project and report that it has
+streamlined access to population health and environmental data for
+analysis.
 
-## Motivating case study: Climate/suicide
+## Motivating case study: Climate and suicide
 
 Suicide has been linked to climate in a variety of studies.
 The climate change impact on mental health is a gap in knowledge.
@@ -162,7 +174,7 @@ The historical exposure-response function can be used to estimate future climate
 
 There has been substantial public interest within Australia in recent decades of the putative relationship between drought and rural mental health, including suicide. The topic has frequently been raised by the media, by rural politicians and by mental health support groups `r citep(bib[["AustralianB2006"]])`. There have also been media reports in India indicating substantial concerns about drought and rural suicide in that country, including `r citep(bib[["SarathiBiswas2012"]])` from May 2012.
 
-The number of studies that have examined the relationship between suicide and drought is limited. However, many papers explore links between suicide and climate variables other than drought (such as temperature) and there are two major reviews papers available of the literature on climatic influences on suicide `r citep(c(bib[["Dixon2009"]],bib[["Deisenhammer2003b"]]))`. However, very few studies have investigated the "dryer than average conditions" that is drought specifically.
+The number of studies that have examined the relationship between suicide and drought is limited. However, many papers explore links between suicide and climate variables other than drought (such as temperature) and there are two major reviews papers available of the literature on climatic influences on suicide `r citep(c(bib[["Dixon2009"]],bib[["Deisenhammer2003b"]]))`. However, very few studies have investigated drought specifically.
 
 There are several mechanisms through which unusually low rainfall, especially if exacerbated by increased soil dryness due to higher temperatures may increase the suicide rate. First, droughts increase the financial stress on farmers and farming communities (even if partially compensated by drought relief welfare payments). Such difficulty may occur in conjunction with other economic stresses, such as rising interest rates, falling commodity prices, or an unfavourable foreign exchange rate.
 
