@@ -851,6 +851,7 @@
   dir()
   render("manuscript.Rmd", "pdf_document")
   #browseURL("manuscript.pdf")
+  
 #+end_src
 
 #+RESULTS: go
@@ -860,7 +861,7 @@
 #+name:manuscript.Rmd
 #+begin_src R :session *R* :tangle manuscript.Rmd :exports none :eval no :padline no
   ---
-  title: 'Open Software - Restricted Data:  A Suicide/Climate Case Study.'
+  title: 'Open Software - Restricted Data: A case study.'
   author:  
   - name: Ivan C. Hanigan
     affilnum: 1
@@ -964,6 +965,8 @@
   
   <!-- Abstract is being wrapped in latex here so that all analysis can be run in the chunk above and the results reproducibly referenced in the abstract. -->
   
+  Draft: \today
+  
   \singlespace
   
   \vspace{2mm}\hrule
@@ -979,8 +982,8 @@
   assumptions transparent and available for scientific debate even
   though the datasets may require authorisation to access.
       
-  \paragraph*{Results:} We built a secure Server/Client Computational
-  Environment for using open software with restricted data.  We
+  \paragraph*{Results:} We built a secure server/client computational
+  environment for using open software with restricted data.  We
   demonstrate the use of this system using drought and suicide as a case study.  
   We describe the potential use of this system in modelling climate change scenarios.
   
@@ -997,27 +1000,27 @@
   
   Some datasets such as sensitive personal information about suicide or
   climate change scenarios with protected intellectual property need to
-  be accessed in a restricted way.  In the context of Reproducible
-  Research (RR) methods, models and assumptions need to be made
+  be accessed in a restricted way.  In the context of reproducible
+  research methods, models and assumptions need to be made
   transparent and available for scientific debate even though the
   datasets may require authorisation to access `r citep(bib[["Peng2011"]])`.
   
   Restrictions around access to data have increased recently in
   Australia, especially to the national mortality database after the
   discovery of an incident in which Australian population health
-  researcher Dr Stephen Begg, dissatisfied with the time it was taking
-  the data custodians to provide data, had hacked into information about
+  researcher Dr Stephen Begg was reported to have 
+  hacked into information about
   deaths in Australia `r citep(bib[["OKeefe2007"]])`.  The subsequent
   investigations led to a wide ranging modification to the procedures
-  for approval and provision of these data that make the access much
-  more restricted.
+  for approval and provision of these data that made the access much
+  more restricted. No new research applications were approved to access these data between 2009 and 2013.
     
-  The Reproducibility Crisis `r citep(bib[["Peng2011"]])` has emerged,
+  At the same time the reproducibility crisis `r citep(bib[["Peng2011"]])` has emerged,
   reducing public confidence in statements by scientists. The true
   extent of the problem may turn out to be overstated
   `r citep(bib[["Jager2014"]])` however the concern should be addressed
-  to avoid the problems a lack of confidence in scientific publications
-  would entail. Appropriate access to data and analytic software
+  to avoid the problems that a lack of confidence in scientific publications
+  would entail, especially in respect to evidence-based policy and expenditure of public money. Appropriate access to data and analytic software
   addresses this issue.  We investigated available workflow tools for
   data management and analysis and implemented a range of these products
   on our server.  This server has enhanced our capacity for
@@ -1026,70 +1029,63 @@
   streamlined access to population health and environmental data for
   analysis.
   
-  ## Motivating case study: Climate and suicide
+  ## Motivating case study: Drought and suicide
   
-  Suicide has been linked to climate in a variety of studies.
-  The climate change impact on mental health is a gap in knowledge.
-  The motivating case for this project was to analyse the relationship between Drought and Suicide. 
-  The historical exposure-response function can be used to estimate future climate change impacts.
+  The impact of drought on mental health is plausible, however remains a gap in epidemiological knowledge `r citep(bib[["Stanke2013"]])`.  There is concern too that this health risk will rise under future climate change `r citep(bib[["Berry2008"]])`.   As mentioned the number of studies that have examined the relationship
+  between suicide and drought is limited to only a handful `r citep(c(bib[["Nicholls2006c"]], bib[["Page2002c"]], bib[["Guiney2012a"]], bib[["Hanigan2012e"]]))`.  The motivating case for this project was to use the historical exposure-response functions to estimate future climate change impacts.
   
-  There has been substantial public interest within Australia in recent decades of the putative relationship between drought and rural mental health, including suicide. The topic has frequently been raised by the media, by rural politicians and by mental health support groups `r citep(bib[["AustralianB2006"]])`. There have also been media reports in India indicating substantial concerns about drought and rural suicide in that country, including `r citep(bib[["SarathiBiswas2012"]])` from May 2012.
+  There has been substantial public interest within Australia in recent decades of the putative relationship between drought and rural mental health, including suicide. The topic has frequently been raised by the media, by rural politicians and by mental health support groups `r citep(bib[["AustralianB2006"]])`. There have also been media reports in India indicating substantial concerns about drought and rural suicide in that country `r citep(bib[["SarathiBiswas2012"]])`.
   
   The number of studies that have examined the relationship between suicide and drought is limited. However, many papers explore links between suicide and climate variables other than drought (such as temperature) and there are two major reviews papers available of the literature on climatic influences on suicide `r citep(c(bib[["Dixon2009"]],bib[["Deisenhammer2003b"]]))`. However, very few studies have investigated drought specifically.
   
-  There are several mechanisms through which unusually low rainfall, especially if exacerbated by increased soil dryness due to higher temperatures may increase the suicide rate. First, droughts increase the financial stress on farmers and farming communities (even if partially compensated by drought relief welfare payments). Such difficulty may occur in conjunction with other economic stresses, such as rising interest rates, falling commodity prices, or an unfavourable foreign exchange rate.
-  
-  As mentioned the number of studies that have examined the relationship
-  between suicide and drought is limited to only a handful `r citep(c(bib[["Nicholls2006c"]], bib[["Page2002c"]], bib[["Guiney2012a"]], bib[["Hanigan2012e"]]))` A  systematic
-  literature review of the Health Effects of Drought found little other
-  evidence for the putative causal effect of drought on suicide `r citep(bib[["Stanke2013"]])`.
+  There are several mechanisms through which unusually low rainfall, especially if exacerbated by increased soil dryness due to higher temperatures may increase the suicide rate. First, droughts increase the financial stress on farmers and farming communities (even if partially compensated by drought relief welfare payments). Such difficulty may occur in conjunction with other economic stresses, such as rising interest rates, falling commodity prices, or an unfavourable foreign exchange rate.  `r citet(bib[["Vins2015"]])` provide a systematic  literature review of the mental health effects of drought and explore the putative causal mechanisms.
   
   
   # Methodology
   
   The approach we took to meet the challenge of analysing restricted suicide and climate change scenario data in a safe environment was to
-  build a new hardware and software stack to using Open-Source software.  We based our
+  build a new hardware and software stack using open-source software.  We based our
   planning on the realisation that there is a growing need of these
-  technologies in the context of Reproducible Research (RR).  This
+  technologies in the context of reproducible research.  This
   requires that methods, models and assumptions need to be made
   transparent and available for scientific debate even though the
   datasets may require authorisation to access.  This is true not just
-  in Health data, but also including the context 
-  of data with restrictive Intellectual Property and licence requirements.
+  in health data, but also including the context 
+  of data  with restrictive intellectual property and licence requirements (such as climate change scenario models).
   
-  ### Open software for restricted data 
+   
   
   To develop an over-all view of
   the issue and analyse the dimensions of the problem we spent the
-  initial phase of the project conceptualising an overall "Rich Picture"
+  initial phase of the project conceptualising a rich picture
   of the issue, and focused on identifying risks that the project might
   face. Several papers that describe similar systems were reviewed `r citep(c(bib[["Evans2012"]], bib[["Fleming2014"]]))` and 
   several recommendations from these papers were adopted in our system. 
   
   Our design responds directly to the primary threat of unintentional release of
-  sensitive data so we decided to build a safe Server/Client environment
+  sensitive data so we decided to build a secure server/client environment
   for analysts to develop their software in an open way, while ensuring
   the safety of the datasets.  Other risks we identified were in
   relation to the provision of the server hardware and we were able to
-  take advantage of the Nectar Research Cloud for virtualised services.
+  take advantage of the Australian 'Nectar Research Cloud' (\url{http://nectar.org.au}) for virtual machines to build the servers on.
   
   Then we defined the scope and quality of the project outcomes that we
   were aiming to deliver.  The fact that restrictions around access to
   data have increased recently, coupled with arguments that appropriate
-  access to analytic software is needed to address the Replicability
-  Crisis meant that the scope of this project was very broad.  we also
-  explored the ambitions of our analysts to support their publishable
-  outputs with open software.  Given that examples of un-replicable work
-  has spread even to the results published in top journals such as
-  Nature and Science, the scope we decided to set for this project was
+  access to analytic software is needed to address the reproducibility
+  crisis meant that the scope of this project was very broad.  We also
+  explored the ambitions of our stakeholders to support their publishable
+  outputs with open software.  Given that examples of un-reproducible work
+  has spread even to the results published in top journals `r citep(bib[["Peng2015"]])`,
+  the scope we decided to set for this project was
   for very high levels of open-ness for the evidence being presented for
-  peer-review along with very high levels of restriction on access to
+  peer-review, along with very high levels of restriction on access to
   the data. Luckily however we were able to rule out the need for the
-  extreme level of restriction such as getting Defence Science and
+  extreme level of restriction such as getting Australian Defence Science and
   Technology Organisation (DSTO) accreditation for the security of these
-  servers against malicious hacking attacks.
+  servers against malicious hacking attacks.  Our servers just needed to be tested by the standard 'vulnerability exploits' scanner used by the Australian National University IT Department. 
   
-  We also looked at the workflow system Kepler to assess it's utility
+  We also looked at the workflow system Kepler to assess it\'s utility
   for providing access to the data, but found that there were a lot of
   limitations at the time `r citep(bib[["Curcin2008"]])` and decided
   that the R environment for statistical computing and graphics would be
@@ -1098,21 +1094,16 @@
   During the next phase of the project we dealt with issues of the costs
   associated with developing the software and hosting the hardware at
   different locations, as well as the time needed to test and get user
-  acceptance on the services.  Throughout the project we have had to deal
-  with lack of resources, especially in terms of Software
-  Engineering skills for the Client-side user interface and Linux
-  Systems Administration support for the Server-side backend.  
+  acceptance on the services.
   
-  The results of the IT Infrastructure part of this project are described next.
+  ## System design
   
-  ## System requirements
-  
-  In this case study we utilise Virtual Machines (VMs) in the Cloud. Our
+  In this case study we utilise Virtual Machines (VMs) in the cloud. Our
   system requires two VMs so that the storage and processing of data can
   be compartmentalised, with various benefits.  A high level overview of
   the system is shown in Figure \ref{fig:sys}.  Full details including
   Linux commands and configuration specifications are available online at
-  [http://opensoftware-restricteddata.github.com](http://opensoftware-restricteddata.github.io).
+  [http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/](http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/).
   
   \begin{figure}[!h]
   \centering
@@ -1122,53 +1113,54 @@
   \end{figure}
   
   
-  ## Software selection process
+  ## Software selections
   We researched a variety of systems and found the following set-up worked best for us.
   
-  ### Linux cluster
+  Linux cluster:
   
   - National Research Cloud [www.nectar.org.au/research-cloud](www.nectar.org.au/research-cloud)
   - Centos 6.4 [www.centos.org](www.centos.org)
   
-  ### PostGIS database
+  Geographical Information Systems (GIS) database server:
   
   - PostgreSQL 9.2 [www.postgresql.org](www.postgresql.org)
   - PostGIS 2.0 [http://postgis.refractions.net](http://postgis.refractions.net)
   
-  ### Analysis
+  Statistical analysis server:
   
   -  R language for statistical computing [www.r-project.org](www.r-project.org)
   -  Rstudio server [www.rstudio.com](www.rstudio.com)
   -  OpenGeo Suite [http://opengeo.org](http://opengeo.org)
   
-  ### Information management
+  Information management:
   
   - Projects,UsersDB Oracle XE APEX [www.oracle.com](www.oracle.com)
   - Data Catalogue [http://assda.anu.edu.au/ddiindex.html](http://assda.anu.edu.au/ddiindex.html)
   
-  ### The client side
+  The client side:
   
   -  Any standard web-browser
   -  The Kepler Project [www.kepler-project.org](www.kepler-project.org)
   -  pgAdmin [www.pgadmin.org](www.pgadmin.org)
   -  Git Version Control and GitHub [www.github.com](www.github.com)
+  -  Emacs code editor with the starter-kit by Kieran Healy and orgmode [http://kieranhealy.org/resources/emacs-starter-kit/](http://kieranhealy.org/resources/emacs-starter-kit/)
   
-  # Results 
+  # Case study 
   
-  ## Case study 1: Historical exposure-response functions
+  ## Step 1: Historical exposure-response functions
   
   For this case study we replicated the work we had previously conducted
-  on our personal desktop computers within the University Research
-  School.  A key result is shown in Figure \ref{fig:Figure1.png}.  That
+  on our personal desktop computers within the 
+  university.  A key result is shown in Figure \ref{fig:Figure1.png}.  That
   work was published already (Hanigan \emph{et al.} 2012), however
   the improved IT infrastructure offered by this project allows the
   analysis to be re-run from a secure web-browser interface.  Such
   improved access allowed a much broader discussion of the data,
   techniques and results because the researcher was able to discuss the
-  details of the modelling with other scientists at conferences and
+  details of the modelling with other scientists at meetings, conferences and
   workshops, while actually repeating the computations in real time.
   This is a vast improvement over the previous option of leaving the
-  data analysis on the secure desktop computers at the University, and
+  data analysis on the secure desktop computers at the university, and
   merely describing the computations to colleagues at the workshops.
   
   \begin{figure}[!h]
@@ -1178,9 +1170,9 @@
   \label{fig:Figure1.png}
   \end{figure}
   
-  ## Case study 2: Future drought scenarios and attributable fraction of suicides
+  ## Step 2: Future drought scenarios and attributable fraction of suicides
   
-  Following the methods of `r citet(bib[["Climate2008"]])` we used the climate change scenarios provided for the Garnaut Review to project estimates of future suicides under various drought conditions.  The statistical method for this calculation is:
+  Following the methods of `r citet(bib[["Climate2008"]])` we used the climate change scenarios provided for the Garnaut Climate Change Review `r citep(bib[["CSIRO2013"]])` to project estimates of future suicides under various drought conditions.  The statistical method for this calculation is:
   
   $$Y_{ijk}=\sum_{lm}(e^{(\beta_{ijk}} \times { X_{lm})} - 1) \times {BaselineRate_{jkl}} \times { Population_{jklm}}$$
   
@@ -1188,7 +1180,7 @@
   
   $\beta_{ijk}$ = the ExposureVariable coefficient for zone$_i$, age$_j$ and sex$_{k}$ 
   
-  ${X_{lm}}$ = Projected Future ExposureVariables  
+  ${X_{lm}}$ = Projected Future Exposure Variables  
   
   \emph{BaselineRate$_{jkl}$} = \emph{avgDeathsPerTime}/\emph{avgPopPerTime} in age$_j$, sex$_k$ and zone$_l$ 
   
@@ -1214,27 +1206,28 @@
   }
   ```
   
-  ## The Garnaut review climate change scenarios
+  ## Results
   
-  We can demonstrate the use of this system by using the climate change scenarios held on the database to project out future droughts, and use the confidential suicide data that is safely stored there to estimate baseline risks and future burden of suicide attributable to the droughts.  Because the server system is easy to access and modify, and these results are reproducible, alternate scenarios and assumptions can be tested.
+  In table \ref{tab:table1} below the two rainfall scenarios used by `r citet(bib[["Berry2008"]])` are used to demonstrate this drought impact assessment report.  For full details of the data from the Garnaut Climate Change Review please refer to the original papers. For the purpose of this discussion only a brief summary is required to appreciate the relevance to this case study. The result shown below merely shows that the estimated impact of climate change can vary a lot given the input datasets and the assumptions and methods applied during analysis.  The codes used to fit models, project scenarios and estimate burden of deaths are all available on the system, and can be assessed by request at the project website: \url{http://swish-climate-impact-assessment.github.com/}
   
-  In the table below, the two rainfall scenarios used by Berry et al 2008 and Bambrick et al 2008 are used to demonstrate this drought impact assessment.  This shows that the estimated impact of climate change can vary a lot given the input datasets.  The codes used to fit models, project scenarios and estimate burden of deaths is all available on the system and can be assessed and modified.
+  \bigskip
   
   ```{r, eval = T, echo = F, results = 'asis'}
   library(xtable)
-  tab <- read.csv(textConnection("Scenario, Deaths per annum, LCI, UCI
+  tab <- read.csv(textConnection("Scenario, Deaths per annum, Lower 95th CI, Upper 95th percent CI
   Historical (1970-2008), 4.01, 2.14, 6.05
   A1FIR1 (Dry), 8.91, 4.56, 14.00
   A1FIR2 (Wet), 2.93, 1.5, 4.47
   "), strip.white = T)
   #tab
-  print(xtable(tab), comment = F, include.rownames = F)
+  names(tab) <- gsub("\\.", " ", names(tab))
+  print(xtable(tab, caption = 'Estimated number of rural male suicides attributable to drought between 2000 and 2100', label = 'tab:table1'), comment = F, include.rownames = F)
   
   ```
-  
+   
   \clearpage
   
-  Below are pictorial represenations of the climate change scenarios influence on rainfall across the country.
+  Below are pictorial represenations of the climate change scenarios estimated annual total rainfall for each Statistical Division (SD) census region across the country.  SDs are used because this is the geographical unit at which the suicide rates were analysed.
   
   \begin{figure}[!h]
   \centering
@@ -1254,36 +1247,46 @@
   
   
   # Discussion 
-  ## Principal findings 
+  ## Principal findings
+
+  We demonstrate the use of this system by using
+  the climate change scenarios held on the database to project future
+  droughts, and use the confidential suicide data that is safely stored
+  there to estimate baseline risks and future burden of suicide
+  attributable to the droughts.  Because the server system is easy to
+  access through a web browser these results are easily reproducible and
+  alternate scenarios and assumptions can be tested.  Because the webserver is very secure, this work can be done with confidence that the risk of unauthorised data release is minimised.
   
   The results of our project are applicable more generally than just
-  Reproducible Research (RR). For instance in relation to issues of
+  reproducible research. For instance in relation to issues of
   governance and management at the multidisciplinary institutions and
   multi-institutional projects it is vitally important that data sharing
-  is enabled, while some data are still being restricted (based either
-  on authorisation requirements or merely for identifying the profile of
-  users downloading data for re-use).  It is important that data access
+  is enabled, while some data are still restricted because access requires
+  approval and authorisation, or because data providers wish to be informed of re-use and identifying the profile of
+  users of the data.  It is important that data access
   can be made restrictive WITHOUT impeding the progress of the local
   science agenda (collaborations, workshops, papers etc) and keeping the
   relevant data custodian parties informed about what is happening with
-  the release of their datasets.  The openness of the analytical
+  the release of their datasets.  The open-ness of the analytical
   software also has a positive effect on the value of the data
   infrastructure (through education and outreach activities) without
   risking any unethical or negligent use of these datasets.
   
-  #  Discussion and conclusion 
+  #  Conclusions 
   
-  - Drought is related to increased suicide risk in Australia
-  - Future Drought associated deaths can be calculated
-  - These estimates will be very uncertain, contentious and difficult to justify
-  - Data management and analysis technology such as that presented is needed to enable rigorous and transparent exploration 
+  In summary we found that:
   
-  This system:
+  - Climate data can be attached to suicide and census data in a secure computing environment.
+  - Future drought associated deaths can be estimated.
+  - These estimates are very uncertain, contentious and difficult to justify.
+  - Data management and analysis technology such as that presented is needed to enable rigorous and transparent exploration that challenges or verifies published results.
   
-  - Enables data analysis in a safe environment
-  - Allows comparison of multiple climate scenarios and assumptions
-  - Demonstrated with a Climate/Health Impact Assessment 
-  - This is Reproducible
+  This system described:
+  
+  - Enables data analysis in a safe environment.
+  - Allows comparison of multiple climate scenarios and assumptions.
+  - Demonstrated with a climate/health impact assessment.
+  - Addresses the reproducibility crisis.
   
   
   
