@@ -111,7 +111,8 @@ Draft: \today
 \paragraph*{Background:} This essay was written to accompany the material presented as a
 speedtalk and poster at the National Climate Change Adaptation
 Research Facility Conference 'Climate Adaptation knowledge and
-partnership', June 2013, Sydney.  The poster and slideshow are both available to download from this website: [http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/](http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/)
+partnership', June 2013, Sydney.  The poster and slideshow are both available to download from this website: [http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/](http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/). The latest version of this working paper is available to download from the website: [http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/report1_high_level/manuscript.pdf](http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/report1_high_level/manuscript.pdf).
+
 
 \paragraph*{Methods:} The paper reports on a project to build tools and procedures for enhancing open and transparent analysis of restricted datasets.
 Some datasets such as suicide or climate
