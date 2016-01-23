@@ -102,19 +102,20 @@ knit_hooks$set(output = function(x, options) {
 ```
 
 <!-- Abstract is being wrapped in latex here so that all analysis can be run in the chunk above and the results reproducibly referenced in the abstract. -->
-
-Draft: \today
-
+  
 \singlespace
 
+Unpublished working paper\\
+Draft: \today
+
 \vspace{2mm}\hrule
-\paragraph*{Background:} This essay was written to accompany the material presented as a
+\paragraph*{Background:} This unpublished working paper was written to accompany the material presented as a
 speedtalk and poster at the National Climate Change Adaptation
 Research Facility Conference 'Climate Adaptation knowledge and
 partnership', June 2013, Sydney.  The poster and slideshow are both available to download from this website: [http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/](http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/presentations-nccarf-2013/). The latest version of this working paper is available to download from the website: [http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/report1_high_level/manuscript.pdf](http://swish-climate-impact-assessment.github.io/opensoftware-restricteddata/report1_high_level/manuscript.pdf).
 
 
-\paragraph*{Methods:} The paper reports on a project to build tools and procedures for enhancing open and transparent analysis of restricted datasets.
+\paragraph*{Methods:} We report on a project to build tools and procedures for enhancing open and transparent analysis of restricted datasets.
 Some datasets such as suicide or climate
 change scenarios need to be accessed in a restricted way.  On the
 other hand scientists need to make their methods, models and
@@ -325,26 +326,6 @@ ${X_{lm}}$ = Projected Future Exposure Variables
 
 \emph{Population$_{jklm}$} = projected populations by age$_j$, sex$_k$, zone$_l$ and time$_m$
 
-
-```{r, eval = F, echo = F}
-dir()
-dir("~/data")
-indir <- "~/data/GARNAUT mental health archive/1 Data/Rain"
-dir(indir, pattern = "jpg")
-filelist  <- c("A1BDRY_RainSD07.jpg",             "A1BWET_RainSD07.jpg"            )
-for(fi in filelist){
-  #file.copy(file.path(indir, fi), fi)
-  txt <- sprintf("\\begin{figure}[!h]
-\\centering
-\\includegraphics[width=\\textwidth]{%s}
-\\caption{%s}
-\\label{fig:%s}
-\\end{figure}
-", fi, fi, fi)
-  cat(txt)
-}
-```
-
 ## Results
 
 In table \ref{tab:table1} below the two rainfall scenarios used by `r citet(bib[["Berry2008"]])` are used to demonstrate this drought impact assessment report.  For full details of the data from the Garnaut Climate Change Review please refer to the original papers. For the purpose of this discussion only a brief summary is required to appreciate the relevance to this case study. The result shown below merely shows that the estimated impact of climate change can vary a lot given the input datasets and the assumptions and methods applied during analysis.  The codes used to fit models, project scenarios and estimate burden of deaths are all available on the system, and can be assessed by request at the project website: \url{http://swish-climate-impact-assessment.github.com/}
@@ -365,25 +346,35 @@ print(xtable(tab, caption = 'Estimated number of rural male suicides attributabl
 ```
  
 \clearpage
+Below are pictorial represenations of the climate change scenarios estimated seasonal rainfall for each Statistical Division (SD) census region across the country.  SDs are used because this is the geographical unit at which the suicide rates were analysed.
 
-Below are pictorial represenations of the climate change scenarios estimated annual total rainfall for each Statistical Division (SD) census region across the country.  SDs are used because this is the geographical unit at which the suicide rates were analysed.
+```{r, eval = F, echo = F}
+dir()
+dir("~/data")
+indir <- "~/data/GARNAUT mental health archive/1 Data/Rain/seasonal/"
+dir(indir, pattern = "jpg")
+fi  <- "SeasonalA1FIR1andR2_final.jpg"
+cap <- "Seasonal Rainfall under alternate future predicted scenarios (A1FI) with wet or dry assumptions"
+#file.copy(file.path(indir, fi), fi)
+txt <- sprintf("\\begin{figure}[!h]
+\\centering
+\\includegraphics[width=\\textwidth]{%s}
+\\caption{%s}
+\\label{fig:%s}
+\\end{figure}
+", fi, cap, fi)
+  cat(txt)
+
+```
+
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=.5\textwidth]{A1BDRY_RainSD07.jpg}
-\caption{A1BDRY RainSD07}
-\label{fig:A1BDRYRainSD07}
+\includegraphics[width=.78\textwidth]{SeasonalA1FIR1andR2_final.jpg}
+\caption{Seasonal rainfall under alternate future predicted scenarios (A1FI) with wet or dry assumptions}
+\label{fig:SeasonalA1FIR1andR2_final.jpg}
 \end{figure}
-
-
-\begin{figure}[!h]
-\centering
-\includegraphics[width=.5\textwidth]{A1BWET_RainSD07.jpg}
-\caption{A1BWET RainSD07}
-\label{fig:A1BWET-RainSD07}
-\end{figure}
-
-
+\clearpage
 
 # Discussion 
 ## Principal findings
@@ -403,7 +394,7 @@ multi-institutional projects it is vitally important that data sharing
 is enabled, while some data are still restricted because access requires
 approval and authorisation, or because data providers wish to be informed of re-use and identifying the profile of
 users of the data.  It is important that data access
-can be made restrictive WITHOUT impeding the progress of the local
+can be made restrictive without impeding the progress of the local
 science agenda (collaborations, workshops, papers etc) and keeping the
 relevant data custodian parties informed about what is happening with
 the release of their datasets.  The open-ness of the analytical
@@ -413,19 +404,13 @@ risking any unethical or negligent use of these datasets.
 
 #  Conclusions 
 
-In summary we found that:
+In summary we found that the historical weather and climate change data can be attached to suicide and census data in a secure computing environment. The future drought associated deaths can then be estimated using statistical tools available in an online virtual machine.  This facilitates collaboration because the data can be accessed remotely from collaborator\'s offices (or even workshops and conference venues) while adhering to requirements for secure data storage and access constraints.
 
-- Climate data can be attached to suicide and census data in a secure computing environment.
-- Future drought associated deaths can be estimated.
-- These estimates are very uncertain, contentious and difficult to justify.
-- Data management and analysis technology such as that presented is needed to enable rigorous and transparent exploration that challenges or verifies published results.
+In the case study presented it should be noted that these estimates are very uncertain, contentious and difficult to justify. However, this reinforces the argument that data management and analysis technology such as those presented are needed to enable rigorous and transparent exploration of methods and assumptions. In this way a community of like-minded scientists can challenge or verify published results.
 
-This system described:
-
-- Enables data analysis in a safe environment.
-- Allows comparison of multiple climate scenarios and assumptions.
-- Demonstrated with a climate/health impact assessment.
-- Addresses the reproducibility crisis.
+In conclusion the system described enables data analysis in a safe environment;
+allows comparison of multiple climate scenarios and assumptions;
+is demonstrated with a climate/health impact assessment and addresses the 'reproducibility crisis'.
 
 
 
