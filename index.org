@@ -926,7 +926,7 @@ Ph: +61 2 6125 7767.
 Fax: +61 2 6125 0740.
 Mob: 0428 265 976.
 CRICOS provider #00120C.
-*** connect using ssh
+*** TODO connect using ssh (mention this is required to set pwd on ec2-user so you can use the web dash - use sudo su; passwd ec2-user)
 If using Windows make sure you have git or WinSCP installed.  Opening a bash
 shell from these will enable you to connect to your server using ssh. Then the contents of the following orgmode chunks can be evaluated on the remote server.
 If your on linux then orgmode can execute these chunks using C-c C-c.
@@ -2638,7 +2638,8 @@ The Brains is a Statistical Analysis engine (running the R environment) integrat
 #+name:R
 #+begin_src sh :session *shell* :exports reports :results silent :eval no
 #rpm -Uvh http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-7.noarch.rpm
-rpm -Uvh http://mirror.overthewire.com.au/pub/epel/6/i386/epel-release-6-7.noarch.rpm
+# rpm -Uvh http://mirror.overthewire.com.au/pub/epel/6/i386/epel-release-6-7.noarch.rpm
+rpm -Uvh http://www.nic.funet.fi/pub/mirrors/fedora.redhat.com/pub/epel/6Server/x86_64/epel-release-6-8.noarch.rpm
 yum install R R-devel
 #+end_src
 #rpm -Uvh #http://mirror.as24220.net/pub/epel/6/i386/epel-release-6-8.noarch.rpm
@@ -2684,7 +2685,7 @@ R_LIBS=~/Rlibs
 update.packages() 
 # in R console, and the libraries will be updated.
 #+end_src
-*** Rstudio
+*** TODO Rstudio (always best to get current version from the website)
 check out the RSudio versions at: http://rstudio.org/download/server
 #+begin_src sh :session *shell* :exports reports :eval no :results silent
 # on RHEL6 ran into dependencies: libcrypto.so.6()(64bit) is needed by rstudio-server-0.96.331-1.x86_64
@@ -2716,6 +2717,11 @@ vi /etc/sysconfig/iptables
 service iptables restart
 #+end_src
 Check that you can log on via port 8787.  Note that this is an unsecure R server and the following steps are required to make this a secure server.  We will need to block port 8787 later on.
+to run a different port try
+vi /etc/rstudio/rserver.conf
+# Server Configuration File
+www-port=8081
+
 *** SSL/HHTPS and running a proxy server 
 # Perhaps an alternative? http://www.investuotojas.eu/2012/08/10/rstudio-server-through-ssh/
 # Or  http://rstudio.org/docs/server/running_with_proxy is only for ubuntu?

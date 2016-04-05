@@ -104,11 +104,11 @@ knit_hooks$set(output = function(x, options) {
 <!-- Abstract is being wrapped in latex here so that all analysis can be run in the chunk above and the results reproducibly referenced in the abstract. -->
   
 \singlespace
-
+\vspace{2mm}\hrule
 Unpublished working paper\\
 Draft: \today
 
-\vspace{2mm}\hrule
+
 \paragraph*{Background:} This unpublished working paper was written to accompany the material presented as a
 speedtalk and poster at the National Climate Change Adaptation
 Research Facility Conference 'Climate Adaptation knowledge and
